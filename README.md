@@ -372,29 +372,29 @@ The LII-in-a-Box will come standard with a number of pre-defined content types, 
 Content type: Judgment
 
 
-**Content type: Judgment**
+Content type: Judgment
 <img src="http://www.africanlii.org/images/imagesfspec/judgement.jpg"/>	
 
 
 Content type: Legislation as promulgated
-<img src="http://www.africanlii.org/images/imagesfspec/judgement.jpg"/>
+<img src="http://www.africanlii.org/images/imagesfspec/legislation.jpg"/>
 
 Content type: Consolidated legislation
-<img src="http://www.africanlii.org/images/imagesfspec/judgement.jpg"/>
+<img src="http://www.africanlii.org/images/imagesfspec/cons_legislation.jpg"/>
 
 
 Content type: Subordinate legislation
-<img src="http://www.africanlii.org/images/imagesfspec/judgement.jpg"/>
+<img src="http://www.africanlii.org/images/imagesfspec/sub_legislation.jpg"/>
 
 Content type: Bill
 <img src="http://www.africanlii.org/images/imagesfspec/bill.jpg"/>
 
 
 Content type: Journal article
-<img src="http://www.africanlii.org/images/imagesfspec/judgement.jpg"/>
+<img src="http://www.africanlii.org/images/imagesfspec/journal_article.jpg"/>
 
 Content type: Government Gazette Issue
-<img src="http://www.africanlii.org/images/imagesfspec/judgement.jpg"/>
+<img src="http://www.africanlii.org/images/imagesfspec/gazette.jpg"/>
 
 
 Content type: Other
@@ -403,8 +403,7 @@ Content type: Other
 
 Content structure
 The site’s content structure, therefore, consists of site information (non-legal) content, and legal information content, as per the content types. It is organized as follows:  
-
-
+<img src="http://www.africanlii.org/images/imagesfspec/cont_structure.jpg"/>
 
 Categorization
 The LII-in-a-Box will categorize content according to the following taxonomies:
@@ -533,6 +532,7 @@ Current software settings
 See Appendix A
 
 Flow chart of Installation of LII-in-a-Box from a System Administrator perspective
+<img src="http://www.africanlii.org/images/imagesfspec/flowchart.jpg"/>
 
 
 Quality Attributes (Non-functional Requirements)
