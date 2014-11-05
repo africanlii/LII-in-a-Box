@@ -51,6 +51,7 @@ The LII-in-a-Box will provide:
 3. Content editors of free and open access to law websites with a convenient editing back office interface that provides a set of custom-developed features that enable efficient upload and management of legal information.
 
 Characteristics and Basic Components of the System
+==================================================
  
 An LII site must be able to present the information it carries in a way that is consistent with global standards for presentation of legal material; it must be researcher-friendly, i.e. able to provide a robust and extensive search interface; it must be user-friendly at multiple levels as it serves a market with varying technical skills. We have therefore already performed extensive customizations of Drupal to address some of these requirements.
  
@@ -65,6 +66,7 @@ All of these considerations around standards and functionality are accounted for
 
 
 Intended producers and consumers of the data the system provides
+=================================================================
 
 The LII-in-a-Box is a standardized legal information publication platform intended to publish legal information in consolidated or final form as supplied by the producers of legal content - courts, legislatures, consolidators of laws, etc.
 
@@ -76,6 +78,7 @@ Our main objective currently remains enabling rapid and standardized publication
 
 
 Activities supported by the system
+==================================
 
 The LII-in-a-Box system will support primarily the publication and reading of judgments, primary and secondary legislation, with modern search features both within and across individual collections. Other legal information content will be supported via standardized and built-in content types. However, and considering the variations across jurisdictions, we do not aim to be exhaustive in the provision of options.
 
@@ -85,6 +88,7 @@ The LII-in-a-Box system will provide a standardized interface into legal informa
 
 
 Data, data structure and information retrieval
+==============================================
 
 The LII-in-a-Box system will capture only a portion of the complex multi-layer information architecture of a legal document (as per Palimarani, et al) :
 the text - part of the document officially approved by the authority with legal power, and
@@ -98,6 +102,7 @@ General and advanced searches will aide the retrieval of information. The genera
 
 
 Specifications and Components
+=============================
 The system as being defined by the following basic considerations:
 1. It must contain defined content types - judgment, consolidated legislation, sessional laws, parliamentary debates, bills, government gazette, journal, etc.- which are common across countries and legal systems, albeit subject to localized customizations;
 2. It must allow for content negotiation, i.e. to facilitate the output of legal information in a wide range of formats;
@@ -108,11 +113,13 @@ All Drupal customizations will be carried out with a view to providing mobile/sm
 
 
 Updates and corrections to the data post initial upload
+=======================================================
 Data on the system will be uploaded either manually or in batch uploads, initiated by the website editors or administrators. Data can be corrected post-inital publication and a record of each version will be kept by the system, but will not be made available to users by default.
 
 The system keeps record of the publication time of each correction. This is important as it substantively affects the application of legal rules contained within sources of law published.
 
 System maintainers profiles
+===========================
 
 At minimum the staff required to maintain the system consists of Content Editors, whose main responsibility will be to upload and correct content on the system. Content Editors should have, at minimum, received training in the types of legal documents in a jurisdiction, the various metadata that describes them and the construction of references for the types of documents.
 
@@ -120,12 +127,14 @@ The Content Editors would ideally be supported by a System Administrator/Drupal 
 
 
 Who is this sytem for?
+=====================
 
 The LII-in-a-Box is intended to server all those projects and institutions, who wish to publish the law they produce or collect for publication for free online access. The type of institution that could benefit from the LII-in-a-Box ranges from courts, legislation producers (Parliament, Attorney General’s offices), law reform commissions, to external institutions or projects that collect legal information from the producers and consolidate it into one platform, using the LII-in-a-Box.
 
 
 
 Definitions 
+===========
 Judgment
 - a decision of a law court or a judge
 
