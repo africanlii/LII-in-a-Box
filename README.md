@@ -2,29 +2,12 @@ LII-in-a-Box
 ============
 	 	 	 
 
-Functional Specifications for Legal Information Institute in a Box System
-Developed by the African Legal Information Institute 
+			Functional Specifications 
+				for 
+			Legal Information Institute in a Box System
+		==Developed by the African Legal Information Institute==
 
-September 2014
 
-
-	 	 	
-
-			
-2
-			
-		
-		Incorporate initial comments from Cornell LII	
-
-			
-		
-		Mariya Badeva-Bright	
-
-			
-		
-Include overview and descriptions on main category;
-improve structure
-		
 Introduction
 ============
 
@@ -161,6 +144,7 @@ Fielded search
 Allows users to limit their search to the metadata of documents published on the system.
 
 User Roles and Functionality of the System 
+==========================================
 All users can
 All users - authenticated or anonymous - can access and utilize the following resources and services on the LIi-in-a-Box instance:
 Access the Main page
