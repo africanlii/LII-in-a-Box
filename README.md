@@ -369,8 +369,6 @@ Can manage file sizes and permissions
 In Drupal, a Content Type is a pre-defined collection of data types (Fields) which relate to each other by an informational context. In this sense, "context" means "parts that should be considered as a correlated whole." Content Types are how site editors can input original content on a Drupal site. Drupal ships with standard content types called Page and Story. Additional content types, such as Blog, Book, Poll, etc. could be installed as optional core content types. Content types are useful in many respects, including to organize content from a site administrator’s and a user’s perspective, and for administering content permissions. 
 
 The LII-in-a-Box will come standard with a number of pre-defined content types, and associated metadata fields. The content types are based on the most common document types published on legal information systems in both common law and civil law countries. Any other content will be captured under the “Other” content type.
-Content type: Judgment
-
 
 Content type: Judgment
 <img src="http://www.africanlii.org/images/imagesfspec/judgement.jpg"/>	
