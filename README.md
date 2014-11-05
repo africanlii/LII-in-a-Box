@@ -145,44 +145,42 @@ User Roles and Functionality of the System
 All users can
 All users - authenticated or anonymous - can access and utilize the following resources and services on the LIi-in-a-Box instance:
 Access the Main page
-Read news
+-Read news
 News are blog posts authored by the site’s Editors, which appear under a separate section of the website. 
 
-Read significant recent additions 
+-Read significant recent additions
 Significant recent additions is a list of hyperlinks manually selected and collated by the site’s Editors. They usually highlight interesting cases or legislation posted on the website.
 
-Read useful links
+-Read useful links
 Useful links is a selection of links to external resources, curated by the site’s Editors.
 
-Access public menus to publicly available content
+-Access public menus to publicly available content
 Public menus are links visible to all users of the website and offer access only to freely and openly available content. 
 
-Perform full text search into available site content or in specific categories of legal content types
+-Perform full text search into available site content or in specific categories of legal content types
 See Search functionality below. 
 
-Access About us, Terms of Use and Blog/Site news pages
+-Access About us, Terms of Use and Blog/Site news pages
 These are static pages, which do not contain legal information, modified from time to time by Content Editors.
 
-Access Contact form
+-Access Contact form
 The Contact form allows all users to reach the website owners while the owners’ email addresses remain protected. 
 
 Access all Caselaw databases
+----------------------------
 
 Utilize all caselaw available via the system, which has been marked by Content Editors as published. There are several ways to enable users to browse content on a specific caselaw database, and this is achieved through alphabetical and chronological indices. Therefore all users can:
 
-{|View index/landing page with chronological ( per year) and alphabetical arrangement  (ascending alpha order) of available caselaw
-|
-|-
-|View Alphabetical arrangement of caselaw per court per letter - ascending order, per letter A and further alphabetize within the group
-|
-|-
-|View Chronological arrangement of caselaw per court and per month - group chronologically within monthly category; if two cases within a month have the same date - arrange alphabetically
-|
-|-
-|Alphabetical and Chronological listings of case titles will be displayed to users in the format, and will be linked to a HTML page of the case, as per the example below
-|
-|-
-|}
+View index/landing page with chronological ( per year) and alphabetical arrangement  (ascending alpha order) of available caselaw
+
+View Alphabetical arrangement of caselaw per court per letter - ascending order, per letter A and further alphabetize within the group
+
+
+View Chronological arrangement of caselaw per court and per month - group chronologically within monthly category; if two cases within a month have the same date - arrange alphabetically
+
+
+Alphabetical and Chronological listings of case titles will be displayed to users in the format, and will be linked to a HTML page of the case, as per the example below
+
 Example:
 =======
 <Case name> (<case number>) <MNC> (<judgment date>); <additional citation> (for common law jurisdictions)
