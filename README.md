@@ -2,52 +2,14 @@ LII-in-a-Box
 ============
 	 	 	 
 
-Functional Specifications
-for
-Legal Information Institute in a Box System
+Functional Specifications for Legal Information Institute in a Box System
 Developed by the African Legal Information Institute 
 
 September 2014
 
 
 	 	 	
-REVISION HISTORY
-			
-Date
-		
-			
-Revision
-		
-			
-Description
-		
-			
-Author
-		
-			
-Comments
-		
-			
-05/09/2014
-		
-			
-1
-		
-			
-Release
-			
-		
-			
-Alfred 	Mahlangu /Mariya Badeva-Bright
-		
-			
 
-			
-		
-			25/09/2014
-
-			
-		
 			
 2
 			
@@ -62,119 +24,9 @@ Alfred 	Mahlangu /Mariya Badeva-Bright
 		
 Include overview and descriptions on main category;
 improve structure
-			
-
-			
 		
-			
-
-			
-		
-			
-
-			
-		
-			
-
-			
-		
-			
-
-			
-		
-			
-
-			
-		
-			
-
-			
-		
-			
-
-			
-		
-			
-
-			
-		
-			
-
-			
-		
-
-
-Table of Contents
-REVISION HISTORY
 Introduction
-Goals
-Characteristics and Basic Components of the System
-Intended producers and consumers of the data the system provides
-Activities supported by the system
-Data, data structure and information retrieval
-Specifications and Components
-Updates and corrections to the data post initial upload
-System maintainers profiles
-Who is this sytem for?
-Definitions
-Judgment
-Legislation (or statute) as promulgated
-Consolidated legislation
-Government Gazette
-Subordinate legislation
-Bill
-Journal article
-Full-text search
-Fielded search
-User Roles and Functionality of the System
-All users can
-Access the Main page
-Access all Caselaw databases
-Case page
-Legislation database
-Consolidated legislation
-Numbered acts (legislation as promulgated)
-Bills of Parliament
-Other legal content types
-Authenticated users can:
-Editor users can
-Site administrators can
-Content types
-Content type: Judgment
-Content type: Legislation as promulgated
-Content type: Consolidated legislation
-Content type: Subordinate legislation
-Content type: Bill
-Content type: Journal article
-Content type: Government Gazette Issue
-Content type: Other
-Content structure
-Categorization
-Search
-URI structure
-Judgment
-Legislation as promulgated
-Consolidated legislation
-Subordinate legislation
-Bill
-Journal article
-Government Gazette Issue
-Other
-Generic, non legal information, content
-File path structure
-Automated linking
-System Architecture
-Major tasks to be performed.
-System Functions
-Software Architecture
-Current software settings
-Flow chart of Installation of LII-in-a-Box from a System Administrator perspective
-Quality Attributes (Non-functional Requirements)
-Appendices
-Appendix A
-
-
-Introduction
+============
 
 Information systems designed for the legal information domain have been in existence since the early 1970s. Commercial publishers developed systems for searching within, initially indices of and subsequently full text, case law and legislation. Immediately following the introduction of new technology, researchers found difference in the quality of legal research conducted. An unexpected outcome of the introduction of this technology, was the possibility that opened up for allowing citizens access to the laws that govern them and the acts of the judiciary that applies those laws.
  
