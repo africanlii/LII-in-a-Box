@@ -1,6 +1,7 @@
 LII-in-a-Box
 ============
-	 	 	 
+
+<img src="http://www.africanlii.org/images/africanlii_logo.jpg" />	 	 	 
 
 Functional Specifications for Legal Information Institute in a Box System Developed by the African Legal Information Institute
 
@@ -371,8 +372,8 @@ The LII-in-a-Box will come standard with a number of pre-defined content types, 
 Content type: Judgment
 
 **Content type: Judgment**
+<img src="http://www.africanlii.org/images/africanlii_logo.jpg" width="240" height="180" border="10" />	
 
-<img src="http://www.africanlii.org/images/africanlii_logo.jpg" width="240" height="180" border="10" />
 
 Content type: Legislation as promulgated
 
