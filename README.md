@@ -170,12 +170,12 @@ The Contact form allows all users to reach the website owners while the ownersâ€
 
 Utilize all caselaw available via the system, which has been marked by Content Editors as published. There are several ways to enable users to browse content on a specific caselaw database, and this is achieved through alphabetical and chronological indices. Therefore all users can:
 
-|View index/landing page with chronological ( per year) and alphabetical arrangement  (ascending alpha order) of available caselaw | |
+|View index/landing page with chronological ( per year) and alphabetical arrangement  (ascending alpha order) of available caselaw | | |
 
-|View Alphabetical arrangement of caselaw per court per letter - ascending order, per letter A and further alphabetize within the group | |
+|View Alphabetical arrangement of caselaw per court per letter - ascending order, per letter A and further alphabetize within the group | | |
 
 
-|View Chronological arrangement of caselaw per court and per month - group chronologically within monthly category; if two cases within a month have the same date - arrange alphabetically | |
+|View Chronological arrangement of caselaw per court and per month - group chronologically within monthly category; if two cases within a month have the same date - arrange alphabetically | | |
 
 
 Alphabetical and Chronological listings of case titles will be displayed to users in the format, and will be linked to a HTML page of the case, as per the example below
