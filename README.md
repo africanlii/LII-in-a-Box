@@ -371,8 +371,8 @@ The LII-in-a-Box will come standard with a number of pre-defined content types, 
 Content type: Judgment
 
 **Content type: Judgment**
-<img src="http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg" 
-alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" />
+
+<img src="http://www.africanlii.org/images/africanlii_logo.jpg" width="240" height="180" border="10" />
 
 Content type: Legislation as promulgated
 
