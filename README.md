@@ -371,8 +371,8 @@ In Drupal, a Content Type is a pre-defined collection of data types (Fields) whi
 The LII-in-a-Box will come standard with a number of pre-defined content types, and associated metadata fields. The content types are based on the most common document types published on legal information systems in both common law and civil law countries. Any other content will be captured under the “Other” content type.
 Content type: Judgment
 
-**Content type: Judgment**
-<img src="http://www.africanlii.org/images/imagesfspec/judgement.jpg" />	
+
+<img src="http://www.africanlii.org/images/imagesfspec/judgement.jpg" alt="**Content type: Judgment**" />	
 
 
 Content type: Legislation as promulgated
