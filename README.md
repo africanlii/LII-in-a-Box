@@ -372,25 +372,33 @@ The LII-in-a-Box will come standard with a number of pre-defined content types, 
 Content type: Judgment
 
 
-<img src="http://www.africanlii.org/images/imagesfspec/judgement.jpg" alt="**Content type: Judgment**" />	
+**Content type: Judgment**
+<img src="http://www.africanlii.org/images/imagesfspec/judgement.jpg"/>	
 
 
 Content type: Legislation as promulgated
+<img src="http://www.africanlii.org/images/imagesfspec/judgement.jpg"/>
 
 Content type: Consolidated legislation
+<img src="http://www.africanlii.org/images/imagesfspec/judgement.jpg"/>
 
 
 Content type: Subordinate legislation
+<img src="http://www.africanlii.org/images/imagesfspec/judgement.jpg"/>
 
 Content type: Bill
+<img src="http://www.africanlii.org/images/imagesfspec/bill.jpg"/>
 
 
 Content type: Journal article
+<img src="http://www.africanlii.org/images/imagesfspec/judgement.jpg"/>
 
 Content type: Government Gazette Issue
+<img src="http://www.africanlii.org/images/imagesfspec/judgement.jpg"/>
 
 
 Content type: Other
+<img src="http://www.africanlii.org/images/imagesfspec/other.jpg"/>
 
 
 Content structure
