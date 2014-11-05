@@ -166,8 +166,7 @@ These are static pages, which do not contain legal information, modified from ti
 - Access Contact form
 The Contact form allows all users to reach the website owners while the owners’ email addresses remain protected. 
 
-Access all Caselaw databases
-----------------------------
+**Access all Caselaw databases**
 
 Utilize all caselaw available via the system, which has been marked by Content Editors as published. There are several ways to enable users to browse content on a specific caselaw database, and this is achieved through alphabetical and chronological indices. Therefore all users can:
 
