@@ -145,25 +145,25 @@ User Roles and Functionality of the System
 All users can
 All users - authenticated or anonymous - can access and utilize the following resources and services on the LIi-in-a-Box instance:
 Access the Main page
--Read news
+- Read news
 News are blog posts authored by the site’s Editors, which appear under a separate section of the website. 
 
--Read significant recent additions
+- Read significant recent additions
 Significant recent additions is a list of hyperlinks manually selected and collated by the site’s Editors. They usually highlight interesting cases or legislation posted on the website.
 
--Read useful links
+- Read useful links
 Useful links is a selection of links to external resources, curated by the site’s Editors.
 
--Access public menus to publicly available content
+- Access public menus to publicly available content
 Public menus are links visible to all users of the website and offer access only to freely and openly available content. 
 
--Perform full text search into available site content or in specific categories of legal content types
+- Perform full text search into available site content or in specific categories of legal content types
 See Search functionality below. 
 
--Access About us, Terms of Use and Blog/Site news pages
+- Access About us, Terms of Use and Blog/Site news pages
 These are static pages, which do not contain legal information, modified from time to time by Content Editors.
 
--Access Contact form
+- Access Contact form
 The Contact form allows all users to reach the website owners while the owners’ email addresses remain protected. 
 
 Access all Caselaw databases
