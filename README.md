@@ -170,12 +170,12 @@ The Contact form allows all users to reach the website owners while the owners�
 
 Utilize all caselaw available via the system, which has been marked by Content Editors as published. There are several ways to enable users to browse content on a specific caselaw database, and this is achieved through alphabetical and chronological indices. Therefore all users can:
 
-|View index/landing page with chronological ( per year) and alphabetical arrangement  (ascending alpha order) of available caselaw | | |
+View index/landing page with chronological ( per year) and alphabetical arrangement  (ascending alpha order) of available caselaw 
 
-|View Alphabetical arrangement of caselaw per court per letter - ascending order, per letter A and further alphabetize within the group | | |
+View Alphabetical arrangement of caselaw per court per letter - ascending order, per letter A and further alphabetize within the group 
 
 
-|View Chronological arrangement of caselaw per court and per month - group chronologically within monthly category; if two cases within a month have the same date - arrange alphabetically | | |
+View Chronological arrangement of caselaw per court and per month - group chronologically within monthly category; if two cases within a month have the same date - arrange alphabetically 
 
 
 Alphabetical and Chronological listings of case titles will be displayed to users in the format, and will be linked to a HTML page of the case, as per the example below
@@ -188,28 +188,25 @@ E.g. Anti-Corruption Commission v Serioes Farms Limited (SCZ/8/199/2009) [2014] 
 <case subject area or case title> <case number> <judgment date>; <MNC> (for civil law jurisdictions)
 
 
-Case page
+`Case page`
 The case page is a dedicated web resource providing access to a judgement’s text, metadata and associated files. 
 
-{|View breadcrumbs organized in the format: 
+View breadcrumbs organized in the format: 
 
 Home » <Name of Court> » <year of judgment> » <MNC> » <title of judgment>
 Home » <collection> » <year> » <title>
-|
-|-
-|View the full case title at the top of the page
-|
-|-
-|View public metadata for judgment, which is:
-Case name
-Case number
-MNC
-Judgment date
-Additional citation
-Related judgments or legislation
-|
-|-
-|}
+
+View the full case title at the top of the page
+
+View public metadata for judgment, which is:
+- Case name
+- Case number
+- MNC
+- Judgment date
+- Additional citation
+- Related judgments or legislation
+
+
 View taxonomy classification of the judgment
 
 View and download available file formats - PDF, doc, docx, rtf, or odt - versions of judgment
@@ -222,15 +219,12 @@ View links to cases and legislation, cited within the body of the text of the ju
 
 
 
-
-Legislation database
+`Legislation database`
 
 The Legislation page is a dedicated web resource providing access to legislation’s text, metadata and associated files. There are two types of legislation content types - Consolidated legislation and Numbered acts.
 
 
-
-
-Consolidated legislation
+`Consolidated legislation`
 
 View index page with legislation arranged in alphabetical order A-Z, and alphabetized within each group
 
@@ -248,7 +242,7 @@ View / follow links to related other legislation, caselaw or legal documents
 
 
 
-Numbered acts (legislation as promulgated) 
+`Numbered acts (legislation as promulgated)`
 
 View index page with legislation arranged in alphabetical and chronological order (per year)
 
@@ -272,7 +266,7 @@ View and download PDF, doc, docx, rtf, or odt version of document
 View / follow links to related other legislation, caselaw or legal documents
 
 
-Bills of Parliament
+`Bills of Parliament`
 
 View index page with bills arranged in alphabetical and chronological order (per year)
 
@@ -295,7 +289,7 @@ View and download PDF, doc, docx, rtf, or odt version of document
 View / follow links to related other legislation, caselaw or legal documents
 
 
-Other legal content types
+`Other legal content types`
 
 View document title in a chronological/alphabetical index
 
@@ -306,9 +300,7 @@ Download alternative file formats
 View related documents on the system 
 
 
-
-
-Authenticated users can:
+**Authenticated users can:**
 Authenticated users are those users of the website, who have successfully completed the registration process prescribed by the website administrators. Additional to the above privileges, they can: 
 
 
@@ -328,7 +320,7 @@ View other custom available content or services as determined by the Editor
 
 
 
-Editor users can
+**Editor users can**
 The Editors (or Content Editors) are a category of users, with exclusive permissions to add, amend and delete website content. 
 
 View all content and utilize all services available to anonymous and authenticated users
@@ -352,7 +344,7 @@ Manage the Significant Recent additions queue
  
 
 
-Site administrators can
+**Site administrators can**
 Site administrators usually perform a more technical function than that of Content Editors, such as adjusting various settings, installation of external modules, troubleshooting, etc. 
 
 Has all access privileges as the Editor user
@@ -371,13 +363,16 @@ Can manage file sizes and permissions
 
 
 
-Content types
+**Content types**
 
 In Drupal, a Content Type is a pre-defined collection of data types (Fields) which relate to each other by an informational context. In this sense, "context" means "parts that should be considered as a correlated whole." Content Types are how site editors can input original content on a Drupal site. Drupal ships with standard content types called Page and Story. Additional content types, such as Blog, Book, Poll, etc. could be installed as optional core content types. Content types are useful in many respects, including to organize content from a site administrator’s and a user’s perspective, and for administering content permissions. 
 
 The LII-in-a-Box will come standard with a number of pre-defined content types, and associated metadata fields. The content types are based on the most common document types published on legal information systems in both common law and civil law countries. Any other content will be captured under the “Other” content type.
 Content type: Judgment
 
+**Content type: Judgment**
+<img src="http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg" 
+alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" />
 
 Content type: Legislation as promulgated
 
