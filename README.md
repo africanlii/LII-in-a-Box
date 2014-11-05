@@ -5,7 +5,7 @@ LII-in-a-Box
 			Functional Specifications 
 				for 
 			Legal Information Institute in a Box System
-		==Developed by the African Legal Information Institute==
+		Developed by the African Legal Information Institute
 
 
 Introduction
