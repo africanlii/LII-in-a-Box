@@ -170,16 +170,21 @@ Access all Caselaw databases
 
 Utilize all caselaw available via the system, which has been marked by Content Editors as published. There are several ways to enable users to browse content on a specific caselaw database, and this is achieved through alphabetical and chronological indices. Therefore all users can:
 
-View index/landing page with chronological ( per year) and alphabetical arrangement  (ascending alpha order) of available caselaw
-
-View Alphabetical arrangement of caselaw per court per letter - ascending order, per letter A and further alphabetize within the group
-
-View Chronological arrangement of caselaw per court and per month - group chronologically within monthly category; if two cases within a month have the same date - arrange alphabetically
-
-Alphabetical and Chronological listings of case titles will be displayed to users in the format, and will be linked to a HTML page of the case, as per the example below
-
-
+{|View index/landing page with chronological ( per year) and alphabetical arrangement  (ascending alpha order) of available caselaw
+|
+|-
+|View Alphabetical arrangement of caselaw per court per letter - ascending order, per letter A and further alphabetize within the group
+|
+|-
+|View Chronological arrangement of caselaw per court and per month - group chronologically within monthly category; if two cases within a month have the same date - arrange alphabetically
+|
+|-
+|Alphabetical and Chronological listings of case titles will be displayed to users in the format, and will be linked to a HTML page of the case, as per the example below
+|
+|-
+|}
 Example:
+=======
 <Case name> (<case number>) <MNC> (<judgment date>); <additional citation> (for common law jurisdictions)
 E.g. Anti-Corruption Commission v Serioes Farms Limited (SCZ/8/199/2009) [2014] ZMSC 35 (6 January 2014); Appeal No. 155/2009 
 
@@ -189,21 +194,25 @@ E.g. Anti-Corruption Commission v Serioes Farms Limited (SCZ/8/199/2009) [2014] 
 Case page
 The case page is a dedicated web resource providing access to a judgement’s text, metadata and associated files. 
 
-View breadcrumbs organized in the format: 
+{|View breadcrumbs organized in the format: 
 
 Home » <Name of Court> » <year of judgment> » <MNC> » <title of judgment>
 Home » <collection> » <year> » <title>
-
-View the full case title at the top of the page
-
-View public metadata for judgment, which is:
+|
+|-
+|View the full case title at the top of the page
+|
+|-
+|View public metadata for judgment, which is:
 Case name
 Case number
 MNC
 Judgment date
 Additional citation
 Related judgments or legislation
-
+|
+|-
+|}
 View taxonomy classification of the judgment
 
 View and download available file formats - PDF, doc, docx, rtf, or odt - versions of judgment
