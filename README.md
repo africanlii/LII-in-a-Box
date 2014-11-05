@@ -375,13 +375,11 @@ Content type: Judgment
 Content type: Judgment
 <img src="http://www.africanlii.org/images/imagesfspec/judgement.jpg"/>	
 
-
 Content type: Legislation as promulgated
 <img src="http://www.africanlii.org/images/imagesfspec/legislation.jpg"/>
 
 Content type: Consolidated legislation
 <img src="http://www.africanlii.org/images/imagesfspec/cons_legislation.jpg"/>
-
 
 Content type: Subordinate legislation
 <img src="http://www.africanlii.org/images/imagesfspec/sub_legislation.jpg"/>
@@ -389,13 +387,11 @@ Content type: Subordinate legislation
 Content type: Bill
 <img src="http://www.africanlii.org/images/imagesfspec/bill.jpg"/>
 
-
 Content type: Journal article
 <img src="http://www.africanlii.org/images/imagesfspec/journal_article.jpg"/>
 
 Content type: Government Gazette Issue
 <img src="http://www.africanlii.org/images/imagesfspec/gazette.jpg"/>
-
 
 Content type: Other
 <img src="http://www.africanlii.org/images/imagesfspec/other.jpg"/>
