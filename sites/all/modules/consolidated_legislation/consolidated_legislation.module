@@ -1,0 +1,26 @@
+<?php
+
+	require_once('consolidated_legislation_functions.inc');
+
+	function consolidated_legislation_node_info() {
+
+		$items = array();
+		$items['consolidated_legislation'] = array(
+			'name' => t('Consolidated Legislation Content Type'),    // name of your content type
+			'type' => 'consolidated_legislation',
+			'base' => 'node_content',
+			'description' => t('A content type to handle consolidated legislation.'),
+			'has_title' => 0,
+			//'title_label' => t('Legislation Title'),
+			'body_label' => t('Consolidated Legislation Description'),
+			//'help' => t('Please fill in all fields.'),
+			'custom' => TRUE,
+		);
+		return $items;
+	}
+
+	function consolidated_legislation_form($node, $form_state) {
+	
+		return node_content_form($node, $form_state);
+	}
+?>

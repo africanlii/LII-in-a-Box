@@ -1,0 +1,108 @@
+; $Id $
+name = liiinabox
+description = Install LiiinaBox.
+core = 7.x
+
+; Core
+dependencies[] = block
+dependencies[] = color
+dependencies[] = comment
+dependencies[] = contact
+dependencies[] = contextual
+dependencies[] = dashboard
+dependencies[] = blog
+dependencies[] = help
+dependencies[] = image
+dependencies[] = list
+dependencies[] = menu
+dependencies[] = number
+dependencies[] = options
+dependencies[] = path
+dependencies[] = php
+dependencies[] = taxonomy
+dependencies[] = syslog
+dependencies[] = search
+dependencies[] = shortcut
+dependencies[] = toolbar
+dependencies[] = overlay
+dependencies[] = field
+dependencies[] = field_ui
+dependencies[] = file
+dependencies[] = rdf
+
+
+; Contrib
+dependencies[] = aggregator
+;dependencies[] = apachesolr
+dependencies[] = auto_nodetitle
+dependencies[] = book
+;dependencies[] = captcha
+dependencies[] = cck
+dependencies[] = ckeditor
+dependencies[] = content_taxonomy
+dependencies[] = ctools
+dependencies[] = custom_search
+dependencies[] = dblog
+dependencies[] = data
+dependencies[] = date
+dependencies[] = date_popup
+dependencies[] = db_maintenance
+dependencies[] = entity
+dependencies[] = entity_token
+dependencies[] = features
+dependencies[] = feeds
+dependencies[] = feeds_import
+dependencies[] = feeds_ui
+dependencies[] = feeds_tamper
+dependencies[] = feeds_tamper_ui
+dependencies[] = field_group
+dependencies[] = filefield_paths
+dependencies[] = glossify
+dependencies[] = googleanalytics
+dependencies[] = helloworld
+dependencies[] = htaccess
+dependencies[] = i18n
+dependencies[] = indexpage
+dependencies[] = job_scheduler
+dependencies[] = jquery_ui
+dependencies[] = jquery_update
+dependencies[] = nodeblock
+dependencies[] = nodequeue
+dependencies[] = options_element
+dependencies[] = pathauto
+dependencies[] = references
+dependencies[] = robotstxt
+dependencies[] = simplehtmldom
+dependencies[] = token
+dependencies[] = variable
+;dependencies[] = views
+dependencies[] = libraries
+dependencies[] = xmlsitemap
+
+;Custom
+dependencies[] = courtnamesadd
+dependencies[] = courtbeginning
+dependencies[] = courtdecisions
+dependencies[] = courtnames
+;dependencies[] = judgment
+;dependencies[] = consolidated_legislation
+dependencies[] = legislation_promulgated
+dependencies[] = legislationtype
+dependencies[] = listcourts
+dependencies[] = listlegislation
+dependencies[] = legisnames
+dependencies[] = uploadfiles
+dependencies[] = bulkuploadfiles
+
+
+libraries[ckeditor][download][type] = get
+libraries[ckeditor][download][url] = http://download.cksource.com/CKEditor/CKEditor/CKEditor%203.5/ckeditor_3.5.tar.gz
+libraries[colorbox][download][type] = get
+libraries[colorbox][download][url] = http://colorpowered.com/colorbox/colorbox.zip
+
+; Information added by Drupal.org packaging script on 2013-12-13
+;version = "7.x-1.0-beta9"
+;core = "7.x"
+;project = "lii_inabox"
+;datestamp = "1386961705"
+

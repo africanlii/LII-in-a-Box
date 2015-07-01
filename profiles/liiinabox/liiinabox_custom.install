@@ -1,0 +1,75 @@
+<?php
+/**
+ * @file
+ * Install, update and uninstall functions for the minimal installation profile.
+ */
+
+/**
+ * Implements hook_install().
+ *
+ * Performs actions to set up the site for this profile.
+ *
+ * @see system_install()
+ */
+function liiinabox_custom_install() {
+
+	// Enable some standard blocks.
+	/*$default_theme = variable_get('theme_default', 'bartlik');
+	$admin_theme = 'seven';
+	theme_enable(array("creative"));
+	variable_set("theme_default", "bartlik");*/
+	
+    $types = array(
+	  array('type' => 'judgment',
+      'name' => st('Judgment'),
+      'base' => 'node_content',
+      'description' => st('Content type to handle Judgments for all courts.'),
+      'custom' => 1,
+      'modified' => 1,
+      'locked' => 0,
+      'promote' => 0,
+      'status' => 1,
+      'comment' => 0,
+	  ),
+	);
+	
+	foreach ($types as $type) {
+		$type = node_type_set_defaults($type);
+		node_type_save($type);
+		node_add_body_field($type);
+	}
+	
+	//Create Case name field
+	$field = array(
+      'field_name' => 'field_casename',
+      'label' => st('Case name'),
+      'cardinality' => 1,
+      'type' => 'text',
+      'settings' => array(
+        'max_length' => 1000,
+      ),
+	);
+	field_create_field($field);
+
+	$instance = array(
+	'field_name'  => 'field_casename',
+	'entity_type' => 'node',             
+	'bundle'      => 'judgment', 
+	'label'       => st('Case name'),
+	'required'    => false,                       
+	'display'     => array(
+    'default' => array(
+      'type' => 'text',                       
+		),
+	),
+	'widget'      => array(
+    'type'     => 'text',              
+    'settings' => array(
+      'display_label' => 1,                     
+    ),
+    ),
+	'weight' => -1,
+	);
+	field_create_instance($instance);
+	
+}

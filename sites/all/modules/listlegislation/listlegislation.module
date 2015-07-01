@@ -1,0 +1,48 @@
+<?php
+/**
+* @file
+* Implements various blocks to improve pending content workflow.
+*/
+/**
+* Implements hook_block_info().
+*/
+function listlegislation_block_info() {
+  //$blocks['judgments'] = array(
+    //'info' => t('Judgments'),
+  //);
+  $blocks['legislation'] = array(
+    'info' => t('Legislation'),
+  );
+
+  return $blocks;
+}
+
+
+/**
+ * Implements hook_block_view().
+ */
+function listlegislation_block_view($delta = '') {
+
+  $legname = '';
+  $type = 'legislationtype';
+
+
+  $result = db_query("SELECT title FROM {node} WHERE type = :type",array(':type' => $type,));
+
+  foreach ($result as $row) {
+    
+    $name = $row->title; 
+   
+    $legname .= "<a href='/legisnames&legname=$name'>".$name."</a><br/>";
+
+  }
+
+  switch ($delta) {
+   
+    case 'legislation':
+      $block['content'] = '<p><h2><strong>Legislation</strong></h2><br />'.$legname .'</p>';
+      break;
+  }
+
+  return $block;
+}

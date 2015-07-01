@@ -1,0 +1,5 @@
+name = Judgment Content Type
+description = A module to install judgment content type
+core = 7.x
+files[] = judgment.install
+files[] = judgment.module

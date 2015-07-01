@@ -1,0 +1,93 @@
+<?php
+/**
+ * Implements hook_menu()
+ * @return array
+ */
+
+ function uploadfiles_node_info() {
+
+    $items = array();
+    $items['uploadfiles'] = array(
+      'name' => t('Page Title'),    // name of your content type
+      'type' => 'uploadfiles',
+      'base' => 'node_content',
+      'description' => t('A content type to handle bulk file uploads.'),
+      'has_title' => 1,
+      'title_label' => t('Upload Files'),
+      'body_label' => t('Upload Files'),
+      //'help' => t('Please fill in all fields.'),
+      'custom' => TRUE,
+    );
+    return $items;
+  }
+
+  function uploadfiles_form($node, $form_state) {
+
+    return node_content_form($node, $form_state);
+  }
+/*function uploadfiles_form(){
+  return drupal_get_form('uploadfiles_form_page');
+}
+
+
+function uploadfiles_form_page($form, &$form_state) {
+
+  $form = array();
+
+  $form['file'] = array(
+      '#type' => 'file',
+      //'#name' => 'files[]',
+      '#title' => t('Upload some File'),
+      '#description' => t('You are allowed to upload txt, pdf, rtf and doc..., 10MB Max Size'),
+      '#attributes' => array('multiple' => 'multiple'),
+   
+  );
+
+  //$form['#attributes']['enctype'] = "multipart/form-data";
+  $form['submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Upload'),
+
+  );
+  //$form['#attributes']['enctype'] = 'multipart/form-data';
+  $form['#submit'][] = 'uploadfiles_form_submit';
+  return $form;
+}
+
+
+function uploadfiles_form_validate($form, &$form_state) {
+ 
+    //Save multiple files
+    //$num_files = count($_FILES['files']['name']);
+
+    // If required, validate the uploaded picture.
+    $validators = array(
+        'file_validate_extensions' => array('rtf txt pdf doc'),
+    );
+
+    $file = file_save_upload('file', $validators,'public://import-downloads/');
+    $val = file_validate($file,$validators);
+
+    if ($file === FALSE) {
+        form_set_error('file',"Failed to upload");
+    }
+    elseif ($file !== NULL) {
+        $form_state['values']['file'] = $file;
+    }
+} 
+
+function uploadfiles_form_submit($form, $form_state) {
+
+    $num_files = count($_FILES['files']['name']);  
+      $validators = array('file_validate_extensions' => array('txt pdf rtf doc html'));
+      $file = file_save_upload('file', $validators, 'public://import-downloads/');
+
+      if ($file) {
+          // Put the temporary file in form_values so we can save it on submit.
+          drupal_set_message(t('Upload successful'));
+      }
+ 
+
+          
+}*/
+
