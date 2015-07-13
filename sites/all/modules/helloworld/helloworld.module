@@ -9,7 +9,7 @@ function helloworld_menu() {
       'hello_world' => array(
         'title' => 'Hello world',
         'page callback' => '_page_hello_world',
-        'access callback' => TRUE,
+        'access callback' => '_allowAccess',
       ),
     );
   return $aItems;
@@ -21,11 +21,11 @@ function helloworld_menu() {
  * @return array
  */
 function _page_hello_world() {
-  //return array(
-    //'#markup' => '<p>Hello world</p>'
-  //);
+  return array(
+    '#markup' => '<p>Hello world</p>'
+  );
 
-  $bundle = 'courtnames';
+  /*$bundle = 'courtnames';
   $mnc_code = 'scza';
   
 

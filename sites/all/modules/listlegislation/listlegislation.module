@@ -27,13 +27,13 @@ function listlegislation_block_view($delta = '') {
   $type = 'legislationtype';
 
 
-  $result = db_query("SELECT title FROM {node} WHERE type = :type",array(':type' => $type,));
+  $result = db_query("SELECT name FROM {node_type} WHERE name LIKE '%legislation%' ");
 
   foreach ($result as $row) {
     
-    $name = $row->title; 
+    $name = $row->name; 
    
-    $legname .= "<a href='/legisnames&legname=$name'>".$name."</a><br/>";
+    $legname .= "<a href='/consol_leglist&legname=$name'>".$name."</a><br/>";
 
   }
 
@@ -43,6 +43,8 @@ function listlegislation_block_view($delta = '') {
       $block['content'] = '<p><h2><strong>Legislation</strong></h2><br />'.$legname .'</p>';
       break;
   }
-
-  return $block;
+  if($result->rowCount() > 0){
+    return $block;
+  }
+  
 }

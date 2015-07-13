@@ -37,7 +37,8 @@
 
 
 		$country_code = strtolower(variable_get('site_default_country'));		
-		variable_set('pathauto_node_legislation_promulgated_pattern', $country_code.'/legis/');
+		variable_set('pathauto_node_legislation_promulgated_pattern', $country_code.'/legislation_promulgated/[node:field_numact]');
+		
 
 		//variable_set('auto_nodetitle_node_judgment_pattern','[node:field_casename]'.'('.'[node:field_casenumber]'.')');
 		
@@ -103,6 +104,7 @@
 		);
 		field_create_instance($instance);
 
+		
 		$field = array(
 		  'field_name' => 'field_yearact',
 		  'label' => $t('Year of Act'),
@@ -116,7 +118,7 @@
 			'entity_type' => 'node',             
 			'bundle'      => 'legislation_promulgated', 
 			'label'       => $t('Year of Act'),
-			'required'    => false,                    
+			'required'    => TRUE,                    
 			'widget'      => array(
 			  'type'     => 'text',              
 			),
@@ -137,7 +139,7 @@
 			'entity_type' => 'node',             
 			'bundle'      => 'legislation_promulgated', 
 			'label'       => $t('Number of Act'),
-			'required'    => false,                    
+			'required'    => TRUE,                    
 			'widget'      => array(
 			  'type'     => 'text',              
 			),
@@ -172,6 +174,38 @@
 			
 		);
 		field_create_instance($instance);
+
+
+		//Create Legislation date of promulgation field
+		$field = array(
+		  'field_name' => 'field_promulgation',
+		  'label' => $t('Date of promulgation'),
+		  'cardinality' => 1,
+		  'type' => 'date',
+		);
+		field_create_field($field);
+
+		$instance = array(
+			'field_name'  => 'field_promulgation',
+			'entity_type' => 'node',             
+			'bundle'      => 'legislation_promulgated', 
+			'label'       => $t('Date of promulgation'),
+			'required'    => true, 
+			'widget'      => array(
+			  'type' => 'date_popup',                     
+			  'settings' => array(
+				'display_label' => 1,             
+				'input_format' => 'j F Y',
+				'date_format' => 'd m Y',
+				'increment' => 1,
+				'year_range' => '-100:+0',                   
+			  ),
+			),
+			
+		);
+		field_create_instance($instance);
+
+
 
 		//Create Legislation date of assent field
 		$field = array(
@@ -314,6 +348,7 @@
 	  	);
 	  	field_create_field($field);
 
+	  	$cnt_code = strtolower(variable_get('site_default_country'));
 	  	$directory = $cnt_code."/legislation";
 	  	$instance = array(
 			'field_name'  => 'field_legdownload',
@@ -330,6 +365,56 @@
 		  	),
 		);
 	  	field_create_instance($instance);
+
+	  	// Create a default vocabulary named "Tags", enabled for the 'article' content type.
+		  $description = st('Use tags to group articles on similar topics into categories.');
+		  $vocabulary = (object) array(
+		    'name' => st('Tags'),
+		    'description' => $description,
+		    'machine_name' => 'type',
+		  );
+		  taxonomy_vocabulary_save($vocabulary);
+
+		  $field = array(
+		    'field_name' => 'field_' . $vocabulary->machine_name,
+		    'type' => 'taxonomy_term_reference',
+		    // Set cardinality to unlimited for tagging.
+		    'cardinality' => FIELD_CARDINALITY_UNLIMITED,
+		    'settings' => array(
+		      'allowed_values' => array(
+		        array(
+		          'vocabulary' => $vocabulary->machine_name,
+		          'parent' => 0,
+		        ),
+		      ),
+		    ),
+		  );
+		  field_create_field($field);
+
+		  $help = st('Enter a comma-separated list of words to describe your content.');
+		  $instance = array(
+		    'field_name' => 'field_' . $vocabulary->machine_name,
+		    'entity_type' => 'node',
+		    'label' => 'Type',
+		    'bundle' => 'legislation_promulgated',
+		    'description' => $help,
+		    'widget' => array(
+		      'type' => 'taxonomy_autocomplete',
+		      //'weight' => -4,
+		    ),
+		    'display' => array(
+		      'default' => array(
+		        'type' => 'taxonomy_term_reference_link',
+		        //'weight' => 10,
+		      ),
+		      'teaser' => array(
+		        'type' => 'taxonomy_term_reference_link',
+		        //'weight' => 10,
+		      ),
+		    ),
+		  );
+		  field_create_instance($instance);
+
 
 	}
 

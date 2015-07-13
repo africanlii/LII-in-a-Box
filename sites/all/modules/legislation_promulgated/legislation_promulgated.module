@@ -6,12 +6,12 @@
 
 		$items = array();
 		$items['legislation_promulgated'] = array(
-			'name' => t('Legislation as promulgated Content Type'),    // name of your content type
+			'name' => t('Legislation as promulgated'),    // name of your content type
 			'type' => 'legislation_promulgated',
 			'base' => 'node_content',
 			'description' => t('A content type to handle legislation as promulgated.'),
-			'has_title' => 0,
-			//'title_label' => t('Legislation Title'),
+			'has_title' => 1,
+			'title_label' => t('Short title'),
 			'body_label' => t('Legislation Description'),
 			//'help' => t('Please fill in all fields.'),
 			'custom' => TRUE,

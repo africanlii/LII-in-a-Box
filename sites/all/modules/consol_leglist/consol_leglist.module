@@ -1,0 +1,270 @@
+<?php
+/**
+ * Implements hook_menu()
+ * @return array
+ */
+function consol_leglist_menu() {
+ 
+  $aItems = array(
+      'consol_leglist' => array(
+        'title' => 'Consolidated Legislation',
+        'page callback' => '_page_consol_leglist',
+        //'access callback' => TRUE,
+        'access arguments' => array('access consol_leglist'),
+        'type' => MENU_NORMAL_ITEM,
+      ),
+    );
+  return $aItems;
+}
+ 
+/**
+ * Page callback mapped to the url /hello_world
+ *
+ * @return array
+ */
+function _page_consol_leglist() {
+  //return array(
+    //'#markup' => '<p>Consol Legislation</p>'
+  //);
+  $content = array();
+  $legname = $_GET['legname'];
+  $legtype = '';
+
+  if($legname == "Consolidated Legislation"){
+    $legtype = 'consolidated_legislation';
+ 
+    drupal_set_title($legname);
+    
+    $result = db_query("SELECT n.title FROM {node} n WHERE n.type = '$legtype' ");
+
+    $result2 = db_query("SELECT cdate.field_consoldate_value FROM {field_data_field_consoldate} cdate  WHERE cdate.bundle ='$legtype' ");  
+
+    //print_r($result);exit;
+    $date_ar = array();
+    $date_year = array();
+    foreach($result2 as $dt){
+
+      $date_ar[] = date('j F Y',strtotime($dt->field_consoldate_value)).'<br/>';
+
+      $year_val = date('Y',strtotime($dt->field_consoldate_value));
+      if(!in_array($year_val,$date_year))
+        $date_year[] = $year_val;
+    }
+    $num = $result->rowCount();
+
+    //echo $num;exit;
+    //query to extract the first letter of the judgment
+    $sqlresult = db_query("SELECT SUBSTRING(nd.title,1,1) AS letter,nd.title, cdate.field_consoldate_value FROM {node} nd INNER JOIN {field_data_field_consoldate} cdate ON 
+    nd.nid = cdate.entity_id WHERE cdate.bundle = '$legtype' ORDER BY nd.title ");
+    
+    $alpha = array();
+
+    foreach($sqlresult as $letters){
+      $alpha[$letters->letter] = $letters->title;
+    }
+
+
+    if($num > 0){
+        //echo "TEST";exit;   
+        $created = min($date_ar);
+            
+        $titles = '';
+        foreach ($result as $row) {
+          $titles .= $row->title.'<br />';
+        }
+
+        //$content['titles'] = $titles;
+        $lists = '<p>Database last updated: '. $created .'';
+        $lists .= 'Number of documents: '. $num .'<br/>';
+        $lists .= '</p>';
+        $lists .= 'Legislation beginning with:</p>';
+
+        
+        $word = '<p></p>';
+        foreach(range('A','Z') as $i) {
+          $word .= (array_key_exists ("$i", $alpha)) ? "<a href='consol_legbegin?letter=$i&legisname=$legtype'".">".$i."</a>" : "$i";
+          $word .= ($i != 'Z') ? ' | ':'';    
+        }
+
+        $years_cont = '<p></p><p>Legislation for the years:</p>';
+        sort($date_year);
+        $years_range = '<p></p>';
+        foreach($date_year as $year) {
+            $years_range .= "<a href='consol_leglistyear?legname=$legname&year=$year'>| $year </a> ";
+        }
+
+        $content['content'] = array(
+          '#type' => 'fieldset',
+          //'#description'=>t($lists.$word),
+          '#description'=>t($lists.$word.$years_cont.$years_range),
+        );
+    }
+    else{
+      $content['content'] = array(
+      '#type' => 'fieldset',
+      '#description'=>t("<strong>There are currently no legislations loaded</strong>"),
+      );
+    }
+    
+  }
+  //Checking Legislation promulgated
+  else if($legname == "Legislation as promulgated"){
+    $legtype = "legislation_promulgated";
+    
+    drupal_set_title($legname);
+    
+    $result = db_query("SELECT * FROM {node} WHERE type = '$legtype' ");
+
+    $result2 = db_query("SELECT cdate.field_yearact_value,p.field_promulgation_value FROM {field_data_field_yearact} cdate INNER JOIN {field_data_field_promulgation} p
+      ON p.entity_id = cdate.entity_id
+     AND cdate.bundle ='$legtype' ");  
+
+
+    $date_ar = array();
+    $date_year = array();
+    foreach($result2 as $dt){
+
+      $date_ar[] = date('j F Y',strtotime($dt->field_promulgation_value)).'<br/>';
+      //$yearval = date('Y',strtotime($dt->field_consoldate_value));
+      if(!in_array($dt->field_yearact_value,$date_year))
+        $date_year[] = $dt->field_yearact_value;
+    }
+    $num = $result->rowCount();
+
+    //echo $num;exit;
+    //query to extract the first letter of the judgment
+    $sqlresult = db_query("SELECT SUBSTRING(nd.title,1,1) AS letter,nd.title, cdate.field_promulgation_value FROM {node} nd INNER JOIN {field_data_field_promulgation} cdate ON 
+    nd.nid = cdate.entity_id WHERE cdate.bundle = '$legtype' ORDER BY nd.title ");
+    
+    $alpha = array();
+
+    foreach($sqlresult as $letters){
+      $alpha[$letters->letter] = $letters->title;
+    }
+
+
+    if($num > 0){
+        //echo "TEST";exit;   
+        $created = min($date_ar);
+            
+        $titles = '';
+        foreach ($result as $row) {
+          $titles .= $row->title.'<br />';
+        }
+
+        //$content['titles'] = $titles;
+        $lists = '<p>Database last updated: '. $created .'';
+        $lists .= 'Number of documents: '. $num .'<br/>';
+        $lists .= '</p>';
+        $lists .= 'Legislation beginning with:</p>';
+
+        
+        $word = '<p></p>';
+        foreach(range('A','Z') as $i) {
+          $word .= (array_key_exists ("$i", $alpha)) ? "<a href='consol_legbegin?letter=$i&legisname=$legtype'".">".$i."</a>" : "$i";
+          $word .= ($i != 'Z') ? ' | ':'';    
+        }
+
+        $years_cont = '<p></p><p>Legislation for the years:</p>';
+        sort($date_year);
+        $years_range = '<p></p>';
+        foreach($date_year as $year) {
+            $years_range .= "<a href='consol_leglistyear?legname=$legname&year=$year'>| $year </a> ";
+        }
+
+        $content['content'] = array(
+          '#type' => 'fieldset',
+          //'#description'=>t($lists.$word),
+          '#description'=>t($lists.$word.$years_cont.$years_range),
+        );
+    }
+    else{
+      $content['content'] = array(
+      '#type' => 'fieldset',
+      '#description'=>t("<strong>There are currently no legislations loaded</strong>"),
+      );
+    }
+   
+  }
+  //Checking Legislation promulgated
+  else if($legname == "Subordinate Legislation"){
+    $legtype = "subordinate_legislation";
+    
+    drupal_set_title($legname);
+    
+    $result = db_query("SELECT * FROM {node} WHERE type = '$legtype' ");
+
+    $result2 = db_query("SELECT pdate.field_subpromdate_value,y.field_sublegyear_value FROM {field_data_field_subpromdate} pdate
+    INNER JOIN {field_revision_field_sublegyear} y
+    ON y.entity_id = pdate.entity_id
+    AND pdate.bundle ='$legtype' ");  
+
+
+    $date_ar = array();
+    $date_year = array();
+    foreach($result2 as $dt){
+
+      $date_ar[] = date('j F Y',strtotime($dt->field_subpromdate_value)).'<br/>';
+      //$yearval = date('Y',strtotime($dt->field_consoldate_value));
+      if(!in_array($dt->field_sublegyear_value,$date_year))
+        $date_year[] = $dt->field_sublegyear_value;
+    }
+    $num = $result->rowCount();
+
+    //echo $num;exit;
+    //query to extract the first letter of the judgment
+    $sqlresult = db_query("SELECT SUBSTRING(nd.title,1,1) AS letter,nd.title, pdate.field_subpromdate_value FROM {node} nd INNER JOIN {field_data_field_subpromdate} pdate ON 
+    nd.nid = pdate.entity_id WHERE pdate.bundle = '$legtype' ORDER BY nd.title ");
+    
+    $alpha = array();
+
+    foreach($sqlresult as $letters){
+      $alpha[$letters->letter] = $letters->title;
+    }
+
+
+    if($num > 0){
+        //echo "TEST";exit;   
+        $created = min($date_ar);
+            
+        $titles = '';
+        foreach ($result as $row) {
+          $titles .= $row->title.'<br />';
+        }
+
+        //$content['titles'] = $titles;
+        $lists = '<p>Database last updated: '. $created .'';
+        $lists .= 'Number of documents: '. $num .'<br/>';
+        $lists .= '</p>';
+        $lists .= 'Legislation beginning with:</p>';
+
+        
+        $word = '<p></p>';
+        foreach(range('A','Z') as $i) {
+          $word .= (array_key_exists ("$i", $alpha)) ? "<a href='consol_legbegin?letter=$i&legisname=$legtype'".">".$i."</a>" : "$i";
+          $word .= ($i != 'Z') ? ' | ':'';    
+        }
+
+        $years_cont = '<p></p><p>Legislation for the years:</p>';
+        sort($date_year);
+        $years_range = '<p></p>';
+        foreach($date_year as $year) {
+            $years_range .= "<a href='consol_leglistyear?legname=$legname&year=$year'>| $year </a> ";
+        }
+
+        $content['content'] = array(
+          '#type' => 'fieldset',
+          //'#description'=>t($lists.$word),
+          '#description'=>t($lists.$word.$years_cont.$years_range),
+        );
+    }
+    else{
+      $content['content'] = array(
+      '#type' => 'fieldset',
+      '#description'=>t("<strong>There are currently no legislations loaded</strong>"),
+      );
+    }
+  }
+  return $content;
+}
+

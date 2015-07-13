@@ -8,12 +8,12 @@
 
     $items = array();
     $items['uploadfiles'] = array(
-      'name' => t('Page Title'),    // name of your content type
+      'name' => t('Bulk Upload Files'),    // name of your content type
       'type' => 'uploadfiles',
       'base' => 'node_content',
       'description' => t('A content type to handle bulk file uploads.'),
-      'has_title' => 1,
-      'title_label' => t('Upload Files'),
+      'has_title' => 0,
+      //'title_label' => t('Upload Files'),
       'body_label' => t('Upload Files'),
       //'help' => t('Please fill in all fields.'),
       'custom' => TRUE,

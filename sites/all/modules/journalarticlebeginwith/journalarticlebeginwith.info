@@ -1,0 +1,5 @@
+name = Journal Article beginning with
+description = A container that contains some lii-inabox code
+package = journalarticlebeginwith
+core = 7.x
+files[] = journalarticlebeginwith.module

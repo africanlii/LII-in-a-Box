@@ -1,0 +1,31 @@
+<?php
+
+  require_once('journaltitle_functions.inc');
+  /**
+  * Implements hook_node_info().
+  */
+  function journaltitle_node_info() {
+
+    $items = array();
+    $items['journaltitle'] = array(
+      'name' => t('Add Journal Title'),    // name of your content type
+      'type' => 'journaltitle',
+      'base' => 'node_content',
+      'description' => t('A content type to handle Journal Titles.'),
+      'has_title' => 1,
+      'title_label' => t('Journal Title'),
+      'body_label' => t('Journal Description'),
+      //'help' => t('Please fill in all fields.'),
+      'custom' => TRUE,
+    );
+    return $items;
+  }
+
+  function journaltitle_form($node, $form_state) {
+
+    return node_content_form($node, $form_state);
+  }
+  
+  
+?>
+

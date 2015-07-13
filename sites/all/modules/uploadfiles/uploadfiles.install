@@ -25,34 +25,35 @@
   
   //function will read the array from and create the fields and instances
   function add_custom_fields_uploadfiles() {
-  
-    $t = get_t();
-    
+        $t = get_t();    
 
-      $field = array(
-      'field_name' => 'field_uploadfile',
-      'label' => $t('Download'),
-      'cardinality' => -1,
-      'type' => 'file',      
-      );
-      field_create_field($field);
+        $field = array(
+          'field_name' => 'field_uploadfile',
+          'label' => $t('Download'),
+          'cardinality' => -1,
+          'type' => 'file',      
+        );
+        field_create_field($field);
 
-      $directory = $cnt_code."/uploaded-files";
-      $instance = array(
-      'field_name'  => 'field_uploadfile',
-      'entity_type' => 'node',             
-      'bundle'      => 'uploadfiles', 
-      'label'       => $t('Uploadfiles'),
-      'required'    => false,
-      'cardinality' => -1,
-      'type' => 'file',                       
-      'settings' => array(      
-        'file_directory' => $directory,
-        'file_extensions' => 'txt doc xls pdf ppt pps odt ods odp rtf',       
-        'max_filesize' => '10MB',           
+        $directory = $cnt_code."/uploaded-files";
+        $instance = array(
+          'field_name'  => 'field_uploadfile',
+          'entity_type' => 'node',             
+          'bundle'      => 'uploadfiles', 
+          'label'       => $t('Upload Files'),
+          'required'    => false,
+          'cardinality' => -1,
+          'type' => 'file_mfw',                       
+          'settings' => array(      
+            'file_directory' => $directory,
+            'file_extensions' => 'txt doc xls pdf ppt pps odt ods odp rtf',       
+            'max_filesize' => '10MB',           
         ),
+        'widget'  => array(        
+          'type' => 'file_mfw',
+        ),    
     );
-      field_create_instance($instance);
+    field_create_instance($instance);
 
 
 

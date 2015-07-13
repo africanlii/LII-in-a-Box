@@ -5,7 +5,7 @@
 			//un-require the title and hide it, we will auto title the content on submit
 			$form['title']['#required'] = FALSE;
 			$form['title']['#type'] = 'value';
-			$form['#submit'][] = 'legislation_promulgated_node_form_submit';
+			$form['#submit'][] = 'consolidated_legislation_node_form_submit';
 			 
 		} 
  	}
@@ -13,8 +13,10 @@
  	function consolidated_legislation_node_form_submit(&$form, &$form_state) {
  
 		//add in the current timestamp
-		$title = $form_state['input']['field_shorttitle']['und'][0]['value'];
+		//echo '<pre>';
+		//print_r($form_state['input']);exit;
+		$title = $form_state['input']['title'].','.$form_state['input']['field_chapterno']['und'][0]['value'];
 		 
 		//add the new title back to the form_state
-		//$form_state['values']['title'] = $title;
+		$form_state['values']['title'] = $title;
 }

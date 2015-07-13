@@ -95,12 +95,15 @@
 		}
 
 
-		//print_r($court_name_ar);exit;
-		//print($form_state['input']['field_issuingcourt_select']['und']);exit;
-
 		//echo '<pre>';
-		//print_r($form_state['field']['field_download']['und']['field']['settings']['uri_scheme']);exit;
+		//print_r($form_state['values']);exit;
+		
 
+		//print($form_state['input']['field_issuingcourt_select']['und']);exit;
+		//$court = $form_state['input']['field_issuingcourt_select']['und'];
+		//echo '<pre>';
+		//print_r($form_state['field']['field_download']['und']['instance']['settings']['file_directory']);exit;
+		//$form_state['field']['field_download']['und']['instance']['settings']['file_directory'] = $form_state['field']['field_download']['und']['instance']['settings']['file_directory'].'/'.$court;
 
 
 		//echo $jdate;exit;
@@ -108,24 +111,7 @@
 
 		$title = $form_state['input']['field_casename']['und'][0]['value'] .' ('.$form_state['input']['field_casenumber']['und'][0]['value'].')' .$form_state['values']['field_mnc']['und'][0]['value'] .' ('.$jdate.')';
 
-		//echo '<pre>';
-		//echo $form_state['input']['field_casename']['und'][0]['value'];
-		//exit;
-		//print_r($form_state['input']);exit;
 		
-		//an example of getting a node reference field if its not empty
-		// this only adds to the title if its not empty
-		/*if(!empty($form_state['values']['field_observation_preserve_ref'][LANGUAGE_NONE][0]['nid'])) {
-			$preserve = node_load($form_state['values']['field_observation_preserve_ref'][LANGUAGE_NONE][0]['nid']);
-			$title .= ' - '.$preserve->title;			
-		}*/		 
-		 
-
-		//$ct_name = str_replace(' ','-',$form_state['input']['field_issuingcourt_select']['und']);
-		//$form_state['field']['field_download']['und']['field']['settings']['uri_scheme'] = $country_code."/judgment/".$ct_name;
-
-		//add in the current timestamp
-		//$title .= ' - '.date('Y-m-d H:i', $form_state['values']['created']);
 		 
 		//add the new title back to the form_state
 		$form_state['values']['title'] = $title;

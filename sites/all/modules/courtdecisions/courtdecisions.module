@@ -9,7 +9,9 @@ function courtdecisions_menu() {
     'courtdecisions' => array(
       'title' => 'Court decisions',
       'page callback' => '_page_courtdecisions',
-      'access callback' => TRUE,
+      //'access callback' => TRUE,
+      'access arguments' => array('access courtdecisions'),
+      'type' => MENU_NORMAL_ITEM,
     ),
   );
   return $aItems;

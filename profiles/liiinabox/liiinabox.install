@@ -72,12 +72,26 @@ function liiinabox_install() {
   // Enable some standard blocks.
   $default_theme = variable_get('theme_default', 'bartlik');
   $admin_theme = 'seven';
-  theme_enable(array("creative"));
+  theme_enable(array("creative")); 
   //variable_set("theme_default", "creative");
+  
+  /*$default_theme = variable_get('theme_default', 'marinelli');
+  $admin_theme = 'seven';
+  variable_set("theme_default", "marinelli"); */
 
- 
+  /*$enable = array(
+    'theme_default' => 'bartlik',
+    'admin_theme' => 'seven',
+  );
+  theme_enable($enable);*/
 
+  //foreach ($enable as $var => $theme) {
+    //if (!is_numeric($var)) {
+     // variable_set($var, $theme);
+    //}
+  //}
 
+  
   $blocks = array(
     array(
       'module' => 'system',
@@ -218,7 +232,17 @@ function liiinabox_install() {
     'region' => 'sidebar_first',
     'pages' => '',
     'cache' => -1,
-    ),  
+    ), 
+    array(
+    'module' => 'listjournals',
+    'delta' => 'journal',
+    'theme' => $default_theme,
+    'status' => 1,
+    'weight' => 0,
+    'region' => 'sidebar_first',
+    'pages' => '',
+    'cache' => -1,
+    ), 
   );
   $query = db_insert('block')->fields(array('module', 'delta', 'theme', 'status', 'weight', 'region', 'pages', 'cache'));
   foreach ($blocks as $block) {

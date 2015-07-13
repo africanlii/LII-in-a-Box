@@ -2725,11 +2725,13 @@ function node_page_default() {
     //$count = db_query("SELECT * FROM {field_revision_field_courtname} WHERE bundle = :bundle",array(':bundle' => $bundle,))->rowCount();
 
     if(!module_exists('judgment')){   
-      $modules = array('judgment'); // Array of module names
+      $modules = array('judgment','consolidated_legislation','subordinate_legislation','legislation_promulgated','journal'); // Array of module names
       $enable_dependencies = TRUE;
       module_enable($modules, $enable_dependencies);
     }
+    
     //End of lii-in-a-box code
+    
 
     $default_links = array();
     if (_node_add_access()) {
@@ -2766,7 +2768,7 @@ function node_page_view($node) {
     //$count = db_query("SELECT * FROM {field_revision_field_courtname} WHERE bundle = :bundle",array(':bundle' => $bundle,))->rowCount();
 
     if(!module_exists('judgment')){   
-      $modules = array('judgment'); // Array of module names
+      $modules = array('judgment','consolidated_legislation','subordinate_legislation','legislation_promulgated','journal'); // Array of module names
       $enable_dependencies = TRUE;
       module_enable($modules, $enable_dependencies);
     }

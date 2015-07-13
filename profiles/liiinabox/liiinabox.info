@@ -45,6 +45,7 @@ dependencies[] = custom_search
 dependencies[] = dblog
 dependencies[] = data
 dependencies[] = date
+dependencies[] = date_tools
 dependencies[] = date_popup
 dependencies[] = db_maintenance
 dependencies[] = entity
@@ -78,6 +79,7 @@ dependencies[] = variable
 ;dependencies[] = views
 dependencies[] = libraries
 dependencies[] = xmlsitemap
+dependencies[] = multiupload_filefield_widget
 
 ;Custom
 dependencies[] = courtnamesadd
@@ -85,14 +87,24 @@ dependencies[] = courtbeginning
 dependencies[] = courtdecisions
 dependencies[] = courtnames
 ;dependencies[] = judgment
+;dependencies[] = legislation_promulgated
 ;dependencies[] = consolidated_legislation
-dependencies[] = legislation_promulgated
-dependencies[] = legislationtype
+;dependencies[] = legislationtype
 dependencies[] = listcourts
 dependencies[] = listlegislation
-dependencies[] = legisnames
+;dependencies[] = legisnames
 dependencies[] = uploadfiles
 dependencies[] = bulkuploadfiles
+dependencies[] = consol_leglist
+dependencies[] = consol_legbegin
+dependencies[] = consol_leglistyear
+;dependencies[] = journal
+dependencies[] = listjournals
+dependencies[] = journaltitle
+dependencies[] = journalarticlealphalisting
+dependencies[] = journalarticlebeginwith
+dependencies[] = journalarticleyearlisting
+;dependencies[] = itemhide
 
 
 libraries[ckeditor][download][type] = get

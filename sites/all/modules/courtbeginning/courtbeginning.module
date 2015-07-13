@@ -9,7 +9,9 @@ function courtbeginning_menu() {
       'courtbeginning' => array(
         'title' => 'Court beginning',
         'page callback' => '_page_courtbeginning',
-        'access callback' => TRUE,
+        //'access callback' => TRUE,
+        'access arguments' => array('access courtbeginning'),
+        'type' => MENU_NORMAL_ITEM,
       ),
     );
   return $aItems;

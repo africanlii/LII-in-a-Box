@@ -1,0 +1,28 @@
+<?php
+/**
+ * Implements hook_menu()
+ * @return array
+ */
+function enable_module_menu() {
+ 
+  $aItems = array(
+      'enable_module' => array(
+        'title' => 'Hello world',
+        'page callback' => '_page_enable_module',
+        'access callback' => '_allowAccess',
+      ),
+    );
+  return $aItems;
+}
+ 
+/**
+ * Page callback mapped to the url /hello_world
+ *
+ * @return array
+ */
+function _page_enable_module() {
+  $default_theme = variable_get('theme_default', 'professional_theme');
+  $admin_theme = 'seven';
+  variable_set("theme_default", "professional_theme");
+}
+

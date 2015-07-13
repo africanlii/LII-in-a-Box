@@ -12,7 +12,9 @@ function courtnames_menu() {
       'courtnames' => array(
         'title' => 'Court names',
         'page callback' => '_page_courtnames',
-        'access callback' => TRUE,
+        //'access callback' => TRUE,
+        'access arguments' => array('access courtnames'),
+        'type' => MENU_NORMAL_ITEM,
       ),
     );
   return $aItems;

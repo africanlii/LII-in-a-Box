@@ -7,9 +7,11 @@ function bulkuploadfiles_menu() {
  
   $aItems = array(
       'bulkuploadfiles' => array(
-        'title' => 'Bulk Uploaded Files',
+        'title' => 'Bulk Upload Files',
         'page callback' => '_page_bulkuploadfiles',
-        'access callback' => TRUE,
+        //'access callback' => TRUE,
+        'access arguments' => array('access bulkuploadfiles'),
+        'type' => MENU_NORMAL_ITEM,
       ),
     );
   return $aItems;

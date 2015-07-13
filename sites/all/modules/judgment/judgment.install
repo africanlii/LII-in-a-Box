@@ -5,8 +5,7 @@
 	 * @file
 	 * Install file for the Judgment Content Type module
 	 */
-	
-	
+		
 	
 	function judgment_install() {
 		node_types_rebuild();

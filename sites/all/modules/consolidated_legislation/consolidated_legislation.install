@@ -11,7 +11,7 @@
 		node_types_rebuild();
 		$types = node_type_get_types();	
 		
-		add_consollegislation_fields();
+		add_legconsol_fields();
 		
 		// add the body field to the node type
 		node_add_body_field($types['consolidated_legislation']);
@@ -37,7 +37,7 @@
 
 
 		$country_code = strtolower(variable_get('site_default_country'));		
-		variable_set('pathauto_node_consolidated_legislation_pattern', $country_code.'/legis/');
+		variable_set('pathauto_node_consolidated_legislation_pattern', $country_code.'/consolidated_legislation/[node:field_chapterno]');
 
 		//variable_set('auto_nodetitle_node_judgment_pattern','[node:field_casename]'.'('.'[node:field_casenumber]'.')');
 		
@@ -50,10 +50,10 @@
 
 
 	//function will read the array from and create the fields and instances
-	function add_consollegislation_fields() {
+	function add_legconsol_fields() {
 		$t = get_t();
-		$field = array(
-			'field_name' => 'field_titleact',
+		/*$field = array(
+			'field_name' => 'field_acttitle',
 			'label' => $t('Title of Act'),
 			'cardinality' => 1,
 			'type' => 'text',
@@ -61,28 +61,9 @@
 				'max_length' => 1000,
 			),
 		);
-		field_create_field($field);
+		field_create_field($field);*/
 		
-		$instance = array(
-			'field_name'  => 'field_titleact',
-			'entity_type' => 'node',             
-			'bundle'      => 'consolidated_legislation', 
-			'label'       => $t('Title of Act'),
-			'required'    => false,                       
-			'display'     => array(
-				'default' => array(
-					'type' => 'text',                       
-				),
-			),
-			'widget'      => array(
-				'type'     => 'text',              
-				'settings' => array(
-					'display_label' => 1,                     
-				),
-			),
-		);
-		field_create_instance($instance);
-
+		
 		$field = array(
 		  'field_name' => 'field_chapterno',
 		  'label' => $t('Chapter number'),
@@ -96,37 +77,38 @@
 			'entity_type' => 'node',             
 			'bundle'      => 'consolidated_legislation', 
 			'label'       => $t('Chapter number'),
-			'required'    => false,                    
+			'required'    => TRUE,                    
 			'widget'      => array(
 			  'type'     => 'text',              
 			),
 		);
 		field_create_instance($instance);
 
+		
 		$field = array(
-		  'field_name' => 'field_inforcecc',
-		  'label' => $t('In Force'),
+		  'field_name' => 'field_cinforce',
+		  'label' => $t('In-force'),
 		  'cardinality' => 1,
 		  'type' => 'text',      
 		);
 		field_create_field($field);
 
 		$instance = array(
-			'field_name'  => 'field_inforcecc',
+			'field_name'  => 'field_inforce',
 			'entity_type' => 'node',             
 			'bundle'      => 'consolidated_legislation', 
-			'label'       => $t('In Force'),
+			'label'       => $t('In-force'),
 			'required'    => false,                    
 			'widget'      => array(
 			  'type'     => 'text',              
 			),
 		);
 		field_create_instance($instance);
-
+		
 
 		//Create Legislation date of assent field
-		/*field = array(
-		  'field_name' => 'field_dateconsol',
+		$field = array(
+		  'field_name' => 'field_consoldate',
 		  'label' => $t('Date of consolidation'),
 		  'cardinality' => 1,
 		  'type' => 'date',
@@ -134,7 +116,7 @@
 		field_create_field($field);
 
 		$instance = array(
-			'field_name'  => 'field_dateconsol',
+			'field_name'  => 'field_consoldate',
 			'entity_type' => 'node',             
 			'bundle'      => 'consolidated_legislation', 
 			'label'       => $t('Date of consolidation'),
@@ -151,11 +133,11 @@
 			),
 			
 		);
-		field_create_instance($instance); */
+		field_create_instance($instance);
 
-
+		
 		$field = array(
-		  'field_name' => 'field_clrelatedsis',
+		  'field_name' => 'field_crelatedsis',
 		  'label' => $t('Link to Related Sis'),
 		  'cardinality' => 1,
 		  'type' => 'text',      
@@ -163,7 +145,7 @@
 		field_create_field($field);
 
 		$instance = array(
-			'field_name'  => 'field_clrelatedsis',
+			'field_name'  => 'field_crelatedsis',
 			'entity_type' => 'node',             
 			'bundle'      => 'consolidated_legislation', 
 			'label'       => $t('Link to Related Sis'),
@@ -176,7 +158,7 @@
 
 
 		$field = array(
-		  'field_name' => 'field_clrelatedcases',
+		  'field_name' => 'field_crelatedcases',
 		  'label' => $t('Link to Related Cases'),
 		  'cardinality' => 1,
 		  'type' => 'text',      
@@ -184,7 +166,7 @@
 		field_create_field($field);
 
 		$instance = array(
-			'field_name'  => 'field_clrelatedcases',
+			'field_name'  => 'field_crelatedcases',
 			'entity_type' => 'node',             
 			'bundle'      => 'consolidated_legislation', 
 			'label'       => $t('Link to Related Cases'),
@@ -196,7 +178,7 @@
 		field_create_instance($instance);
 
 		$field = array(
-		  'field_name' => 'field_clrelatedleg',
+		  'field_name' => 'field_crelatedleg',
 		  'label' => $t('Link to Related Legislation'),
 		  'cardinality' => 1,
 		  'type' => 'text',      
@@ -204,7 +186,7 @@
 		field_create_field($field);
 
 		$instance = array(
-			'field_name'  => 'field_clrelatedleg',
+			'field_name'  => 'field_crelatedleg',
 			'entity_type' => 'node',             
 			'bundle'      => 'consolidated_legislation', 
 			'label'       => $t('Link to Related Legislation'),
@@ -217,7 +199,7 @@
 		
 
 	    $field = array(
-		  'field_name' => 'field_cclegtaxonomy',
+		  'field_name' => 'field_clegtaxonomy',
 		  'label' => $t('Taxonomy'),
 		  'cardinality' => 1,
 		  'type' => 'text',      
@@ -225,7 +207,7 @@
 		field_create_field($field);
 
 		$instance = array(
-			'field_name'  => 'field_cclegtaxonomy',
+			'field_name'  => 'field_clegtaxonomy',
 			'entity_type' => 'node',             
 			'bundle'      => 'consolidated_legislation', 
 			'label'       => $t('Taxonomy'),
@@ -237,16 +219,17 @@
 		field_create_instance($instance);
 
 		$field = array(
-		  'field_name' => 'field_cclegdownload',
+		  'field_name' => 'field_clegdownload',
 		  'label' => $t('Download'),
 		  'cardinality' => -1,
 		  'type' => 'file',      
 	  	);
 	  	field_create_field($field);
 
-	  	$directory = $cnt_code."/legislation";
+	  	$cnt_code = strtolower(variable_get('site_default_country'));
+	  	$directory = $cnt_code."/leg-consol";
 	  	$instance = array(
-			'field_name'  => 'field_cclegdownload',
+			'field_name'  => 'field_clegdownload',
 			'entity_type' => 'node',             
 			'bundle'      => 'consolidated_legislation', 
 			'label'       => $t('Download of Original File'),
@@ -260,6 +243,9 @@
 		  	),
 		);
 	  	field_create_instance($instance);
+
+	  
+
 
 	}
 
