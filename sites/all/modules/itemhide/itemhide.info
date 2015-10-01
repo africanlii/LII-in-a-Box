@@ -1,0 +1,5 @@
+name = Hide Navigation from anonymus
+description = A container that contains some lii-inabox code
+package = itemhide
+core = 7.x
+files[] = itemhide.module

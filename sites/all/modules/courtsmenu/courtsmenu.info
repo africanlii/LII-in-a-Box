@@ -1,0 +1,5 @@
+name = Courts menu
+description = A module to display courts in a menu
+package = courtsmenu
+core = 7.x
+files[] = courtsmenu.module

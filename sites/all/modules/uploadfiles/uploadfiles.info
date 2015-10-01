@@ -1,0 +1,7 @@
+name = Upload Multiple files
+description = Files uploader module
+package = uploadfiles
+core = 7.x
+files[] = uploadfiles.install
+files[] = uploadfiles.module
+files[] = uploadfiles_functions.inc

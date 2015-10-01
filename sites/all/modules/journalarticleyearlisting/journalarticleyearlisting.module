@@ -1,0 +1,94 @@
+<?php
+/**
+ * Implements hook_menu()
+ * @return array
+ */
+function journalarticleyearlisting_menu() {
+ 
+  $aItems = array(
+      'journalarticleyearlisting' => array(
+        'title' => 'Journal Articles',
+        'page callback' => '_page_journalarticleyearlisting',
+        //'access callback' => TRUE,
+        'access arguments' => array('access journalarticleyearlisting'),
+        'type' => MENU_NORMAL_ITEM,
+      ),
+    );
+  return $aItems;
+}
+ 
+/**
+ * Page callback mapped to the url /hello_world
+ *
+ * @return array
+ */
+function _page_journalarticleyearlisting() {
+  //return array(
+    //'#markup' => '<p>Hello world</p>'
+  //);
+
+      $content = array();
+      $jname = '';
+      $year = '';
+      if(isset($_GET['journalname']) && isset($_GET['year'])){
+        $jname = $_GET['journalname'];
+        $year = $_GET['year'];
+      }
+      //echo $courtname;exit;
+      drupal_set_title($year.' '.$jname);
+     
+      $metadata = '<p><strong>type:</strong>Journals';
+      $metadata .= '<p><strong>database:</strong>'.$jname;
+      $metadata .= '<p><strong>year:</strong>'.$year;
+
+      $result = db_query("SELECT pdate.field_jpubdate_value,n.title,ualias.alias FROM {field_data_field_jpubdate} pdate     
+        INNER JOIN {field_data_field_journaltitle_select} jtitle
+        ON jtitle.entity_id = pdate.entity_id 
+        INNER JOIN {node} n 
+        ON n.nid = pdate.entity_id
+        AND n.type = 'journal'
+        INNER JOIN {url_alias} ualias
+        ON CONCAT('node/',n.nid) = ualias.source
+        WHERE jtitle.field_journaltitle_select_value LIKE '%$jname%' ORDER BY pdate.field_jpubdate_value, n.title ");
+
+      $date_month = array();
+      
+
+      $date_ar = array();  
+      $months = '<p></p>';
+      $titles = '<p><ul>';  
+      $prev_month = "";
+     
+      foreach($result as $res){
+        $yearjudg = date('Y',strtotime($res->field_jpubdate_value));    
+        $content_month = date('F Y',strtotime($res->field_jpubdate_value));
+        $monthjudg = date('F',strtotime($res->field_jpubdate_value));  
+        $alias = $res->alias;
+
+        if($yearjudg == $year){     
+          //if($prev_month != $content_month){
+            //$titles .= '<strong>'.$content_month.'</strong>'.'<br/>';
+          //}      
+          $titles .= '<li>'."<a href='$alias'>".$res->title.'</a></li>';
+          $prev_month = $content_month;
+        }            
+      }// End of for loop
+      
+      $titles .= '</ul></p>';
+      
+      $content['content'] = array(
+        '#type' => 'fieldset',
+        '#description'=>t($metadata.$months.$titles),
+      );
+      return $content;  
+}
+
+
+/*function _checkAccess1(){
+  global $user;
+  if ($user->uid) { // user is logged in
+    return TRUE;
+  } // Anonymous
+  return FALSE;
+}*/
+

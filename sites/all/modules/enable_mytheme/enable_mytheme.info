@@ -1,0 +1,5 @@
+name = Enable theme
+description = A container to enable a defined theme
+package = enable_mytheme
+core = 7.x
+files[] = enable_mytheme.module

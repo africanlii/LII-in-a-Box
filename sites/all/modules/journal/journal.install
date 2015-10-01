@@ -1,0 +1,297 @@
+<?php
+
+		/**
+	 * @file
+	 * Install file for the journal Content Type module
+	 */
+		
+	
+	function journal_install() {
+		node_types_rebuild();
+		$types = node_type_get_types();	
+		
+		add_custom_journalfields();
+		
+		// add the body field to the node type
+		node_add_body_field($types['journal']);
+		// load the instance definition for our content type's body
+		$body_instance = field_info_instance('node', 'body', 'journal');
+		// configure the body field
+		$body_instance['type'] = 'text_summary_or_trimmed';
+		$body_instance['label'] = 'Journal Description';
+		$body_instance['display'] = array(
+			'default' => array(
+				'label' => 'above', 
+				'type' => 'text_default',
+				//'weight' => 0,
+			),
+			'teaser' => array(
+				'label' => 'hidden', 
+				'type' => 'text_summary_or_trimmed',
+				//'weight' => 0,
+		),
+		);
+		$body_instance['widget']['weight'] = 0;
+		  
+
+
+		$country_code = strtolower(variable_get('site_default_country'));	
+		  //Setting URI structure for journal content type
+		  //variable_set('pathauto_node_journal_pattern', 'journal/[node:title]');
+		  //variable_set('pathauto_node_journal_pattern', '[node:field_countrycode]/journal/[node:field_issuingcourt]/[node:field-jdate:custom:Y]/[node:field_jno]');
+		variable_set('pathauto_node_journal_pattern', $country_code.'/journal/[node:field_jmnc]/[node:field_jpubdate:custom:Y/[node:title]');
+
+		//variable_set('auto_nodetitle_node_journal_pattern','[node:field_casename]'.'('.'[node:field_casenumber]'.')');
+		
+		  // Don't display date and author information for "journals" nodes by default.
+		variable_set('node_submitted_journal', FALSE);
+		variable_set('node_options_journal', array('status'));
+		variable_set('comment_journal', 'COMMENT_NODE_HIDDEN'); 
+		
+	}// End function install function
+
+
+	function add_custom_journalfields() {
+		$t = get_t();
+		$field = array(
+			'field_name' => 'field_jauthor',
+			'label' => $t('Author'),
+			'cardinality' => 1,
+			'type' => 'text',
+			'settings' => array(
+				'max_length' => 1000,
+			),
+		);
+		field_create_field($field);
+		
+		$instance = array(
+			'field_name'  => 'field_jauthor',
+			'entity_type' => 'node',             
+			'bundle'      => 'journal', 
+			'label'       => $t('Author'),
+			'required'    => false,                       
+			'display'     => array(
+				'default' => array(
+					'type' => 'text',                       
+				),
+			),
+			'widget'      => array(
+				'type'     => 'text',              
+				'settings' => array(
+					'display_label' => 1,                     
+				),
+			),
+		);
+		field_create_instance($instance);
+
+		$field = array(
+			'field_name' => 'field_journaltitle_select',
+			'label' => t('Select Journal title from the list'),
+			'type' => 'list_text',
+			'cardinality' => '1', // change this to -1 to enable ctrl+select
+			'foreign keys' => array(),
+			'indexes' => array(
+			  'value' => array(
+				0 => 'value',
+			  ),
+			),
+			'module' => 'list',
+			'settings' => array(
+			  'allowed_values_function' => '_journaltitles_options_list',
+			),
+		);	
+		field_create_field($field);
+
+
+		$help = $t('Select the court for this judgment');
+		$instance = array(
+				'field_name' => 'field_journaltitle_select',
+				'label' => t('Journal Title'),
+				'entity_type' => 'node',             
+				'bundle'      => 'journal',
+				'description' => t('Select Journal title.'),
+				'default_value' => NULL,	// add a default value here that matches your key => index values
+				'display' => array(
+				  'default' => array(
+					'label' => 'above',
+					'module' => 'list',
+					'settings' => array(),
+					'type' => 'list_default',
+				  ),
+				  'teaser' => array(
+					'label' => 'above',
+					'settings' => array(),
+					'type' => 'hidden',
+					'weight' => 3,
+				  ),
+				),
+				'required' => 1,
+				'settings' => array(
+				  'user_register_form' => FALSE,
+				),
+				'widget' => array(
+				  'active' => 1,
+				  'module' => 'options',
+				  'settings' => array(),
+				  'type' => 'options_select',
+				  
+				),
+		);
+		field_create_instance($instance); 
+
+
+		
+		//Create Case number field
+	  	$field = array(
+		  'field_name' => 'field_jcitation',
+		  'label' => $t('Journal Citation'),
+		  'cardinality' => 1,
+		  'type' => 'text',
+		  'settings' => array(
+			'max_length' => 1000,
+		  ),
+	  	);
+	  	field_create_field($field);
+
+		$instance = array(
+			  'field_name'  => 'field_jcitation',
+			  'entity_type' => 'node',             
+			  'bundle'      => 'journal', 
+			  'label'       => $t('Journal Citation'),
+			  'required'    => false,                       
+			  'display'     => array(
+				'default' => array(
+				  'type' => 'text',                       
+				),
+			  ),
+			  'widget'      => array(
+				'type'     => 'text',              
+				'settings' => array(
+				  'display_label' => 1,                     
+				),
+			  ),
+		);
+		field_create_instance($instance);
+	 
+
+	
+	 
+			//Create Media Neutral Citation field
+		$field = array(
+			'field_name' => 'field_jmnc',
+			'label' => $t('Media Neutral Citation'),
+			'cardinality' => 1,
+			'type' => 'text',
+			'settings' => array(
+			'max_length' => 1000,
+			),
+		);
+		field_create_field($field);
+
+		$instance = array(
+			'field_name'  => 'field_jmnc',
+			'entity_type' => 'node',             
+			'bundle'      => 'journal', 
+			'label'       => $t('Media Neutral Citation'),
+			'required'    => false,                       
+			'display'     => array(
+				'default' => array(
+			  		'type' => 'text',                       
+				),
+			),
+			'widget'      => array(
+				'type'     => 'text',              
+				'settings' => array(
+					'display_label' => 1,                     
+				),
+			),
+		);
+		field_create_instance($instance);
+
+
+		//Create journal date field
+		$field = array(
+		  'field_name' => 'field_jnpubdate',
+		  'label' => $t('Publication Date'),
+		  'cardinality' => 1,
+		  'type' => 'date',
+		);
+		field_create_field($field);
+
+		$instance = array(
+			'field_name'  => 'field_jnpubdate',
+			'entity_type' => 'node',             
+			'bundle'      => 'journal', 
+			'label'       => $t('Publication Date'),
+			'required'    => true, 
+			'widget'      => array(
+			  'type' => 'date_popup',                     
+			  'settings' => array(
+				'display_label' => 1,             
+				'input_format' => 'j F Y',
+				'date_format' => 'd m Y',
+				'increment' => 1,
+				'year_range' => '-100:+0',                   
+			  ),
+			),			
+		);
+		field_create_instance($instance);
+	  
+
+	
+	  	$cnt_code = strtolower(variable_get('site_default_country'));
+	   	//Create Download field
+	  	$field = array(
+		  'field_name' => 'field_journaldownload',
+		  'label' => $t('Download'),
+		  'cardinality' => -1,
+		  'type' => 'file',   
+	  	);
+	  	field_create_field($field);
+
+	  	$directory = $cnt_code."/journals";
+	  	$instance = array(
+			'field_name'  => 'field_journaldownload',
+			'entity_type' => 'node',             
+			'bundle'      => 'journal', 
+			'label'       => $t('Download'),
+			'required'    => false,
+			'cardinality' => -1,
+			'type' => 'file',                       
+			'settings' => array(      
+			  'file_directory' => $directory,
+			  'file_extensions' => 'txt doc xls pdf ppt pps odt ods odp rtf',       
+			  'max_filesize' => '10MB',           
+		  	),
+		);
+	  	field_create_instance($instance);		
+	}
+
+		
+	function journal_uninstall() {
+		// gather all the content while the module was enabled
+		$sql = 'SELECT nid FROM {node} n WHERE n.type = :type';
+		$result = db_query($sql, array(':type' => 'journal'));
+		$nids = array();
+		foreach ($result as $row) {
+			$nids[] = $row->nid;
+		}
+		  
+		// delete all the nodes at once
+		node_delete_multiple($nids);
+		  
+		// delete any remaining field instances attached to this content type
+		$instances = field_info_instances('node', 'journal');
+		foreach ($instances as $instance_name => $instance) {
+			field_delete_instance($instance);
+		}
+		  
+		// delete our content type
+		node_type_delete('journal');
+		  
+		// purge all field information
+		field_purge_batch(1000);
+	}
+
+
+?>

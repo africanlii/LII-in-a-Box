@@ -1,0 +1,95 @@
+<?php
+    
+  /**
+   * @file
+   * Install file for the Judgment Content Type module
+   */
+  
+  function uploadfiles_install() {
+    node_types_rebuild();
+    $types = node_type_get_types(); 
+    
+    add_custom_fields_uploadfiles();
+  
+    $country_code = strtolower(variable_get('site_default_country')); 
+    
+    variable_set('pathauto_node_uploadfiles_pattern', 'uploadfiles');
+
+      // Don't display date and author information for "Judgments" nodes by default.
+    variable_set('node_submitted_uploadfiles', FALSE);
+    variable_set('node_options_uploadfiles', array('status'));
+    variable_set('comment_uploadfiles', 'COMMENT_NODE_HIDDEN'); 
+    
+  }// End function install function
+
+  
+  //function will read the array from and create the fields and instances
+  function add_custom_fields_uploadfiles() {
+        $t = get_t();    
+
+        $field = array(
+          'field_name' => 'field_uploadfile',
+          'label' => $t('Download'),
+          'cardinality' => -1,
+          'type' => 'file',      
+        );
+        field_create_field($field);
+
+        $directory = $cnt_code."/uploaded-files";
+        $instance = array(
+          'field_name'  => 'field_uploadfile',
+          'entity_type' => 'node',             
+          'bundle'      => 'uploadfiles', 
+          'label'       => $t('Upload Files'),
+          'required'    => false,
+          'cardinality' => -1,
+          'type' => 'file_mfw',                       
+          'settings' => array(      
+            'file_directory' => $directory,
+            'file_extensions' => 'txt doc xls pdf ppt pps odt ods odp rtf',       
+            'max_filesize' => '10MB',           
+        ),
+        'widget'  => array(        
+          'type' => 'file_mfw',
+        ),    
+    );
+    field_create_instance($instance);
+
+
+
+      variable_set('pathauto_node_uploadfiles_pattern', '[node:field_courtnameadd]');
+
+      variable_set('node_submitted_uploadfiles', FALSE);
+      variable_set('node_options_uploadfiles', array('status'));
+      variable_set('comment_uploadfiles', 'COMMENT_NODE_HIDDEN'); 
+  
+  }
+
+    
+  function uploadfiles_uninstall() {
+    // gather all the content while the module was enabled
+    $sql = 'SELECT nid FROM {node} n WHERE n.type = :type';
+    $result = db_query($sql, array(':type' => 'uploadfiles'));
+    $nids = array();
+    foreach ($result as $row) {
+      $nids[] = $row->nid;
+    }
+      
+    // delete all the nodes at once
+    node_delete_multiple($nids);
+      
+    // delete any remaining field instances attached to this content type
+    $instances = field_info_instances('node', 'uploadfiles');
+    foreach ($instances as $instance_name => $instance) {
+      field_delete_instance($instance);
+    }
+      
+    // delete our content type
+    node_type_delete('uploadfiles');
+      
+    // purge all field information
+    field_purge_batch(1000);
+  }
+?>
+
+

@@ -1,0 +1,4 @@
+name = Court beginning with
+description = A container that lists court decisions begging with
+core = 7.x
+files[] = courtbeginning.module

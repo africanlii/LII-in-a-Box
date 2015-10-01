@@ -1,0 +1,24 @@
+<?php
+
+	function gazette_node_info() {
+
+		$items = array();
+		$items['gazette'] = array(
+			'name' => t('Government Gazette Content Type'),    // name of your content type
+			'type' => 'gazette',
+			'base' => 'node_content',
+			'description' => t('A content type to handle government gazette.'),
+			'has_title' => 1,
+			'title_label' => t('Title'),
+			'body_label' => t('Gazette Description'),
+			//'help' => t('Please fill in all fields.'),
+			'custom' => TRUE,
+		);
+		return $items;
+	}
+
+	function gazette_form($node, $form_state) {
+	
+		return node_content_form($node, $form_state);
+	}
+?>

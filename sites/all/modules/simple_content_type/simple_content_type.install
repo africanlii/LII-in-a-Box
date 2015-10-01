@@ -1,0 +1,72 @@
+<?php
+
+/**
+ * @file
+ * Install file for the Simple Content Type module
+ */
+require_once('simple_content_type_functions.inc');
+/**
+ * Implements hook_install().
+ * - Add a title
+ * - Add a select list
+ */
+function simple_content_type_install() {
+  // create the simple content type
+  node_types_rebuild();
+  $types = node_type_get_types();
+  
+  // create all the fields we are adding to our content type
+  foreach (_simple_content_type_installed_fields() as $field) {
+    field_create_field($field);
+  }
+  
+  // create all the instance for our fields
+  foreach (_simple_content_type_installed_instances() as $instance) {
+    $instance['entity_type'] = 'node';
+    $instance['bundle'] = 'simple_content_type';
+    field_create_instance($instance);
+  }
+  
+  // disable comments for this content type
+  variable_set('comment_simple_content_type', COMMENT_NODE_CLOSED);
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function simple_content_type_uninstall() {
+  // gather all the content while the module was enabled
+  $result = db_select('node', 'n')
+    ->fields('n', array('nid'))
+    ->condition("n.type", 'simple_content_type')
+    ->execute();
+  
+  $nids = array();
+  foreach ($result as $row) {
+    $nids[] = $row->nid;
+  }
+  
+  // delete all the nodes at once
+  node_delete_multiple($nids);
+
+  // delete all the fields defined by this module
+  foreach (array_keys(_simple_content_type_installed_fields()) as $field) {
+    field_delete_field($field);
+  }
+
+  // delete any remaining field instances attached to this content type
+  $instances = field_info_instances('node', 'simple_content_type');
+  foreach ($instances as $instance_name => $instance) {
+    field_delete_instance($instance);
+  }
+  
+  // delete our content type
+  node_type_delete('simple_content_type');
+  
+  // purge all field information
+  field_purge_batch(1000);
+  
+  // delete any variables we set
+  variable_del('comment_simple_content_type');
+}
+

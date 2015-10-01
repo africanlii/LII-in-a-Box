@@ -1,0 +1,31 @@
+<?php
+
+  require_once('courtnamesadd_functions.inc');
+  /**
+  * Implements hook_node_info().
+  */
+  function courtnamesadd_node_info() {
+
+    $items = array();
+    $items['courtnamesadd'] = array(
+      'name' => t('Add Courtnames'),    // name of your content type
+      'type' => 'courtnamesadd',
+      'base' => 'node_content',
+      'description' => t('A content type to handle courtnames.'),
+      'has_title' => 1,
+      'title_label' => t('Court Name'),
+      'body_label' => t('Court Description'),
+      //'help' => t('Please fill in all fields.'),
+      'custom' => TRUE,
+    );
+    return $items;
+  }
+
+  function courtnamesadd_form($node, $form_state) {
+
+    return node_content_form($node, $form_state);
+  }
+  
+  
+?>
+

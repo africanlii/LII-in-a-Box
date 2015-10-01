@@ -1,0 +1,30 @@
+<?php
+
+  require_once('legislationtype_functions.inc');
+  /**
+  * Implements hook_node_info().
+  */
+  function legislationtype_node_info() {
+
+    $items = array();
+    $items['legislationtype'] = array(
+      'name' => t('Add Title of Legislation Type'),    // name of your content type
+      'type' => 'legislationtype',
+      'base' => 'node_content',
+      'description' => t('A content type to handle types of legislation.'),
+      'has_title' => 1,
+      'title_label' => t('Legislation Title'),
+      'body_label' => t('Legislation content'),
+      'custom' => TRUE,
+    );
+    return $items;
+  }
+
+  function legislationtype_form($node, $form_state) {
+
+    return node_content_form($node, $form_state);
+  }
+  
+  
+?>
+

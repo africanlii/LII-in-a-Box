@@ -1,0 +1,81 @@
+<?php
+/**
+ * Implements hook_menu()
+ * @return array
+ */
+function datafetcher_menu() {
+ 
+  $aItems = array(
+      'datafetcher' => array(
+        'title' => 'Data Fetcher',
+        'page callback' => '_page_datafetcher',
+        'access callback' => TRUE,
+        'access arguments' => array('access datafetcher'),
+        'type' => MENU_NORMAL_ITEM,
+      ),
+    );
+  return $aItems;
+}
+ 
+/**
+ * Page callback mapped to the url /hello_world
+ *
+ * @return array
+ */
+function _page_datafetcher() {
+  //return array(
+    //'#markup' => '<p>Hello world</p>'
+  //);
+
+
+  $url = "https://indigo.code4sa.org/api/documents"; 
+  
+  //$url = "http://www.saflii.org/cgi-bin/get_meta_data789";
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_HEADER, array('Content-type: application/json'));
+  //curl_setopt($ch, CURLOPT_HEADER, array('Content-type: text/html\n\n'));
+  curl_setopt($ch, CURLOPT_HEADER, false);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  //curl_setopt($ch, CURLOPT_POST, 1);
+  //curl_setopt($ch, CURLOPT_POSTFIELDS, $client_id);
+  //curl_setopt($ch, CURLOPT_GET, true);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+  $output = curl_exec($ch);
+  $json_array = json_decode($output, true);
+
+  //echo '<pre>';
+  //print_r($json_array);die();//curl_error($ch));
+  //drupal_set_title("");
+  $country_code = strtolower(variable_get('site_default_country'));
+  //echo $country_code;
+  $data = '';
+  for($i=0;$i<count($json_array);$i++){
+    $uri =$json_array['results'][$i]['published_url'].".html";
+    $frbr_uri = $json_array['results'][$i]['frbr_uri'];
+
+  if(isset($json_array['results'][$i]['published_url']) && $country_code ==$json_array['results'][$i]['country']){
+      $data .= "<ul>";
+      $data .= "<li>";
+      $data .= "<a href='/legislation_display?frbr_uri=$frbr_uri'>".$json_array['results'][$i]['title']."</a><br/>";
+    
+      $data .= "</li>";
+      $data .= "</ul>";
+    }
+  }
+
+
+  $content['content'] = array(
+        '#type' => 'fieldset',
+        '#description'=>t($data),
+      );
+  return $content; 
+
+  //return array(
+    //'#markup' => '<p>Hello world</p>'
+  //);
+
+
+ 
+}
+
