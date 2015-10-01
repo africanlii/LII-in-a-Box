@@ -53,11 +53,14 @@ function theme_test_menu() {
     'access callback' => TRUE,
     'type' => MENU_CALLBACK,
   );
+<<<<<<< HEAD
   $items['theme-test/drupal-add-region-content'] = array(
     'page callback' => '_theme_test_drupal_add_region_content',
     'access callback' => TRUE,
     'type' => MENU_CALLBACK,
   );
+=======
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
   return $items;
 }
 
@@ -132,6 +135,7 @@ function _theme_test_suggestion() {
 }
 
 /**
+<<<<<<< HEAD
  * Page callback, calls drupal_add_region_content.
  */
 function _theme_test_drupal_add_region_content() {
@@ -140,6 +144,8 @@ function _theme_test_drupal_add_region_content() {
 }
 
 /**
+=======
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
  * Theme function for testing theme('theme_test_foo').
  */
 function theme_theme_test_foo($variables) {

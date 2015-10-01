@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿/* Esperanto initialisation for the jQuery UI date picker plugin. */
 /* Written by Olivier M. (olivierweb@ifrance.com). */
 jQuery(function($){
@@ -17,3 +18,24 @@ jQuery(function($){
 		isRTL: false};
 	$.datepicker.setDefaults($.datepicker.regional['eo']);
 });
+=======
+﻿/* Esperanto initialisation for the jQuery UI date picker plugin. */
+/* Written by Olivier M. (olivierweb@ifrance.com). */
+jQuery(function($){
+	$.datepicker.regional['eo'] = {
+		closeText: 'Fermi',
+		prevText: '&lt;Anta',
+		nextText: 'Sekv&gt;',
+		currentText: 'Nuna',
+		monthNames: ['Januaro','Februaro','Marto','Aprilo','Majo','Junio',
+		'Julio','Aŭgusto','Septembro','Oktobro','Novembro','Decembro'],
+		monthNamesShort: ['Jan','Feb','Mar','Apr','Maj','Jun',
+		'Jul','Aŭg','Sep','Okt','Nov','Dec'],
+		dayNames: ['Dimanĉo','Lundo','Mardo','Merkredo','Ĵaŭdo','Vendredo','Sabato'],
+		dayNamesShort: ['Dim','Lun','Mar','Mer','Ĵaŭ','Ven','Sab'],
+		dayNamesMin: ['Di','Lu','Ma','Me','Ĵa','Ve','Sa'],
+		dateFormat: 'dd/mm/yy', firstDay: 0,
+		isRTL: false};
+	$.datepicker.setDefaults($.datepicker.regional['eo']);
+});
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43

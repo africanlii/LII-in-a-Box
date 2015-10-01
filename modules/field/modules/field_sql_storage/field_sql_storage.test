@@ -355,14 +355,22 @@ class FieldSqlStorageTestCase extends DrupalWebTestCase {
     field_attach_insert('test_entity', $entity);
 
     // Add an index
+<<<<<<< HEAD
     $field = array('field_name' => $field_name, 'indexes' => array('value' => array(array('value', 255))));
+=======
+    $field = array('field_name' => $field_name, 'indexes' => array('value' => array('value')));
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
     field_update_field($field);
     foreach ($tables as $table) {
       $this->assertTrue(Database::getConnection()->schema()->indexExists($table, "{$field_name}_value"), format_string("Index on value created in %table", array('%table' => $table)));
     }
 
     // Add a different index, removing the existing custom one.
+<<<<<<< HEAD
     $field = array('field_name' => $field_name, 'indexes' => array('value_format' => array(array('value', 127), array('format', 127))));
+=======
+    $field = array('field_name' => $field_name, 'indexes' => array('value_format' => array('value', 'format')));
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
     field_update_field($field);
     foreach ($tables as $table) {
       $this->assertTrue(Database::getConnection()->schema()->indexExists($table, "{$field_name}_value_format"), format_string("Index on value_format created in %table", array('%table' => $table)));

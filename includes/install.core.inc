@@ -362,8 +362,12 @@ function install_run_tasks(&$install_state) {
  * Runs an individual installation task.
  *
  * @param $task
+<<<<<<< HEAD
  *   An array of information about the task to be run as returned by
  *   hook_install_tasks().
+=======
+ *   An array of information about the task to be run.
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
  * @param $install_state
  *   An array of information about the current installation state. This is
  *   passed in by reference so that it can be modified by the task.
@@ -479,15 +483,22 @@ function install_run_task($task, &$install_state) {
  * the page request evolves (for example, if an installation profile hasn't
  * been selected yet, we don't yet know which profile tasks need to be run).
  *
+<<<<<<< HEAD
  * You can override this using hook_install_tasks() or
  * hook_install_tasks_alter().
  *
+=======
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
  * @param $install_state
  *   An array of information about the current installation state.
  *
  * @return
+<<<<<<< HEAD
  *   A list of tasks to be performed, with associated metadata as returned by
  *   hook_install_tasks().
+=======
+ *   A list of tasks to be performed, with associated metadata.
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
  */
 function install_tasks_to_perform($install_state) {
   // Start with a list of all currently available tasks.
@@ -1558,6 +1569,7 @@ function install_import_locales_remaining(&$install_state) {
  *   A message informing the user that the installation is complete.
  */
 function install_finished(&$install_state) {
+<<<<<<< HEAD
 
   //$url_ct = l(t('TO COMPLETE ENTER THE COURT NAMES'), 'overlay=node/add/courtnames'); 
 
@@ -1568,6 +1580,12 @@ function install_finished(&$install_state) {
   $output .= '<p>' . (isset($messages['error']) ? st('Review the messages above before visiting <a href="@url">your new site</a>.', array('@url' => url(''))) : st('<a href="@url">TO COMPLETE ENTER THE COURT NAMES</a>.', array('@url' => url('node/add/courtnamesadd')))) . '</p>';
 
  // $output .= '<p>'.$url_ct.'</p>';
+=======
+  drupal_set_title(st('@drupal installation complete', array('@drupal' => drupal_install_profile_distribution_name())), PASS_THROUGH);
+  $messages = drupal_set_message();
+  $output = '<p>' . st('Congratulations, you installed @drupal!', array('@drupal' => drupal_install_profile_distribution_name())) . '</p>';
+  $output .= '<p>' . (isset($messages['error']) ? st('Review the messages above before visiting <a href="@url">your new site</a>.', array('@url' => url(''))) : st('<a href="@url">Visit your new site</a>.', array('@url' => url('')))) . '</p>';
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
 
   // Flush all caches to ensure that any full bootstraps during the installer
   // do not leave stale cached data, and that any content types or other items
@@ -1817,7 +1835,10 @@ function _install_configure_form($form, &$form_state, &$install_state) {
     '#default_value' => variable_get('site_default_country', NULL),
     '#options' => $countries,
     '#description' => st('Select the default country for the site.'),
+<<<<<<< HEAD
     '#required' => TRUE,
+=======
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
     '#weight' => 0,
   );
 

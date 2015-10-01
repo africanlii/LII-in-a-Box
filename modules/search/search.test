@@ -2049,6 +2049,7 @@ class SearchNodeAccessTest extends DrupalWebTestCase {
 }
 
 /**
+<<<<<<< HEAD
  * Tests node search with query tags.
  */
 class SearchNodeTagTest extends DrupalWebTestCase {
@@ -2090,6 +2091,8 @@ class SearchNodeTagTest extends DrupalWebTestCase {
 }
 
 /**
+=======
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
  * Tests searching with locale values set.
  */
 class SearchSetLocaleTest extends DrupalWebTestCase {

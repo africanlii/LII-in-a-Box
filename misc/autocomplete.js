@@ -114,7 +114,10 @@ Drupal.jsAC.prototype.onkeyup = function (input, e) {
  */
 Drupal.jsAC.prototype.select = function (node) {
   this.input.value = $(node).data('autocompleteValue');
+<<<<<<< HEAD
   $(this.input).trigger('autocompleteSelect', [node]);
+=======
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
 };
 
 /**
@@ -168,7 +171,11 @@ Drupal.jsAC.prototype.unhighlight = function (node) {
 Drupal.jsAC.prototype.hidePopup = function (keycode) {
   // Select item if the right key or mousebutton was pressed.
   if (this.selected && ((keycode && keycode != 46 && keycode != 8 && keycode != 27) || !keycode)) {
+<<<<<<< HEAD
     this.select(this.selected);
+=======
+    this.input.value = $(this.selected).data('autocompleteValue');
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
   }
   // Hide popup.
   var popup = this.popup;
@@ -221,7 +228,11 @@ Drupal.jsAC.prototype.found = function (matches) {
   for (key in matches) {
     $('<li></li>')
       .html($('<div></div>').html(matches[key]))
+<<<<<<< HEAD
       .mousedown(function () { ac.hidePopup(this); })
+=======
+      .mousedown(function () { ac.select(this); })
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
       .mouseover(function () { ac.highlight(this); })
       .mouseout(function () { ac.unhighlight(this); })
       .data('autocompleteValue', key)

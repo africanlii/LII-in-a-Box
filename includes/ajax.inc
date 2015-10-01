@@ -211,7 +211,11 @@
  *
  * When returning an Ajax command array, it is often useful to have
  * status messages rendered along with other tasks in the command array.
+<<<<<<< HEAD
  * In that case the Ajax commands array may be constructed like this:
+=======
+ * In that case the the Ajax commands array may be constructed like this:
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
  * @code
  *   $commands = array();
  *   $commands[] = ajax_command_replace(NULL, $output);

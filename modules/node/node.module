@@ -506,8 +506,12 @@ function node_type_load($name) {
  *   - custom: TRUE or FALSE indicating whether this type is defined by a module
  *     (FALSE) or by a user (TRUE) via Add Content Type.
  *   - modified: TRUE or FALSE indicating whether this type has been modified by
+<<<<<<< HEAD
  *     an administrator. When modifying an existing node type, set to TRUE, or
  *     the change will be ignored on node_types_rebuild().
+=======
+ *     an administrator. Currently not used in any way.
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
  *   - locked: TRUE or FALSE indicating whether the administrator can change the
  *     machine name of this type.
  *   - disabled: TRUE or FALSE indicating whether this type has been disabled.
@@ -1581,7 +1585,13 @@ function node_permission() {
     ),
     'access content overview' => array(
       'title' => t('Access the content overview page'),
+<<<<<<< HEAD
       'description' => t('Get an overview of <a href="@url">all content</a>.', array('@url' => url('admin/content'))),
+=======
+      'description' => user_access('access content overview')
+        ? t('Get an overview of <a href="@url">all content</a>.', array('@url' => url('admin/content')))
+        : t('Get an overview of all content.'),
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
     ),
     'access content' => array(
       'title' => t('View published content'),
@@ -1609,7 +1619,11 @@ function node_permission() {
 }
 
 /**
+<<<<<<< HEAD
  * Gathers the rankings from the hook_ranking() implementations.
+=======
+ * Gathers the rankings from the the hook_ranking() implementations.
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
  *
  * @param $query
  *   A query object that has been extended with the Search DB Extender.
@@ -2720,6 +2734,7 @@ function node_page_default() {
 
     $default_message = '<p>' . t('No front page content has been created yet.') . '</p>';
 
+<<<<<<< HEAD
     //lii-in-a-box code to enable judgment module
     //$bundle = 'courtnamesadd';  
     //$count = db_query("SELECT * FROM {field_revision_field_courtname} WHERE bundle = :bundle",array(':bundle' => $bundle,))->rowCount();
@@ -2733,6 +2748,8 @@ function node_page_default() {
     //End of lii-in-a-box code
     
 
+=======
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
     $default_links = array();
     if (_node_add_access()) {
       $default_links[] = l(t('Add new content'), 'node/add');
@@ -2762,6 +2779,7 @@ function node_page_default() {
  * @see node_menu()
  */
 function node_page_view($node) {
+<<<<<<< HEAD
 
   //lii-in-a-box code to enable judgment module
     //$bundle = 'courtnames';  
@@ -2774,11 +2792,16 @@ function node_page_view($node) {
     }
     //End of lii-in-a-box code
   
+=======
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
   // If there is a menu link to this node, the link becomes the last part
   // of the active trail, and the link name becomes the page title.
   // Thus, we must explicitly set the page title to be the node title.
   drupal_set_title($node->title);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
   $uri = entity_uri('node', $node);
   // Set the node path as the canonical URL to prevent duplicate content.
   drupal_add_html_head_link(array('rel' => 'canonical', 'href' => url($uri['path'], $uri['options'])), TRUE);
@@ -3783,6 +3806,7 @@ function node_content_form($node, $form_state) {
     );
   }
 
+<<<<<<< HEAD
   /*if($node->type == 'judgment'){
       //echo '<pre>';
       //print_r($node);exit;
@@ -3809,6 +3833,8 @@ function node_content_form($node, $form_state) {
      
   }*/
 
+=======
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
   return $form;
 }
 

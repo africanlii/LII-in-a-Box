@@ -10,6 +10,7 @@
  */
 function shortcut_install() {
   $t = get_t();
+<<<<<<< HEAD
 
 
   //lii-in-a-box code to enable judgment module
@@ -31,6 +32,23 @@ function shortcut_install() {
       );
     //End of lii-in-a-box code
 
+=======
+  // Create an initial default shortcut set.
+  $shortcut_set = new stdClass();
+  $shortcut_set->title = $t('Default');
+  $shortcut_set->links = array(
+    array(
+      'link_path' => 'node/add',
+      'link_title' => $t('Add content'),
+      'weight' => -20,
+    ),
+    array(
+      'link_path' => 'admin/content',
+      'link_title' => $t('Find content'),
+      'weight' => -19,
+    ),
+  );
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
   // If Drupal is being installed, rebuild the menu before saving the shortcut
   // set, to make sure the links defined above can be correctly saved. (During
   // installation, the menu might not have been built at all yet, or it might

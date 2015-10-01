@@ -261,7 +261,10 @@ class ImageToolkitGdTestCase extends DrupalWebTestCase {
    */
   function testManipulations() {
     // If GD isn't available don't bother testing this.
+<<<<<<< HEAD
     module_load_include('inc', 'system', 'image.gd');
+=======
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
     if (!function_exists('image_gd_check_settings') || !image_gd_check_settings()) {
       $this->pass(t('Image manipulations for the GD toolkit were skipped because the GD toolkit is not available.'));
       return;
@@ -380,7 +383,11 @@ class ImageToolkitGdTestCase extends DrupalWebTestCase {
             array_fill(0, 3, 76) + array(3 => 0),
             array_fill(0, 3, 149) + array(3 => 0),
             array_fill(0, 3, 29) + array(3 => 0),
+<<<<<<< HEAD
             array_fill(0, 3, 225) + array(3 => 127)
+=======
+            array_fill(0, 3, 0) + array(3 => 127)
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
           ),
         ),
       );
@@ -395,6 +402,7 @@ class ImageToolkitGdTestCase extends DrupalWebTestCase {
           continue 2;
         }
 
+<<<<<<< HEAD
         // All images should be converted to truecolor when loaded.
         $image_truecolor = imageistruecolor($image->resource);
         $this->assertTrue($image_truecolor, format_string('Image %file after load is a truecolor image.', array('%file' => $file)));
@@ -403,6 +411,13 @@ class ImageToolkitGdTestCase extends DrupalWebTestCase {
           if ($op == 'desaturate') {
             // Transparent GIFs and the imagefilter function don't work together.
             $values['corners'][3][3] = 0;
+=======
+        // Transparent GIFs and the imagefilter function don't work together.
+        // There is a todo in image.gd.inc to correct this.
+        if ($image->info['extension'] == 'gif') {
+          if ($op == 'desaturate') {
+            $values['corners'][3] = $this->white;
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
           }
         }
 
@@ -455,8 +470,12 @@ class ImageToolkitGdTestCase extends DrupalWebTestCase {
 
         $directory = file_default_scheme() . '://imagetests';
         file_prepare_directory($directory, FILE_CREATE_DIRECTORY);
+<<<<<<< HEAD
         $file_path = $directory . '/' . $op . '.' . $image->info['extension'];
         image_save($image, $file_path);
+=======
+        image_save($image, $directory . '/' . $op . '.' . $image->info['extension']);
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
 
         $this->assertTrue($correct_dimensions_real, format_string('Image %file after %action action has proper dimensions.', array('%file' => $file, '%action' => $op)));
         $this->assertTrue($correct_dimensions_object, format_string('Image %file object after %action action is reporting the proper height and width values.', array('%file' => $file, '%action' => $op)));
@@ -465,6 +484,7 @@ class ImageToolkitGdTestCase extends DrupalWebTestCase {
           $this->assertTrue($correct_colors, format_string('Image %file object after %action action has the correct color placement.', array('%file' => $file, '%action' => $op)));
         }
       }
+<<<<<<< HEAD
 
       // Check that saved image reloads without raising PHP errors.
       $image_reloaded = image_load($file_path);
@@ -496,6 +516,10 @@ class ImageToolkitGdTestCase extends DrupalWebTestCase {
       $image_truecolor = imageistruecolor($image->resource);
       $this->assertTrue($image_truecolor, format_string('Image %file after load is a truecolor image.', array('%file' => $file)));
     }
+=======
+    }
+
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
   }
 }
 

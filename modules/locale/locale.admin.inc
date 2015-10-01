@@ -1139,11 +1139,19 @@ function locale_translate_edit_form($form, &$form_state, $lid) {
     '#value' => $source->location
   );
 
+<<<<<<< HEAD
   // Include both translated and not yet translated target languages in the
   // list. The source language is English for built-in strings and the default
   // language for other strings.
   $languages = language_list();
   $default = language_default();
+=======
+  // Include default form controls with empty values for all languages.
+  // This ensures that the languages are always in the same order in forms.
+  $languages = language_list();
+  $default = language_default();
+  // We don't need the default language value, that value is in $source.
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
   $omit = $source->textgroup == 'default' ? 'en' : $default->language;
   unset($languages[($omit)]);
   $form['translations'] = array('#tree' => TRUE);

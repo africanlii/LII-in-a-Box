@@ -938,7 +938,11 @@ function drupal_process_form($form_id, &$form, &$form_state) {
         // after the batch is processed.
       }
 
+<<<<<<< HEAD
       // Set a flag to indicate that the form has been processed and executed.
+=======
+      // Set a flag to indicate the the form has been processed and executed.
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
       $form_state['executed'] = TRUE;
 
       // Redirect the form based on values in $form_state.
@@ -2451,6 +2455,7 @@ function form_type_password_confirm_value($element, $input = FALSE) {
     $element += array('#default_value' => array());
     return $element['#default_value'] + array('pass1' => '', 'pass2' => '');
   }
+<<<<<<< HEAD
   $value = array('pass1' => '', 'pass2' => '');
   // Throw out all invalid array keys; we only allow pass1 and pass2.
   foreach ($value as $allowed_key => $default) {
@@ -2462,6 +2467,8 @@ function form_type_password_confirm_value($element, $input = FALSE) {
     }
   }
   return $value;
+=======
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
 }
 
 /**
@@ -2506,6 +2513,7 @@ function form_type_select_value($element, $input = FALSE) {
 }
 
 /**
+<<<<<<< HEAD
  * Determines the value for a textarea form element.
  *
  * @param array $element
@@ -2527,6 +2535,8 @@ function form_type_textarea_value($element, $input = FALSE) {
 }
 
 /**
+=======
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
  * Determines the value for a textfield form element.
  *
  * @param $element
@@ -2541,12 +2551,18 @@ function form_type_textarea_value($element, $input = FALSE) {
  */
 function form_type_textfield_value($element, $input = FALSE) {
   if ($input !== FALSE && $input !== NULL) {
+<<<<<<< HEAD
     // This should be a string, but allow other scalars since they might be
     // valid input in programmatic form submissions.
     if (!is_scalar($input)) {
       $input = '';
     }
     return str_replace(array("\r", "\n"), '', (string) $input);
+=======
+    // Equate $input to the form value to ensure it's marked for
+    // validation.
+    return str_replace(array("\r", "\n"), '', $input);
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
   }
 }
 
@@ -2662,8 +2678,13 @@ function _form_options_flatten($array) {
  *   - #required: (optional) Whether the user needs to select an option (TRUE)
  *     or not (FALSE). Defaults to FALSE.
  *   - #empty_option: (optional) The label to show for the first default option.
+<<<<<<< HEAD
  *     By default, the label is automatically set to "- Select -" for a required
  *     field and "- None -" for an optional field.
+=======
+ *     By default, the label is automatically set to "- Please select -" for a
+ *     required field and "- None -" for an optional field.
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
  *   - #empty_value: (optional) The value for the first default option, which is
  *     used to determine whether the user submitted a value or not.
  *     - If #required is TRUE, this defaults to '' (an empty string).

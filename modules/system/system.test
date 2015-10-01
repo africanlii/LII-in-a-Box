@@ -1068,11 +1068,14 @@ class PageNotFoundTestCase extends DrupalWebTestCase {
     );
     $node = $this->drupalCreateNode($edit);
 
+<<<<<<< HEAD
     // As node IDs must be integers, make sure requests for non-integer IDs
     // return a page not found error.
     $this->drupalGet('node/invalid');
     $this->assertResponse(404);
 
+=======
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
     // Use a custom 404 page.
     $this->drupalPost('admin/config/system/site-information', array('site_404' => 'node/' . $node->nid), t('Save configuration'));
 
@@ -2832,6 +2835,7 @@ class SystemValidTokenTest extends DrupalUnitTestCase {
 }
 
 /**
+<<<<<<< HEAD
  * Tests drupal_set_message() and related functions.
  */
 class DrupalSetMessageTest extends DrupalWebTestCase {
@@ -2861,6 +2865,8 @@ class DrupalSetMessageTest extends DrupalWebTestCase {
 }
 
 /**
+=======
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
  * Tests confirm form destinations.
  */
 class ConfirmFormTest extends DrupalWebTestCase {

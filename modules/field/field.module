@@ -894,7 +894,10 @@ function field_view_field($entity_type, $entity, $field_name, $display = array()
       'entity' => $entity,
       'view_mode' => '_custom',
       'display' => $display,
+<<<<<<< HEAD
       'language' => $langcode,
+=======
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
     );
     drupal_alter('field_attach_view', $result, $context);
 

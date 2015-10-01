@@ -149,6 +149,7 @@ class SearchQuery extends SelectQueryExtender {
     $this->searchExpression = $expression;
     $this->type = $module;
 
+<<<<<<< HEAD
     // Add a search_* tag. This needs to be added before any preExecute methods
     // for decorated queries are called, as $this->prepared will be set to TRUE
     // and tags added in the execute method will never get used. For example,
@@ -160,6 +161,8 @@ class SearchQuery extends SelectQueryExtender {
     // See node_search_execute().
     $this->addTag('search_' . $module);
 
+=======
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
     return $this;
   }
 
@@ -505,8 +508,14 @@ class SearchQuery extends SelectQueryExtender {
       $this->orderBy('calculated_score', 'DESC');
     }
 
+<<<<<<< HEAD
     // Add useful metadata.
     $this
+=======
+    // Add tag and useful metadata.
+    $this
+      ->addTag('search_' . $this->type)
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
       ->addMetaData('normalize', $this->normalize)
       ->fields('i', array('type', 'sid'));
 

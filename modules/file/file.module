@@ -357,10 +357,13 @@ function file_file_delete($file) {
  * support for a default value.
  */
 function file_managed_file_process($element, &$form_state, $form) {
+<<<<<<< HEAD
   // Append the '-upload' to the #id so the field label's 'for' attribute
   // corresponds with the file element.
   $original_id = $element['#id'];
   $element['#id'] .= '-upload';
+=======
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
   $fid = isset($element['#value']['fid']) ? $element['#value']['fid'] : 0;
 
   // Set some default element properties.
@@ -370,7 +373,11 @@ function file_managed_file_process($element, &$form_state, $form) {
 
   $ajax_settings = array(
     'path' => 'file/ajax/' . implode('/', $element['#array_parents']) . '/' . $form['form_build_id']['#value'],
+<<<<<<< HEAD
     'wrapper' => $original_id . '-ajax-wrapper',
+=======
+    'wrapper' => $element['#id'] . '-ajax-wrapper',
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
     'effect' => 'fade',
     'progress' => array(
       'type' => $element['#progress_indicator'],
@@ -465,13 +472,21 @@ function file_managed_file_process($element, &$form_state, $form) {
     $element['upload']['#attached']['js'] = array(
       array(
         'type' => 'setting',
+<<<<<<< HEAD
         'data' => array('file' => array('elements' => array('#' . $element['#id'] => $extension_list)))
+=======
+        'data' => array('file' => array('elements' => array('#' . $element['#id'] . '-upload' => $extension_list)))
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
       )
     );
   }
 
   // Prefix and suffix used for Ajax replacement.
+<<<<<<< HEAD
   $element['#prefix'] = '<div id="' . $original_id . '-ajax-wrapper">';
+=======
+  $element['#prefix'] = '<div id="' . $element['#id'] . '-ajax-wrapper">';
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
   $element['#suffix'] = '</div>';
 
   return $element;
@@ -519,6 +534,7 @@ function file_managed_file_value(&$element, $input = FALSE, $form_state = NULL) 
       // public file) to confirm it exists and that the current user has access
       // to it.
       if (isset($input['fid']) && ($file = file_load($input['fid']))) {
+<<<<<<< HEAD
         // By default the public:// file scheme provided by Drupal core is the
         // only one that allows files to be publicly accessible to everyone, so
         // it is the only one for which the file access checks are bypassed.
@@ -530,6 +546,9 @@ function file_managed_file_value(&$element, $input = FALSE, $form_state = NULL) 
         // reasons all other schemes must go through the file_download_access()
         // check.
         if (in_array(file_uri_scheme($file->uri), variable_get('file_public_schema', array('public'))) || file_download_access($file->uri)) {
+=======
+        if (file_uri_scheme($file->uri) == 'public' || file_download_access($file->uri)) {
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
           $fid = $file->fid;
         }
         // If the current user doesn't have access, don't let the file be

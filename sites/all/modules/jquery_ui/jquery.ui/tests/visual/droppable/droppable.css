@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 #draggables * { width: 100px; height: 20px; display: block; margin-bottom: 1em; background: #abc; }
 #droppable { width: 200px; }
 #droppable * { margin: 0.8em; padding: 0.4em; }
+=======
+#draggables * { width: 100px; height: 20px; display: block; margin-bottom: 1em; background: #abc; }
+#droppable { width: 200px; }
+#droppable * { margin: 0.8em; padding: 0.4em; }
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43

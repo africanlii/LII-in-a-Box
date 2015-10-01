@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 @import url("../../external/qunit/testsuite.css");
 html { border: 0; }
 .xerror, .error, .ui-tabs-hide { display: none }
 #main { position: absolute; top: -10000px; left: -10000px; }
+=======
+@import url("../../external/qunit/testsuite.css");
+html { border: 0; }
+.xerror, .error, .ui-tabs-hide { display: none }
+#main { position: absolute; top: -10000px; left: -10000px; }
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43

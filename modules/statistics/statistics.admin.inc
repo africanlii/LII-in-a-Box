@@ -59,7 +59,11 @@ function statistics_recent_hits() {
  * statistics settings form, but is dependent on cron running.
  *
  * @return
+<<<<<<< HEAD
  *   A render array containing information about the top pages.
+=======
+ *   A render array containing information about the the top pages.
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
  */
 function statistics_top_pages() {
   $header = array(

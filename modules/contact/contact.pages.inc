@@ -134,7 +134,11 @@ function contact_site_form_submit($form, &$form_state) {
   global $user, $language;
 
   $values = $form_state['values'];
+<<<<<<< HEAD
   $values['sender'] = clone $user;
+=======
+  $values['sender'] = $user;
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
   $values['sender']->name = $values['name'];
   $values['sender']->mail = $values['mail'];
   $values['category'] = contact_load($values['cid']);
@@ -270,7 +274,11 @@ function contact_personal_form_submit($form, &$form_state) {
   global $user, $language;
 
   $values = $form_state['values'];
+<<<<<<< HEAD
   $values['sender'] = clone $user;
+=======
+  $values['sender'] = $user;
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
   $values['sender']->name = $values['name'];
   $values['sender']->mail = $values['mail'];
 

@@ -359,6 +359,10 @@ function user_cancel_confirm_form($form, &$form_state, $account) {
   $form['_account'] = array('#type' => 'value', '#value' => $account);
 
   // Display account cancellation method selection, if allowed.
+<<<<<<< HEAD
+=======
+  $default_method = variable_get('user_cancel_method', 'user_cancel_block');
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
   $admin_access = user_access('administer users');
   $can_select_method = $admin_access || user_access('select account cancellation method');
   $form['user_cancel_method'] = array(

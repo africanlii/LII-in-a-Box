@@ -278,6 +278,7 @@ function update_theme() {
     ),
     'update_report' => array(
       'variables' => array('data' => NULL),
+<<<<<<< HEAD
       'file' => 'update.report.inc',
     ),
     'update_version' => array(
@@ -287,6 +288,14 @@ function update_theme() {
     'update_status_label' => array(
       'variables' => array('status' => NULL),
       'file' => 'update.report.inc',
+=======
+    ),
+    'update_version' => array(
+      'variables' => array('version' => NULL, 'tag' => NULL, 'class' => array()),
+    ),
+    'update_status_label' => array(
+      'variables' => array('status' => NULL),
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
     ),
   );
 }

@@ -1691,7 +1691,11 @@ function theme_status_messages($variables) {
       $output .= " </ul>\n";
     }
     else {
+<<<<<<< HEAD
       $output .= reset($messages);
+=======
+      $output .= $messages[0];
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
     }
     $output .= "</div>\n";
   }
@@ -2622,9 +2626,12 @@ function template_preprocess_page(&$variables) {
     if (!isset($variables['page'][$region_key])) {
       $variables['page'][$region_key] = array();
     }
+<<<<<<< HEAD
     if ($region_content = drupal_get_region_content($region_key)) {
       $variables['page'][$region_key][]['#markup'] = $region_content;
     }
+=======
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
   }
 
   // Set up layout variable.

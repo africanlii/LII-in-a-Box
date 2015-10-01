@@ -297,7 +297,11 @@ function language_negotiation_get_switch_links($type, $path) {
       // Add support for WCAG 2.0's Language of Parts to add language identifiers.
       // http://www.w3.org/TR/UNDERSTANDING-WCAG20/meaning-other-lang-id.html
       foreach ($result as $langcode => $link) {
+<<<<<<< HEAD
         $result[$langcode]['attributes']['xml:lang'] = $langcode;
+=======
+        $result[$langcode]['attributes']['lang'] = $langcode;
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
       }
 
       if (!empty($result)) {

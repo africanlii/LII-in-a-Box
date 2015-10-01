@@ -57,6 +57,7 @@ Drupal.tableSelect = function () {
     // Keep track of the last checked checkbox.
     lastChecked = e.target;
   });
+<<<<<<< HEAD
 
   // If all checkboxes are checked on page load, make sure the select-all one
   // is checked too, otherwise keep unchecked.
@@ -65,6 +66,12 @@ Drupal.tableSelect = function () {
 
 Drupal.tableSelectRange = function (from, to, state) {
   // We determine the looping mode based on the order of from and to.
+=======
+};
+
+Drupal.tableSelectRange = function (from, to, state) {
+  // We determine the looping mode based on the the order of from and to.
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
   var mode = from.rowIndex > to.rowIndex ? 'previousSibling' : 'nextSibling';
 
   // Traverse through the sibling nodes.

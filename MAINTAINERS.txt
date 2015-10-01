@@ -27,6 +27,10 @@ Ajax system
 - Earl Miles 'merlinofchaos' http://drupal.org/user/26979
 
 Base system
+<<<<<<< HEAD
+=======
+- Károly Négyesi 'chx' http://drupal.org/user/9446
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
 - Damien Tournoud 'DamZ' http://drupal.org/user/22211
 - Moshe Weitzman 'moshe weitzman' http://drupal.org/user/23
 
@@ -38,6 +42,10 @@ Cache system
 - Nathaniel Catchpole 'catch' http://drupal.org/user/35733
 
 Cron system
+<<<<<<< HEAD
+=======
+- Károly Négyesi 'chx' http://drupal.org/user/9446
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
 - Derek Wright 'dww' http://drupal.org/user/46549
 
 Database system
@@ -53,8 +61,15 @@ Database system
 
   - Sqlite driver
     - Damien Tournoud 'DamZ' http://drupal.org/user/22211
+<<<<<<< HEAD
 
 Database update system
+=======
+    - Károly Négyesi 'chx' http://drupal.org/user/9446
+
+Database update system
+- Károly Négyesi 'chx' http://drupal.org/user/9446
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
 - Ashok Modi 'BTMash' http://drupal.org/user/60422
 
 Entity system
@@ -67,6 +82,10 @@ File system
 - Aaron Winborn 'aaron' http://drupal.org/user/33420
 
 Form system
+<<<<<<< HEAD
+=======
+- Károly Négyesi 'chx' http://drupal.org/user/9446
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
 - Alex Bronstein 'effulgentsia' http://drupal.org/user/78040
 - Wolfgang Ziegler 'fago' http://drupal.org/user/16747
 - Daniel F. Kudwien 'sun' http://drupal.org/user/54136
@@ -100,6 +119,10 @@ Markup
 
 Menu system
 - Peter Wolanin 'pwolanin' http://drupal.org/user/49851
+<<<<<<< HEAD
+=======
+- Károly Négyesi 'chx' http://drupal.org/user/9446
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
 
 Path system
 - Dave Reid 'davereid' http://drupal.org/user/53892
@@ -255,6 +278,10 @@ Shortcut module
 
 Simpletest module
 - Jimmy Berry 'boombatower' http://drupal.org/user/214218
+<<<<<<< HEAD
+=======
+- Károly Négyesi 'chx' http://drupal.org/user/9446
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
 
 Statistics module
 - Tim Millwood 'timmillwood' http://drupal.org/user/227849

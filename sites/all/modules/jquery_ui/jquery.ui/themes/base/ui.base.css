@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @import url("ui.core.css");
 
 @import url("ui.accordion.css");
@@ -7,3 +8,14 @@
 @import url("ui.resizable.css");
 @import url("ui.slider.css");
 @import url("ui.tabs.css");
+=======
+@import url("ui.core.css");
+
+@import url("ui.accordion.css");
+@import url("ui.datepicker.css");
+@import url("ui.dialog.css");
+@import url("ui.progressbar.css");
+@import url("ui.resizable.css");
+@import url("ui.slider.css");
+@import url("ui.tabs.css");
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43

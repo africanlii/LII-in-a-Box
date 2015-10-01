@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* tests.css */
 
 body { font-size: 62.5%; }
@@ -6,3 +7,13 @@ td { border: 1px solid silver; padding: 10px; }
 td textarea { font-size: 10px; }
 del { background: #FFE6E6; }
 ins { background: #E6FFE6; }
+=======
+/* tests.css */
+
+body { font-size: 62.5%; }
+iframe { border: 0; width: 200px; 150px; }
+td { border: 1px solid silver; padding: 10px; }
+td textarea { font-size: 10px; }
+del { background: #FFE6E6; }
+ins { background: #E6FFE6; }
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43

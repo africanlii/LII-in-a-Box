@@ -78,6 +78,7 @@ function system_test_menu() {
     'type' => MENU_CALLBACK,
   );
 
+<<<<<<< HEAD
   $items['system-test/drupal-set-message'] = array(
     'title' => 'Set messages with drupal_set_message()',
     'page callback' => 'system_test_drupal_set_message',
@@ -85,6 +86,8 @@ function system_test_menu() {
     'type' => MENU_CALLBACK,
   );
 
+=======
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
   $items['system-test/main-content-handling'] = array(
     'title' => 'Test main content handling',
     'page callback' => 'system_test_main_content_fallback',
@@ -443,6 +446,7 @@ function system_test_authorize_init_page($page_title) {
 }
 
 /**
+<<<<<<< HEAD
  * Sets two messages and removes the first one before the messages are displayed.
  */
 function system_test_drupal_set_message() {
@@ -457,6 +461,8 @@ function system_test_drupal_set_message() {
 }
 
 /**
+=======
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
  * Page callback to print out $_GET['destination'] for testing.
  */
 function system_test_get_destination() {

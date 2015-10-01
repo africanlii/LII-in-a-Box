@@ -220,10 +220,13 @@ function field_test_field_attach_view_alter(&$output, $context) {
   if (!empty($context['display']['settings']['alter'])) {
     $output['test_field'][] = array('#markup' => 'field_test_field_attach_view_alter');
   }
+<<<<<<< HEAD
 
   if (isset($output['test_field'])) {
     $output['test_field'][] = array('#markup' => 'field language is ' . $context['language']);
   }
+=======
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
 }
 
 /**

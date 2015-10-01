@@ -470,6 +470,7 @@ class FormsTestCase extends DrupalWebTestCase {
     $this->drupalPost(NULL, array('checkboxes[one]' => TRUE, 'checkboxes[two]' => TRUE), t('Submit'));
     $this->assertText('An illegal choice has been detected.', 'Input forgery was detected.');
   }
+<<<<<<< HEAD
 
   /**
    * Tests that submitted values are converted to scalar strings for textfields.
@@ -528,6 +529,8 @@ class FormsTestCase extends DrupalWebTestCase {
 
     $this->assertIdentical($form_state['values'][$element_type], $expected_value, format_string('Form submission for the "@element_type" element type has been correctly sanitized.', array('@element_type' => $element_type)));
   }
+=======
+>>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
 }
 
 /**
