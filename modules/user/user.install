@@ -81,11 +81,7 @@ function user_schema() {
     ),
     'foreign keys' => array(
       'role' => array(
-<<<<<<< HEAD
         'table' => 'role',
-=======
-        'table' => 'roles',
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
         'columns' => array('rid' => 'rid'),
       ),
     ),
@@ -282,11 +278,7 @@ function user_schema() {
         'columns' => array('uid' => 'uid'),
       ),
       'role' => array(
-<<<<<<< HEAD
         'table' => 'role',
-=======
-        'table' => 'roles',
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
         'columns' => array('rid' => 'rid'),
       ),
     ),
@@ -364,7 +356,6 @@ function user_update_dependencies() {
     'filter' => 7000,
   );
 
-<<<<<<< HEAD
   // user_update_7012() uses the file API and inserts records into the
   // {file_managed} table, so it therefore must run after system_update_7061(),
   // which inserts files with specific IDs into the table and therefore relies
@@ -372,13 +363,6 @@ function user_update_dependencies() {
   // existing records).
   $dependencies['user'][7012] = array(
     'system' => 7061,
-=======
-  // user_update_7012() uses the file API, which relies on the {file_managed}
-  // table, so it must run after system_update_7034(), which creates that
-  // table.
-  $dependencies['user'][7012] = array(
-    'system' => 7034,
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
   );
 
   // user_update_7013() uses the file usage API, which relies on the

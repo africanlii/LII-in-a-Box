@@ -1,5 +1,4 @@
 
-<<<<<<< HEAD
 Drupal 7.37, 2015-05-07
 -----------------------
 - Fixed a regression in Drupal 7.36 which caused certain kinds of content types
@@ -78,8 +77,6 @@ Drupal 7.36, 2015-04-01
 - Numerous API documentation improvements.
 - Additional automated test coverage.
 
-=======
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
 Drupal 7.35, 2015-03-18
 ----------------------
 - Fixed security issues (multiple vulnerabilities). See SA-CORE-2015-001.

@@ -12,12 +12,6 @@
 #
 # For more information about the robots.txt standard, see:
 # http://www.robotstxt.org/robotstxt.html
-<<<<<<< HEAD
-=======
-#
-# For syntax checking, see:
-# http://www.frobee.com/robots-txt-check
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
 
 User-agent: *
 Crawl-delay: 10

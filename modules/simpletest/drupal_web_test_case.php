@@ -1769,7 +1769,6 @@ class DrupalWebTestCase extends DrupalTestCase {
   protected function curlExec($curl_options, $redirect = FALSE) {
     $this->curlInitialize();
 
-<<<<<<< HEAD
     if (!empty($curl_options[CURLOPT_URL])) {
       // Forward XDebug activation if present.
       if (isset($_COOKIE['XDEBUG_SESSION'])) {
@@ -1788,16 +1787,6 @@ class DrupalWebTestCase extends DrupalTestCase {
         $original_url = $curl_options[CURLOPT_URL];
         $curl_options[CURLOPT_URL] = strtok($curl_options[CURLOPT_URL], '#');
       }
-=======
-    // cURL incorrectly handles URLs with a fragment by including the
-    // fragment in the request to the server, causing some web servers
-    // to reject the request citing "400 - Bad Request". To prevent
-    // this, we strip the fragment from the request.
-    // TODO: Remove this for Drupal 8, since fixed in curl 7.20.0.
-    if (!empty($curl_options[CURLOPT_URL]) && strpos($curl_options[CURLOPT_URL], '#')) {
-      $original_url = $curl_options[CURLOPT_URL];
-      $curl_options[CURLOPT_URL] = strtok($curl_options[CURLOPT_URL], '#');
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
     }
 
     $url = empty($curl_options[CURLOPT_URL]) ? curl_getinfo($this->curlHandle, CURLINFO_EFFECTIVE_URL) : $curl_options[CURLOPT_URL];
@@ -2268,7 +2257,6 @@ class DrupalWebTestCase extends DrupalTestCase {
             if ($wrapperNode) {
               // ajax.js adds an enclosing DIV to work around a Safari bug.
               $newDom = new DOMDocument();
-<<<<<<< HEAD
               // DOM can load HTML soup. But, HTML soup can throw warnings,
               // suppress them.
               $newDom->loadHTML('<div>' . $command['data'] . '</div>');
@@ -2276,10 +2264,6 @@ class DrupalWebTestCase extends DrupalTestCase {
               // encountered. This probably means we are replacing an element
               // with the same ID.
               $newNode = @$dom->importNode($newDom->documentElement->firstChild->firstChild, TRUE);
-=======
-              $newDom->loadHTML('<div>' . $command['data'] . '</div>');
-              $newNode = $dom->importNode($newDom->documentElement->firstChild->firstChild, TRUE);
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
               $method = isset($command['method']) ? $command['method'] : $ajax_settings['method'];
               // The "method" is a jQuery DOM manipulation function. Emulate
               // each one using PHP's DOMNode API.

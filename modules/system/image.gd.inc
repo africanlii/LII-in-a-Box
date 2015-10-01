@@ -229,7 +229,6 @@ function image_gd_desaturate(stdClass $image) {
 function image_gd_load(stdClass $image) {
   $extension = str_replace('jpg', 'jpeg', $image->info['extension']);
   $function = 'imagecreatefrom' . $extension;
-<<<<<<< HEAD
   if (function_exists($function) && $image->resource = $function($image->source)) {
     if (imageistruecolor($image->resource)) {
       return TRUE;
@@ -248,9 +247,6 @@ function image_gd_load(stdClass $image) {
     return (bool) $image->resource;
   }
   return FALSE;
-=======
-  return (function_exists($function) && $image->resource = $function($image->source));
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
 }
 
 /**
@@ -318,7 +314,6 @@ function image_gd_create_tmp(stdClass $image, $width, $height) {
   $res = imagecreatetruecolor($width, $height);
 
   if ($image->info['extension'] == 'gif') {
-<<<<<<< HEAD
     // Find out if a transparent color is set, will return -1 if no
     // transparent color has been defined in the image.
     $transparent = imagecolortransparent($image->resource);
@@ -344,19 +339,6 @@ function image_gd_create_tmp(stdClass $image, $width, $height) {
       else {
         imagefill($res, 0, 0, imagecolorallocate($res, 255, 255, 255));
       }
-=======
-    // Grab transparent color index from image resource.
-    $transparent = imagecolortransparent($image->resource);
-
-    if ($transparent >= 0) {
-      // The original must have a transparent color, allocate to the new image.
-      $transparent_color = imagecolorsforindex($image->resource, $transparent);
-      $transparent = imagecolorallocate($res, $transparent_color['red'], $transparent_color['green'], $transparent_color['blue']);
-
-      // Flood with our new transparent color.
-      imagefill($res, 0, 0, $transparent);
-      imagecolortransparent($res, $transparent);
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
     }
   }
   elseif ($image->info['extension'] == 'png') {

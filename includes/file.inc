@@ -1559,11 +1559,7 @@ function file_save_upload($form_field_name, $validators = array(), $destination 
     return FALSE;
   }
 
-<<<<<<< HEAD
   // Add in our check of the file name length.
-=======
-  // Add in our check of the the file name length.
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
   $validators['file_validate_name_length'] = array();
 
   // Call the validation functions specified by this function's caller.

@@ -653,7 +653,6 @@ function drupal_rewrite_settings($settings = array(), $prefix = '') {
     if ($fp && fwrite($fp, $buffer) === FALSE) {
       throw new Exception(st('Failed to modify %settings. Verify the file permissions.', array('%settings' => $settings_file)));
     }
-<<<<<<< HEAD
     else {
       // The existing settings.php file might have been included already. In
       // case an opcode cache is enabled, the rewritten contents of the file
@@ -661,8 +660,6 @@ function drupal_rewrite_settings($settings = array(), $prefix = '') {
       // in case an opcode cache is enabled.
       drupal_clear_opcode_cache(DRUPAL_ROOT . '/' . $settings_file);
     }
-=======
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
   }
   else {
     throw new Exception(st('Failed to open %settings. Verify the file permissions.', array('%settings' => $default_settings)));

@@ -942,10 +942,7 @@ class CascadingStylesheetsUnitTest extends DrupalUnitTestCase {
    * - Proper URLs in imported files. (https://drupal.org/node/265719)
    * - Retain pseudo-selectors. (https://drupal.org/node/460448)
    * - Don't adjust data URIs. (https://drupal.org/node/2142441)
-<<<<<<< HEAD
    * - Files imported from external URLs. (https://drupal.org/node/2014851)
-=======
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
    */
   function testLoadCssBasic() {
     // Array of files to test living in 'simpletest/files/css_test_files/'.
@@ -1445,7 +1442,6 @@ class JavaScriptTestCase extends DrupalWebTestCase {
   }
 
   /**
-<<<<<<< HEAD
    * Test the 'javascript_always_use_jquery' variable.
    */
   function testJavaScriptAlwaysUseJQuery() {
@@ -1567,8 +1563,6 @@ class JavaScriptTestCase extends DrupalWebTestCase {
   }
 
   /**
-=======
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
    * Test drupal_add_js() sets preproccess to false when cache is set to false.
    */
   function testNoCache() {
@@ -1796,7 +1790,6 @@ class JavaScriptTestCase extends DrupalWebTestCase {
     $query_string = variable_get('css_js_query_string', '0');
     $this->assertRaw(drupal_get_path('module', 'node') . '/node.js?' . $query_string, 'Query string was appended correctly to js.');
   }
-<<<<<<< HEAD
 
   /**
    * Resets static variables related to adding JavaScript to a page.
@@ -1806,8 +1799,6 @@ class JavaScriptTestCase extends DrupalWebTestCase {
     drupal_static_reset('drupal_add_library');
     drupal_static_reset('drupal_get_library');
   }
-=======
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
 }
 
 /**

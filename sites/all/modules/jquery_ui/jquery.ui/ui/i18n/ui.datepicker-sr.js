@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ﻿/* Serbian i18n for the jQuery UI date picker plugin. */
 /* Written by Dejan Dimić. */
 jQuery(function($){
@@ -17,24 +16,4 @@ jQuery(function($){
 		dateFormat: 'dd/mm/yy', firstDay: 1,
 		isRTL: false};
 	$.datepicker.setDefaults($.datepicker.regional['sr']);
-=======
-﻿/* Serbian i18n for the jQuery UI date picker plugin. */
-/* Written by Dejan Dimić. */
-jQuery(function($){
-	$.datepicker.regional['sr'] = {
-		closeText: 'Затвори',
-		prevText: '&#x3c;',
-		nextText: '&#x3e;',
-		currentText: 'Данас',
-		monthNames: ['Јануар','Фебруар','Март','Април','Мај','Јун',
-		'Јул','Август','Септембар','Октобар','Новембар','Децембар'],
-		monthNamesShort: ['Јан','Феб','Мар','Апр','Мај','Јун',
-		'Јул','Авг','Сеп','Окт','Нов','Дец'],
-		dayNames: ['Недеља','Понедељак','Уторак','Среда','Четвртак','Петак','Субота'],
-		dayNamesShort: ['Нед','Пон','Уто','Сре','Чет','Пет','Суб'],
-		dayNamesMin: ['Не','По','Ут','Ср','Че','Пе','Су'],
-		dateFormat: 'dd/mm/yy', firstDay: 1,
-		isRTL: false};
-	$.datepicker.setDefaults($.datepicker.regional['sr']);
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
 });

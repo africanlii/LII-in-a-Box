@@ -1,10 +1,7 @@
 
 
-<<<<<<< HEAD
 @import url("http://example.com/style.css");
 @import url("//example.com/style.css");
-=======
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
 @import "import1.css";
 @import "import2.css";
 

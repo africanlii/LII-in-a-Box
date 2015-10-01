@@ -28,13 +28,9 @@ interface DrupalEntityControllerInterface {
    * @param $ids
    *   An array of entity IDs, or FALSE to load all entities.
    * @param $conditions
-<<<<<<< HEAD
    *   An array of conditions. Keys are field names on the entity's base table.
    *   Values will be compared for equality. All the comparisons will be ANDed
    *   together. This parameter is deprecated; use an EntityFieldQuery instead.
-=======
-   *   An array of conditions in the form 'field' => $value.
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
    *
    * @return
    *   An array of entity objects indexed by their ids. When no results are
@@ -187,14 +183,11 @@ class DrupalDefaultEntityController implements DrupalEntityControllerInterface {
       }
     }
 
-<<<<<<< HEAD
     // Ensure integer entity IDs are valid.
     if (!empty($ids)) {
       $this->cleanIds($ids);
     }
 
-=======
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
     // Load any remaining entities from the database. This is the case if $ids
     // is set to FALSE (so we load all entities), if there are any ids left to
     // load, if loading a revision, or if $conditions was passed without $ids.
@@ -236,7 +229,6 @@ class DrupalDefaultEntityController implements DrupalEntityControllerInterface {
   }
 
   /**
-<<<<<<< HEAD
    * Ensures integer entity IDs are valid.
    *
    * The identifier sanitization provided by this method has been introduced
@@ -266,8 +258,6 @@ class DrupalDefaultEntityController implements DrupalEntityControllerInterface {
   }
 
   /**
-=======
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
    * Builds the query to load the entity.
    *
    * This has full revision support. For entities requiring special queries,
@@ -282,13 +272,9 @@ class DrupalDefaultEntityController implements DrupalEntityControllerInterface {
    * @param $ids
    *   An array of entity IDs, or FALSE to load all entities.
    * @param $conditions
-<<<<<<< HEAD
    *   An array of conditions. Keys are field names on the entity's base table.
    *   Values will be compared for equality. All the comparisons will be ANDed
    *   together. This parameter is deprecated; use an EntityFieldQuery instead.
-=======
-   *   An array of conditions in the form 'field' => $value.
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
    * @param $revision_id
    *   The ID of the revision to load, or FALSE if this query is asking for the
    *   most current revision(s).

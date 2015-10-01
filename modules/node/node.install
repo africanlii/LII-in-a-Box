@@ -934,7 +934,6 @@ function node_update_7014() {
 }
 
 /**
-<<<<<<< HEAD
  * Enable node types that may have been erroneously disabled in Drupal 7.36.
  */
 function node_update_7015() {
@@ -945,7 +944,5 @@ function node_update_7015() {
 }
 
 /**
-=======
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
  * @} End of "addtogroup updates-7.x-extra".
  */

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ﻿/* Swedish initialisation for the jQuery UI date picker plugin. */
 /* Written by Anders Ekdahl ( anders@nomadiz.se). */
 jQuery(function($){
@@ -18,24 +17,3 @@ jQuery(function($){
 		isRTL: false};
     $.datepicker.setDefaults($.datepicker.regional['sv']);
 });
-=======
-﻿/* Swedish initialisation for the jQuery UI date picker plugin. */
-/* Written by Anders Ekdahl ( anders@nomadiz.se). */
-jQuery(function($){
-    $.datepicker.regional['sv'] = {
-		closeText: 'Stäng',
-        prevText: '&laquo;Förra',
-		nextText: 'Nästa&raquo;',
-		currentText: 'Idag',
-        monthNames: ['Januari','Februari','Mars','April','Maj','Juni',
-        'Juli','Augusti','September','Oktober','November','December'],
-        monthNamesShort: ['Jan','Feb','Mar','Apr','Maj','Jun',
-        'Jul','Aug','Sep','Okt','Nov','Dec'],
-		dayNamesShort: ['Sön','Mån','Tis','Ons','Tor','Fre','Lör'],
-		dayNames: ['Söndag','Måndag','Tisdag','Onsdag','Torsdag','Fredag','Lördag'],
-		dayNamesMin: ['Sö','Må','Ti','On','To','Fr','Lö'],
-        dateFormat: 'yy-mm-dd', firstDay: 1,
-		isRTL: false};
-    $.datepicker.setDefaults($.datepicker.regional['sv']);
-});
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43

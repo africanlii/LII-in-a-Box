@@ -474,7 +474,6 @@ class FileFieldWidgetTestCase extends FileFieldTestCase {
       $node_file = (object) $node->{$field_name}[LANGUAGE_NONE][0];
       $this->assertFileExists($node_file, 'New file saved to disk on node creation.');
 
-<<<<<<< HEAD
       // Test that running field_attach_update() leaves the file intact.
       $field = new stdClass();
       $field->type = $type_name;
@@ -484,8 +483,6 @@ class FileFieldWidgetTestCase extends FileFieldTestCase {
       $node_file = (object) $node->{$field_name}[LANGUAGE_NONE][0];
       $this->assertFileExists($node_file, 'New file still saved to disk on field update.');
 
-=======
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
       // Ensure the file can be downloaded.
       $this->drupalGet(file_create_url($node_file->uri));
       $this->assertResponse(200, 'Confirmed that the generated URL is correct by downloading the shipped file.');
@@ -889,10 +886,7 @@ class FileFieldDisplayTestCase extends FileFieldTestCase {
     $field_settings = array(
       'display_field' => '1',
       'display_default' => '1',
-<<<<<<< HEAD
       'cardinality' => FIELD_CARDINALITY_UNLIMITED,
-=======
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
     );
     $instance_settings = array(
       'description_field' => '1',
@@ -933,7 +927,6 @@ class FileFieldDisplayTestCase extends FileFieldTestCase {
 
     $this->assertNoRaw($default_output, 'Field is hidden when "display" option is unchecked.');
 
-<<<<<<< HEAD
     // Test that fields appear as expected during the preview.
     // Add a second file.
     $name = 'files[' . $field_name . '_' . LANGUAGE_NONE . '_1]';
@@ -945,8 +938,6 @@ class FileFieldDisplayTestCase extends FileFieldTestCase {
     $this->drupalPost('node/' . $nid . '/edit', $edit, t('Preview'));
     $this->assertRaw($field_name . '[' . LANGUAGE_NONE . '][0][display]', 'First file appears as expected.');
     $this->assertRaw($field_name . '[' . LANGUAGE_NONE . '][1][display]', 'Second file appears as expected.');
-=======
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
   }
 }
 

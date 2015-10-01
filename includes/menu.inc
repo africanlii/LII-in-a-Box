@@ -456,13 +456,9 @@ function menu_get_item($path = NULL, $router_item = NULL) {
     // Rebuild if we know it's needed, or if the menu masks are missing which
     // occurs rarely, likely due to a race condition of multiple rebuilds.
     if (variable_get('menu_rebuild_needed', FALSE) || !variable_get('menu_masks', array())) {
-<<<<<<< HEAD
       if (_menu_check_rebuild()) {
         menu_rebuild();
       }
-=======
-      menu_rebuild();
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
     }
     $original_map = arg(NULL, $path);
 
@@ -2700,7 +2696,6 @@ function menu_reset_static_cache() {
 }
 
 /**
-<<<<<<< HEAD
  * Checks whether a menu_rebuild() is necessary.
  */
 function _menu_check_rebuild() {
@@ -2716,8 +2711,6 @@ function _menu_check_rebuild() {
 }
 
 /**
-=======
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
  * Populates the database tables used by various menu functions.
  *
  * This function will clear and populate the {menu_router} table, add entries
@@ -2737,7 +2730,6 @@ function menu_rebuild() {
     // We choose to block here since otherwise the router item may not
     // be available in menu_execute_active_handler() resulting in a 404.
     lock_wait('menu_rebuild');
-<<<<<<< HEAD
 
     if (_menu_check_rebuild()) {
       // If we get here and menu_masks was not set, then it is possible a menu
@@ -2746,8 +2738,6 @@ function menu_rebuild() {
       // in a 404, so re-run the function.
       return menu_rebuild();
     }
-=======
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
     return FALSE;
   }
 
@@ -2772,15 +2762,12 @@ function menu_rebuild() {
     $transaction->rollback();
     watchdog_exception('menu', $e);
   }
-<<<<<<< HEAD
   // Explicitly commit the transaction now; this ensures that the database
   // operations during the menu rebuild are committed before the lock is made
   // available again, since locks may not always reside in the same database
   // connection. The lock is acquired outside of the transaction so should also
   // be released outside of it.
   unset($transaction);
-=======
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
 
   lock_release('menu_rebuild');
   return TRUE;

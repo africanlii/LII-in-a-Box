@@ -478,7 +478,6 @@ class SessionHttpsTestCase extends DrupalWebTestCase {
   }
 
   /**
-<<<<<<< HEAD
    * Tests that empty session IDs do not cause unrelated sessions to load.
    */
   public function testEmptySessionId() {
@@ -529,8 +528,6 @@ class SessionHttpsTestCase extends DrupalWebTestCase {
   }
 
   /**
-=======
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
    * Test that there exists a session with two specific session IDs.
    *
    * @param $sid

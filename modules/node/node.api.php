@@ -1299,13 +1299,10 @@ function hook_validate($node, $form, &$form_state) {
  *   The node to be displayed, as returned by node_load().
  * @param $view_mode
  *   View mode, e.g. 'full', 'teaser', ...
-<<<<<<< HEAD
  * @param $langcode
  *   (optional) A language code to use for rendering. Defaults to the global
  *   content language of the current request.
  *
-=======
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
  * @return
  *   The passed $node parameter should be modified as necessary and returned so
  *   it can be properly presented. Nodes are prepared for display by assembling
@@ -1319,11 +1316,7 @@ function hook_validate($node, $form, &$form_state) {
  *
  * @ingroup node_api_hooks
  */
-<<<<<<< HEAD
 function hook_view($node, $view_mode, $langcode = NULL) {
-=======
-function hook_view($node, $view_mode) {
->>>>>>> 6686a981138d00e6df8b50ea1054cb770c50da43
   if ($view_mode == 'full' && node_is_page($node)) {
     $breadcrumb = array();
     $breadcrumb[] = l(t('Home'), NULL);
