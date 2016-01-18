@@ -35,6 +35,11 @@ function _page_courtnames_output() {
       $path = current_path();
       $path_ar = explode('/',$path);
     
+      if(count($path_ar) == 1){
+        return array(
+          '#markup' => '<p>Courtname not yet selected</p>'
+        );
+      }
       if(count($path_ar) == 2){
         return _page_courtnames($path);
       }
