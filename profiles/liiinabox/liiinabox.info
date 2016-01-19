@@ -24,7 +24,7 @@ dependencies[] = syslog
 dependencies[] = search
 dependencies[] = shortcut
 dependencies[] = toolbar
-dependencies[] = overlay
+;dependencies[] = overlay
 dependencies[] = field
 dependencies[] = field_ui
 dependencies[] = file
@@ -98,12 +98,8 @@ dependencies[] = consol_leglist
 ;dependencies[] = journal
 dependencies[] = listjournals
 dependencies[] = journaltitle
-dependencies[] = journalarticlealphalisting
-dependencies[] = journalarticlebeginwith
-dependencies[] = journalarticleyearlisting
+dependencies[] = journalarticle
 dependencies[] = courtsmenu
-;dependencies[] = itemhide
-;dependencies[] = journal
 
 
 libraries[ckeditor][download][type] = get

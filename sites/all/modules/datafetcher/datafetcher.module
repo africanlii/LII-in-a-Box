@@ -66,8 +66,7 @@ function _page_datafetcher() {
 
 
   $content['content'] = array(
-        '#type' => 'fieldset',
-        '#description'=>t($data),
+        '#markup'=>t($data),
       );
   return $content; 
 

@@ -1,5 +1,0 @@
-name = Consolidated Legislation beginning with a particular letter
-description = A container that lists legislation beginning with letter
-package = consol_legbegin
-core = 7.x
-files[] = consol_legbegin.module

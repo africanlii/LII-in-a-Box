@@ -1,5 +1,0 @@
-name = Journal Artiles alpha listing
-description = A container that alpha lists Journal Articles
-package = journalarticlealphalisting
-core = 7.x
-files[] = journalarticlealphalisting.module

@@ -1,5 +1,0 @@
-name = Listing of Consolidated Legislation by year
-description = A container that lists Consolidated Legislation by year
-package = consol_leglistyear
-core = 7.x
-files[] = consol_leglistyear.module

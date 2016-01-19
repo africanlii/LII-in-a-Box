@@ -1,5 +1,0 @@
-name = Journal Articles listing by year
-description = A container lists Journal Articles by year
-package = journalarticleyearlisting
-core = 7.x
-files[] = journalarticleyearlisting.module
