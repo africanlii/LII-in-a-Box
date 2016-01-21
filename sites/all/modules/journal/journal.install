@@ -39,7 +39,11 @@
 		  //Setting URI structure for journal content type
 		  //variable_set('pathauto_node_journal_pattern', 'journal/[node:title]');
 		  //variable_set('pathauto_node_journal_pattern', '[node:field_countrycode]/journal/[node:field_issuingcourt]/[node:field-jdate:custom:Y]/[node:field_jno]');
+<<<<<<< HEAD
 		variable_set('pathauto_node_journal_pattern', $country_code.'/journal/[node:field_jmnc]/[node:field_jpubdate:custom:Y/[node:title]');
+=======
+		variable_set('pathauto_node_journal_pattern', '/journal/[node:title]');
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 
 		//variable_set('auto_nodetitle_node_journal_pattern','[node:field_casename]'.'('.'[node:field_casenumber]'.')');
 		
@@ -211,7 +215,11 @@
 
 		//Create journal date field
 		$field = array(
+<<<<<<< HEAD
 		  'field_name' => 'field_jnpubdate',
+=======
+		  'field_name' => 'field_jpubdate',
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 		  'label' => $t('Publication Date'),
 		  'cardinality' => 1,
 		  'type' => 'date',
@@ -219,7 +227,11 @@
 		field_create_field($field);
 
 		$instance = array(
+<<<<<<< HEAD
 			'field_name'  => 'field_jnpubdate',
+=======
+			'field_name'  => 'field_jpubdate',
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 			'entity_type' => 'node',             
 			'bundle'      => 'journal', 
 			'label'       => $t('Publication Date'),

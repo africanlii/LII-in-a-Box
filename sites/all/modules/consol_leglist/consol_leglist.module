@@ -7,9 +7,15 @@ function consol_leglist_menu() {
  
   $aItems = array(
       'consol_leglist' => array(
+<<<<<<< HEAD
         'title' => 'Legislation',
         'page callback' => 'legislation_output',
         'access callback' => TRUE,
+=======
+        'title' => 'Consolidated Legislation',
+        'page callback' => '_page_consol_leglist',
+        //'access callback' => TRUE,
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
         'access arguments' => array('access consol_leglist'),
         'type' => MENU_NORMAL_ITEM,
       ),
@@ -17,6 +23,7 @@ function consol_leglist_menu() {
   return $aItems;
 }
  
+<<<<<<< HEAD
 
 
 function legislation_output() {
@@ -59,6 +66,23 @@ function _page_consol_leglist($current_path) {
   if($legtype == "consolidated_legislation"){
     $legname = str_replace('-',' ',$legname);
     $legname = ucwords($legname);
+=======
+/**
+ * Page callback mapped to the url /hello_world
+ *
+ * @return array
+ */
+function _page_consol_leglist() {
+  //return array(
+    //'#markup' => '<p>Consol Legislation</p>'
+  //);
+  $content = array();
+  $legname = $_GET['legname'];
+  $legtype = '';
+
+  if($legname == "Consolidated Legislation"){
+    $legtype = 'consolidated_legislation';
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
  
     drupal_set_title($legname);
     
@@ -66,9 +90,12 @@ function _page_consol_leglist($current_path) {
 
     $result2 = db_query("SELECT cdate.field_consoldate_value FROM {field_data_field_consoldate} cdate  WHERE cdate.bundle ='$legtype' ");  
 
+<<<<<<< HEAD
     $query2=db_query("SELECT DATE_FORMAT(cdate.field_consoldate_value,'%d %M %Y')
       FROM {field_data_field_consoldate} cdate  WHERE cdate.bundle ='$legtype' ")->fetchCol();
 
+=======
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
     //print_r($result);exit;
     $date_ar = array();
     $date_year = array();
@@ -82,6 +109,7 @@ function _page_consol_leglist($current_path) {
     }
     $num = $result->rowCount();
 
+<<<<<<< HEAD
     $consoldate_num = $result2->rowCount();
     //query to extract the first letter of the judgment
 
@@ -268,6 +296,12 @@ function _page_consol_leglist($current_path) {
     //query to extract the first letter of the judgment
     $sqlresult = db_query("SELECT SUBSTRING(nd.title,1,1) AS letter,nd.title, pdate.field_subpromdate_value FROM {node} nd INNER JOIN {field_data_field_subpromdate} pdate ON 
     nd.nid = pdate.entity_id WHERE pdate.bundle = '$legtype' ORDER BY nd.title ");
+=======
+    //echo $num;exit;
+    //query to extract the first letter of the judgment
+    $sqlresult = db_query("SELECT SUBSTRING(nd.title,1,1) AS letter,nd.title, cdate.field_consoldate_value FROM {node} nd INNER JOIN {field_data_field_consoldate} cdate ON 
+    nd.nid = cdate.entity_id WHERE cdate.bundle = '$legtype' ORDER BY nd.title ");
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
     
     $alpha = array();
 
@@ -278,7 +312,11 @@ function _page_consol_leglist($current_path) {
 
     if($num > 0){
         //echo "TEST";exit;   
+<<<<<<< HEAD
         //$created = min($date_ar);
+=======
+        $created = min($date_ar);
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
             
         $titles = '';
         foreach ($result as $row) {
@@ -286,8 +324,12 @@ function _page_consol_leglist($current_path) {
         }
 
         //$content['titles'] = $titles;
+<<<<<<< HEAD
         $lists = '';
         //$lists = '<p>Database last updated: '. $created .'';
+=======
+        $lists = '<p>Database last updated: '. $created .'';
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
         $lists .= 'Number of documents: '. $num .'<br/>';
         $lists .= '</p>';
         $lists .= 'Legislation beginning with:</p>';
@@ -295,8 +337,12 @@ function _page_consol_leglist($current_path) {
         
         $word = '<p></p>';
         foreach(range('A','Z') as $i) {
+<<<<<<< HEAD
           //$word .= (array_key_exists ("$i", $alpha)) ? "<a href='consol_legbegin?letter=$i&legisname=$legtype'".">".$i."</a>" : "$i";
           $word .= (array_key_exists ("$i", $alpha)) ? t('<a href="@url">'.$i.'</a>', array('@url' => url('consol_leglist/'.$legtype.'/'.strtolower($i)))) : "$i";
+=======
+          $word .= (array_key_exists ("$i", $alpha)) ? "<a href='consol_legbegin?letter=$i&legisname=$legtype'".">".$i."</a>" : "$i";
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
           $word .= ($i != 'Z') ? ' | ':'';    
         }
 
@@ -304,16 +350,27 @@ function _page_consol_leglist($current_path) {
         sort($date_year);
         $years_range = '<p></p>';
         foreach($date_year as $year) {
+<<<<<<< HEAD
           //$years_range .= "<a href='consol_leglistyear?legname=$legname&year=$year'>| $year </a> ";
           $years_range .= t('<a href="@url">'.$year.'</a> | ', array('@url' => url('consol_leglist/'.$legtype.'/'. $year)));
         }
 
         $content['content'] = array(
           '#markup'=>t($lists.$word.$years_cont.$years_range),
+=======
+            $years_range .= "<a href='consol_leglistyear?legname=$legname&year=$year'>| $year </a> ";
+        }
+
+        $content['content'] = array(
+          '#type' => 'fieldset',
+          //'#description'=>t($lists.$word),
+          '#description'=>t($lists.$word.$years_cont.$years_range),
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
         );
     }
     else{
       $content['content'] = array(
+<<<<<<< HEAD
       '#markup'=>t("<strong>There are currently no legislations loaded</strong>"),
       );
     }
@@ -322,19 +379,37 @@ function _page_consol_leglist($current_path) {
   else if($legtype == "gazette_legislation"){
     $legname = str_replace('-',' ',$legname);
     $legname = ucwords($legname);
+=======
+      '#type' => 'fieldset',
+      '#description'=>t("<strong>There are currently no legislations loaded</strong>"),
+      );
+    }
+    
+  }
+  //Checking Legislation promulgated
+  else if($legname == "Legislation as promulgated"){
+    $legtype = "legislation_promulgated";
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
     
     drupal_set_title($legname);
     
     $result = db_query("SELECT * FROM {node} WHERE type = '$legtype' ");
 
+<<<<<<< HEAD
     $result2 = db_query("SELECT pdate.field_gaz_publication_date_value FROM {field_data_field_gaz_publication_date} pdate
     WHERE pdate.bundle ='$legtype' ");  
+=======
+    $result2 = db_query("SELECT cdate.field_yearact_value,p.field_promulgation_value FROM {field_data_field_yearact} cdate INNER JOIN {field_data_field_promulgation} p
+      ON p.entity_id = cdate.entity_id
+     AND cdate.bundle ='$legtype' ");  
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 
 
     $date_ar = array();
     $date_year = array();
     foreach($result2 as $dt){
 
+<<<<<<< HEAD
       $date_ar[] = date('j F Y',strtotime($dt->field_gaz_publication_date_value)).'<br/>';
       $yearval = date('Y',strtotime($dt->field_gaz_publication_date_value));
       if(!in_array($yearval,$date_year))
@@ -347,6 +422,19 @@ function _page_consol_leglist($current_path) {
     //query to extract the first letter of the judgment
     $sqlresult = db_query("SELECT SUBSTRING(nd.title,1,1) AS letter,nd.title, pdate.field_gaz_publication_date_value FROM {node} nd INNER JOIN {field_data_field_gaz_publication_date} pdate ON 
     nd.nid = pdate.entity_id WHERE pdate.bundle = '$legtype' ORDER BY nd.title ");
+=======
+      $date_ar[] = date('j F Y',strtotime($dt->field_promulgation_value)).'<br/>';
+      //$yearval = date('Y',strtotime($dt->field_consoldate_value));
+      if(!in_array($dt->field_yearact_value,$date_year))
+        $date_year[] = $dt->field_yearact_value;
+    }
+    $num = $result->rowCount();
+
+    //echo $num;exit;
+    //query to extract the first letter of the judgment
+    $sqlresult = db_query("SELECT SUBSTRING(nd.title,1,1) AS letter,nd.title, cdate.field_promulgation_value FROM {node} nd INNER JOIN {field_data_field_promulgation} cdate ON 
+    nd.nid = cdate.entity_id WHERE cdate.bundle = '$legtype' ORDER BY nd.title ");
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
     
     $alpha = array();
 
@@ -357,7 +445,11 @@ function _page_consol_leglist($current_path) {
 
     if($num > 0){
         //echo "TEST";exit;   
+<<<<<<< HEAD
         //$created = min($date_ar);
+=======
+        $created = min($date_ar);
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
             
         $titles = '';
         foreach ($result as $row) {
@@ -365,8 +457,12 @@ function _page_consol_leglist($current_path) {
         }
 
         //$content['titles'] = $titles;
+<<<<<<< HEAD
         $lists = '';
         //$lists = '<p>Database last updated: '. $created .'';
+=======
+        $lists = '<p>Database last updated: '. $created .'';
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
         $lists .= 'Number of documents: '. $num .'<br/>';
         $lists .= '</p>';
         $lists .= 'Legislation beginning with:</p>';
@@ -374,8 +470,12 @@ function _page_consol_leglist($current_path) {
         
         $word = '<p></p>';
         foreach(range('A','Z') as $i) {
+<<<<<<< HEAD
           //$word .= (array_key_exists ("$i", $alpha)) ? "<a href='consol_legbegin?letter=$i&legisname=$legtype'".">".$i."</a>" : "$i";
           $word .= (array_key_exists ("$i", $alpha)) ? t('<a href="@url">'.$i.'</a>', array('@url' => url('consol_leglist/'.$legtype.'/'.strtolower($i)))) : "$i";
+=======
+          $word .= (array_key_exists ("$i", $alpha)) ? "<a href='consol_legbegin?letter=$i&legisname=$legtype'".">".$i."</a>" : "$i";
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
           $word .= ($i != 'Z') ? ' | ':'';    
         }
 
@@ -383,16 +483,27 @@ function _page_consol_leglist($current_path) {
         sort($date_year);
         $years_range = '<p></p>';
         foreach($date_year as $year) {
+<<<<<<< HEAD
           //$years_range .= "<a href='consol_leglistyear?legname=$legname&year=$year'>| $year </a> ";
           $years_range .= t('<a href="@url">'.$year.'</a> | ', array('@url' => url('consol_leglist/'.$legtype.'/'. $year)));
         }
 
         $content['content'] = array(
           '#markup'=>t($lists.$word.$years_cont.$years_range),
+=======
+            $years_range .= "<a href='consol_leglistyear?legname=$legname&year=$year'>| $year </a> ";
+        }
+
+        $content['content'] = array(
+          '#type' => 'fieldset',
+          //'#description'=>t($lists.$word),
+          '#description'=>t($lists.$word.$years_cont.$years_range),
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
         );
     }
     else{
       $content['content'] = array(
+<<<<<<< HEAD
         '#markup'=>t("<strong>There are currently no legislations loaded</strong>"),
       );
     }
@@ -400,19 +511,38 @@ function _page_consol_leglist($current_path) {
   else if($legtype == "bills_legislation"){
     $legname = str_replace('-',' ',$legname);
     $legname = ucwords($legname);
+=======
+      '#type' => 'fieldset',
+      '#description'=>t("<strong>There are currently no legislations loaded</strong>"),
+      );
+    }
+   
+  }
+  //Checking Legislation promulgated
+  else if($legname == "Subordinate Legislation"){
+    $legtype = "subordinate_legislation";
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
     
     drupal_set_title($legname);
     
     $result = db_query("SELECT * FROM {node} WHERE type = '$legtype' ");
 
+<<<<<<< HEAD
     $result2 = db_query("SELECT pdate.field_date_introduced_value FROM {field_data_field_date_introduced} pdate
     WHERE pdate.bundle ='$legtype' ");  
+=======
+    $result2 = db_query("SELECT pdate.field_subpromdate_value,y.field_sublegyear_value FROM {field_data_field_subpromdate} pdate
+    INNER JOIN {field_revision_field_sublegyear} y
+    ON y.entity_id = pdate.entity_id
+    AND pdate.bundle ='$legtype' ");  
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 
 
     $date_ar = array();
     $date_year = array();
     foreach($result2 as $dt){
 
+<<<<<<< HEAD
       $date_ar[] = date('j F Y',strtotime($dt->field_date_introduced_value)).'<br/>';
       $yearval = date('Y',strtotime($dt->field_date_introduced_value));
       if(!in_array($yearval,$date_year))
@@ -424,6 +554,18 @@ function _page_consol_leglist($current_path) {
     //echo $num;exit;
     //query to extract the first letter of the judgment
     $sqlresult = db_query("SELECT SUBSTRING(nd.title,1,1) AS letter,nd.title, pdate.field_date_introduced_value FROM {node} nd INNER JOIN {field_data_field_date_introduced} pdate ON 
+=======
+      $date_ar[] = date('j F Y',strtotime($dt->field_subpromdate_value)).'<br/>';
+      //$yearval = date('Y',strtotime($dt->field_consoldate_value));
+      if(!in_array($dt->field_sublegyear_value,$date_year))
+        $date_year[] = $dt->field_sublegyear_value;
+    }
+    $num = $result->rowCount();
+
+    //echo $num;exit;
+    //query to extract the first letter of the judgment
+    $sqlresult = db_query("SELECT SUBSTRING(nd.title,1,1) AS letter,nd.title, pdate.field_subpromdate_value FROM {node} nd INNER JOIN {field_data_field_subpromdate} pdate ON 
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
     nd.nid = pdate.entity_id WHERE pdate.bundle = '$legtype' ORDER BY nd.title ");
     
     $alpha = array();
@@ -435,7 +577,11 @@ function _page_consol_leglist($current_path) {
 
     if($num > 0){
         //echo "TEST";exit;   
+<<<<<<< HEAD
         //$created = min($date_ar);
+=======
+        $created = min($date_ar);
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
             
         $titles = '';
         foreach ($result as $row) {
@@ -443,8 +589,12 @@ function _page_consol_leglist($current_path) {
         }
 
         //$content['titles'] = $titles;
+<<<<<<< HEAD
         $lists = '';
         //$lists = '<p>Database last updated: '. $created .'';
+=======
+        $lists = '<p>Database last updated: '. $created .'';
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
         $lists .= 'Number of documents: '. $num .'<br/>';
         $lists .= '</p>';
         $lists .= 'Legislation beginning with:</p>';
@@ -452,8 +602,12 @@ function _page_consol_leglist($current_path) {
         
         $word = '<p></p>';
         foreach(range('A','Z') as $i) {
+<<<<<<< HEAD
           //$word .= (array_key_exists ("$i", $alpha)) ? "<a href='consol_legbegin?letter=$i&legisname=$legtype'".">".$i."</a>" : "$i";
           $word .= (array_key_exists ("$i", $alpha)) ? t('<a href="@url">'.$i.'</a>', array('@url' => url('consol_leglist/'.$legtype.'/'.strtolower($i)))) : "$i";
+=======
+          $word .= (array_key_exists ("$i", $alpha)) ? "<a href='consol_legbegin?letter=$i&legisname=$legtype'".">".$i."</a>" : "$i";
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
           $word .= ($i != 'Z') ? ' | ':'';    
         }
 
@@ -461,8 +615,12 @@ function _page_consol_leglist($current_path) {
         sort($date_year);
         $years_range = '<p></p>';
         foreach($date_year as $year) {
+<<<<<<< HEAD
           //$years_range .= "<a href='consol_leglistyear?legname=$legname&year=$year'>| $year </a> ";
           $years_range .= t('<a href="@url">'.$year.'</a> | ', array('@url' => url('consol_leglist/'.$legtype.'/'. $year)));
+=======
+            $years_range .= "<a href='consol_leglistyear?legname=$legname&year=$year'>| $year </a> ";
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
         }
 
         $content['content'] = array(
@@ -473,13 +631,19 @@ function _page_consol_leglist($current_path) {
     }
     else{
       $content['content'] = array(
+<<<<<<< HEAD
         '#markup'=>t("<strong>There are currently no legislations loaded</strong>"),
+=======
+      '#type' => 'fieldset',
+      '#description'=>t("<strong>There are currently no legislations loaded</strong>"),
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
       );
     }
   }
   return $content;
 }
 
+<<<<<<< HEAD
 
 function legislation_beginwith($current_path){
 
@@ -684,3 +848,5 @@ function legislation_beginwith($current_path){
     }
 
 }
+=======
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3

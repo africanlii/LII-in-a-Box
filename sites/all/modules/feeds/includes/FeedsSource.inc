@@ -366,14 +366,21 @@ class FeedsSource extends FeedsConfigurable {
       //if($parser_result->title != '')
       //$new_result = array($parser_array);    
       
+<<<<<<< HEAD
       //Alfred changed the parser to read body from the URL 
+=======
+     
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
       //foreach($parser_result as $values){
       $new_ar = $parser_result->items;
       for($i=0; $i<count($parser_result->items); $i++){
         //echo $parser_result->items[$i]['body'] .' ';
         $new_body = file_get_contents($parser_result->items[$i]['body']);
+<<<<<<< HEAD
         //Alfred- convert content to utf8_encode for importing
         $new_body = mb_check_encoding($new_body, 'UTF-8') ? $new_body : utf8_encode($new_body);
+=======
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
         $parser_result->items[$i]['body'] = $new_body;
       
       }

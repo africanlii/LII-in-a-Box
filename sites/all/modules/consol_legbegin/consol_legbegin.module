@@ -1,0 +1,65 @@
+<?php
+/**
+ * Implements hook_menu()
+ * @return array
+ */
+function consol_legbegin_menu() {
+ 
+  $aItems = array(
+      'consol_legbegin' => array(
+        'title' => 'Consolidated Legislation beginning with',
+        'page callback' => '_page_consol_legbegin',
+        //'access callback' => TRUE,
+        'access arguments' => array('access consol_legbegin'),
+        'type' => MENU_NORMAL_ITEM,
+      ),
+    );
+  return $aItems;
+}
+ 
+/**
+ * Page callback mapped to the url /hello_world
+ *
+ * @return array
+ */
+function _page_consol_legbegin() {
+
+  $letter = '';
+  $legisname = '';
+  if(isset($_GET['letter']) && isset($_GET['legisname'])){
+    $letter = $_GET['letter'];
+    $legisname= $_GET['legisname'];
+  }
+
+  drupal_set_title('Legislations beginning with '.$letter);
+
+  $queryres=db_query("SELECT nd.title, ualias.alias
+  FROM {node} nd INNER JOIN {url_alias} ualias ON
+  ualias.source = CONCAT('node/',nd.nid) 
+  AND nd.title LIKE '$letter%'
+  AND nd.type = '$legisname' ");
+
+
+  $data = '<p><strong>type:</strong> judgment';
+  $data .= '<p><strong>database:</strong> '.$legisname;
+  $data .= '<p><strong>alpha:</strong> '.$letter;
+  $data .= "<p><ul>";
+  foreach($queryres as $result){
+    $content_title = $result->title;
+    $content_src = $result->alias;
+    $data .="<li><a href='$content_src'>$content_title</a></li>"; 
+  }
+  $data .= "</ul></p>";
+
+  $content['content'] = array(
+    '#type' => 'fieldset',
+    '#description'=>t($data),
+  );
+  return $content;
+  //return array(
+    //'#markup' => '<p>Consol Legislation beginning with</p>'
+  //);
+  
+  
+}
+

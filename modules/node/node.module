@@ -2725,7 +2725,11 @@ function node_page_default() {
     //$count = db_query("SELECT * FROM {field_revision_field_courtname} WHERE bundle = :bundle",array(':bundle' => $bundle,))->rowCount();
 
     if(!module_exists('judgment')){   
+<<<<<<< HEAD
       $modules = array('judgment','consolidated_legislation','subordinate_legislation','legislation_promulgated','journal','bills','gazette','other'); // Array of module names
+=======
+      $modules = array('judgment','consolidated_legislation','subordinate_legislation','legislation_promulgated','journal'); // Array of module names
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
       $enable_dependencies = TRUE;
       module_enable($modules, $enable_dependencies);
     }
@@ -2768,7 +2772,11 @@ function node_page_view($node) {
     //$count = db_query("SELECT * FROM {field_revision_field_courtname} WHERE bundle = :bundle",array(':bundle' => $bundle,))->rowCount();
 
     if(!module_exists('judgment')){   
+<<<<<<< HEAD
       $modules = array('judgment','consolidated_legislation','subordinate_legislation','legislation_promulgated','journal','bills','gazette','other'); // Array of module names
+=======
+      $modules = array('judgment','consolidated_legislation','subordinate_legislation','legislation_promulgated','journal'); // Array of module names
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
       $enable_dependencies = TRUE;
       module_enable($modules, $enable_dependencies);
     }

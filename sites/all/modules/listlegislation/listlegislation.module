@@ -23,16 +23,24 @@ function listlegislation_block_info() {
  */
 function listlegislation_block_view($delta = '') {
 
+<<<<<<< HEAD
   $t = get_t();
+=======
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
   $legname = '';
   $type = 'legislationtype';
 
 
+<<<<<<< HEAD
   $result = db_query("SELECT name,type FROM {node_type} WHERE type LIKE '%legislation%' ");
+=======
+  $result = db_query("SELECT name FROM {node_type} WHERE name LIKE '%legislation%' ");
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 
   foreach ($result as $row) {
     
     $name = $row->name; 
+<<<<<<< HEAD
     $legtype = $row->type;
    
     //$legname .= "<a href='/consol_leglist&legname=$name'>".$name."</a><br/>";
@@ -41,6 +49,10 @@ function listlegislation_block_view($delta = '') {
     $newname = trim(strtolower($trimmednm));
     $legname .= t('<a href="@url">'.$name.'</a>', array('@url' => url('consol_leglist/'.$legtype.'/'.$newname))) . "<br/>" ;
 
+=======
+   
+    $legname .= "<a href='/consol_leglist&legname=$name'>".$name."</a><br/>";
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 
   }
 
@@ -48,7 +60,11 @@ function listlegislation_block_view($delta = '') {
    
     case 'legislation':
       $block['content'] = '<p><h2><strong>Legislation</strong></h2><br />'.$legname .'</p>';
+<<<<<<< HEAD
     break;
+=======
+      break;
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
   }
   if($result->rowCount() > 0){
     return $block;

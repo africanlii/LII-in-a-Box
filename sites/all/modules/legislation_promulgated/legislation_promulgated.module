@@ -1,6 +1,10 @@
 <?php
 
+<<<<<<< HEAD
 	//require_once('legislation_promulgated_functions.inc');
+=======
+	require_once('legislation_promulgated_functions.inc');
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 
 	function legislation_promulgated_node_info() {
 
@@ -11,7 +15,11 @@
 			'base' => 'node_content',
 			'description' => t('A content type to handle legislation as promulgated.'),
 			'has_title' => 1,
+<<<<<<< HEAD
 			'title_label' => t('Title'),
+=======
+			'title_label' => t('Short title'),
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 			'body_label' => t('Legislation Description'),
 			//'help' => t('Please fill in all fields.'),
 			'custom' => TRUE,

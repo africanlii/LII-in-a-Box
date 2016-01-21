@@ -13,9 +13,15 @@ function listcourts_block_info() {
   //$blocks['legislation'] = array(
    // 'info' => t('Legislation'),
   //);
+<<<<<<< HEAD
   
   return $blocks;
 } 
+=======
+
+  return $blocks;
+}
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 
 
 /**
@@ -23,7 +29,10 @@ function listcourts_block_info() {
  */
 function listcourts_block_view($delta = '') {
 
+<<<<<<< HEAD
   $t = get_t();
+=======
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
   $courtname = '';
   $type = 'courtnamesadd';
 
@@ -34,11 +43,15 @@ function listcourts_block_view($delta = '') {
     
     $name = $row->title; 
    
+<<<<<<< HEAD
     //$courtname .= "<a href='/courtnames&courtname=$name'>".$name."</a><br/>";
 
     $trimmednm = str_replace(' ','-',$name);
     $newname = trim(strtolower($trimmednm));
     $courtname .= $t('<a href="@url">'.$name.'</a>', array('@url' => url('courtnames/'.$newname))) . "<br/>" ;
+=======
+    $courtname .= "<a href='/courtnames&courtname=$name'>".$name."</a><br/>";
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 
   }
 

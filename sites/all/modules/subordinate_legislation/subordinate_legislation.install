@@ -37,7 +37,11 @@
 
 
 		$country_code = strtolower(variable_get('site_default_country'));		
+<<<<<<< HEAD
 		variable_set('pathauto_node_subordinate_legislation_pattern', $country_code.'/legislation/si/[node:field_sublegyear]/[node:field_sublegno]');
+=======
+		variable_set('pathauto_node_subordinate_legislation_pattern', $country_code.'/subordinate_legislation/[node:field_sublegno]');
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 
 		//variable_set('auto_nodetitle_node_judgment_pattern','[node:field_casename]'.'('.'[node:field_casenumber]'.')');
 		
@@ -215,6 +219,7 @@
 
 
 		$field = array(
+<<<<<<< HEAD
 		  'field_name' => 'field_subrelatedsis',
 		  'label' => $t('Link to Related Sis'),
 		  'cardinality' => 1,
@@ -224,6 +229,53 @@
 		       'related_sis'=>'related_sis'
 		   ),   
 		   ),      
+=======
+		  'field_name' => 'field_issuingauth',
+		  'label' => $t('Issuing Authority'),
+		  'cardinality' => 1,
+		  'type' => 'text',      
+		);
+		field_create_field($field);
+
+		$instance = array(
+			'field_name'  => 'field_issuingauth',
+			'entity_type' => 'node',             
+			'bundle'      => 'subordinate_legislation', 
+			'label'       => $t('Issuing Authority'),
+			'required'    => false,                    
+			'widget'      => array(
+			  'type'     => 'text',              
+			),
+		);
+		field_create_instance($instance);
+
+		$field = array(
+		  'field_name' => 'field_subleginforce',
+		  'label' => $t('In-force'),
+		  'cardinality' => 1,
+		  'type' => 'text',      
+		);
+		field_create_field($field);
+
+		$instance = array(
+			'field_name'  => 'field_subleginforce',
+			'entity_type' => 'node',             
+			'bundle'      => 'subordinate_legislation', 
+			'label'       => $t('In-force'),
+			'required'    => false,                    
+			'widget'      => array(
+			  'type'     => 'text',              
+			),
+		);
+		field_create_instance($instance);
+
+
+		$field = array(
+		  'field_name' => 'field_subrelatedsis',
+		  'label' => $t('Link to Related Sis'),
+		  'cardinality' => 1,
+		  'type' => 'text',      
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 		);
 		field_create_field($field);
 
@@ -231,17 +283,26 @@
 			'field_name'  => 'field_subrelatedsis',
 			'entity_type' => 'node',             
 			'bundle'      => 'subordinate_legislation', 
+<<<<<<< HEAD
 			'type' => 'node_reference',
 			'label'       => $t('Link to Related Sis'),
 			'required'    => false,                    
 			'widget'=>array(
 		      'type'=>'taxonomy_autocomplete'
 		    ),
+=======
+			'label'       => $t('Link to Related Sis'),
+			'required'    => false,                    
+			'widget'      => array(
+			  'type'     => 'text',              
+			),
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 		);
 		field_create_instance($instance);
 
 
 		$field = array(
+<<<<<<< HEAD
 		  'field_name' => 'field_subrelatedconsol_act',
 		  'label' => $t('Link to Related Consol Act'),
 		  'cardinality' => 1,
@@ -251,10 +312,17 @@
 		       'related_leg'=>'related_leg'
 		   ), 
 		  ),   
+=======
+		  'field_name' => 'field_subrelatedconsolact',
+		  'label' => $t('Link to Related Consol Act'),
+		  'cardinality' => 1,
+		  'type' => 'text',      
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 		);
 		field_create_field($field);
 
 		$instance = array(
+<<<<<<< HEAD
 			'field_name'  => 'field_subrelatedconsol_act',
 			'entity_type' => 'node',             
 			'bundle'      => 'subordinate_legislation', 
@@ -264,6 +332,16 @@
 			'widget'=>array(
 		      'type'=>'taxonomy_autocomplete'
 		    ),
+=======
+			'field_name'  => 'field_subrelatedconsolact',
+			'entity_type' => 'node',             
+			'bundle'      => 'subordinate_legislation', 
+			'label'       => $t('Link to Related Consol Act'),
+			'required'    => false,                    
+			'widget'      => array(
+			  'type'     => 'text',              
+			),
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 		);
 		field_create_instance($instance);
 
@@ -271,12 +349,16 @@
 		  'field_name' => 'field_subrelatedleg',
 		  'label' => $t('Link to Related Legislation'),
 		  'cardinality' => 1,
+<<<<<<< HEAD
 		  'type' => 'node_reference',    
 		  'settings'=>array(
 		     'referenceable_types'=>array(
 		       'related_leg'=>'related_leg'
 		   ),
 		  ),      
+=======
+		  'type' => 'text',      
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 		);
 		field_create_field($field);
 
@@ -284,16 +366,25 @@
 			'field_name'  => 'field_subrelatedleg',
 			'entity_type' => 'node',             
 			'bundle'      => 'subordinate_legislation', 
+<<<<<<< HEAD
 			'type' => 'node_reference',
 			'label'       => $t('Link to Related Legislation'),
 			'required'    => false,                    
 			'widget'=>array(
 		      'type'=>'taxonomy_autocomplete'
 		    ),
+=======
+			'label'       => $t('Link to Related Legislation'),
+			'required'    => false,                    
+			'widget'      => array(
+			  'type'     => 'text',              
+			),
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 		);
 		field_create_instance($instance);
 		
 
+<<<<<<< HEAD
 	    // Create a default vocabulary named "Tags", enabled for the 'article' content type.
 		$description = st('Use tags to group articles on similar topics into categories.');
 		$vocabulary = (object) array(
@@ -344,6 +435,28 @@
 		field_create_instance($instance);
 
 
+=======
+	    $field = array(
+		  'field_name' => 'field_sublegtaxonomy',
+		  'label' => $t('Taxonomy'),
+		  'cardinality' => 1,
+		  'type' => 'text',      
+		);
+		field_create_field($field);
+
+		$instance = array(
+			'field_name'  => 'field_sublegtaxonomy',
+			'entity_type' => 'node',             
+			'bundle'      => 'subordinate_legislation', 
+			'label'       => $t('Taxonomy'),
+			'required'    => false,                    
+			'widget'      => array(
+			  'type'     => 'text',              
+			),
+		);
+		field_create_instance($instance);
+
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 		$field = array(
 		  'field_name' => 'field_sublegdownload',
 		  'label' => $t('Download'),

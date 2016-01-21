@@ -7,6 +7,7 @@
 require_once('courtnames_functions.inc');
 
 function courtnames_menu() {
+<<<<<<< HEAD
 
 
   $t = get_t();
@@ -16,12 +17,21 @@ function courtnames_menu() {
         'title' => 'Court names',
         'page callback' => '_page_courtnames_output',
         'access callback' => TRUE,
+=======
+ //$courtname = $_GET['courtname'];
+  $aItems = array(
+      'courtnames' => array(
+        'title' => 'Court names',
+        'page callback' => '_page_courtnames',
+        //'access callback' => TRUE,
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
         'access arguments' => array('access courtnames'),
         'type' => MENU_NORMAL_ITEM,
       ),
     );
   return $aItems;
 }
+<<<<<<< HEAD
 
 
 /**
@@ -51,12 +61,15 @@ function _page_courtnames_output() {
 
 }
 
+=======
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
  
 /**
  * Page callback mapped to the url /courtnames
  *
  * @return array
  */
+<<<<<<< HEAD
 function _page_courtnames($current_path) {
   $content = array();
 
@@ -69,6 +82,16 @@ function _page_courtnames($current_path) {
 
   //print_r($path_ar);
 
+=======
+function _page_courtnames() {
+  $content = array();
+  $courtname = '';
+  if(isset($_GET['courtname'])){
+    $courtname = $_GET['courtname'];
+  }
+  //echo $courtname;exit;
+  drupal_set_title($courtname);
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
   $type = 'judgment';
   $mnc_code = 'scza';
   $result = db_query("SELECT * FROM {node} WHERE type = :type",array(':type' => $type,));
@@ -103,6 +126,7 @@ function _page_courtnames($current_path) {
     $alpha[$letters->letter] = $letters->title;
   }
 
+<<<<<<< HEAD
   $query2=db_query("SELECT DATE_FORMAT(jdate.field_jdate_value,'%d %M %Y') FROM {field_revision_field_issuingcourt_select} issuingcourt INNER JOIN {field_data_field_jdate} jdate
                          ON issuingcourt.entity_id = jdate.entity_id 
                          WHERE issuingcourt.field_issuingcourt_select_value LIKE '%$courtname%' ORDER BY jdate.field_jdate_value  ")->fetchCol();
@@ -110,6 +134,12 @@ function _page_courtnames($current_path) {
   if($num > 0){
       $ind = count($query2)-1;
       $created = $query2[$ind];
+=======
+
+  if($num > 0){
+      //echo "TEST";exit;   
+      $created = min($date_ar);
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
           
       $titles = '';
       foreach ($result as $row) {
@@ -117,6 +147,7 @@ function _page_courtnames($current_path) {
       }
 
       //$content['titles'] = $titles;
+<<<<<<< HEAD
       $lists = '<p>Most recent decision: '. $created .'<br/>';
       $lists .= 'Number of decisions: '. $num .'<br/>';
       $lists .= 'Decisions beginning with:</p>';
@@ -130,14 +161,35 @@ function _page_courtnames($current_path) {
        
       }
 
+=======
+      $lists = '<p>Most recent decision: '. $created .'';
+      $lists .= 'Number of decisions: '. $num .'<br/>';
+      $lists .= 'Decisions beginning with:</p>';
+
+      
+      $word = '<p></p>';
+      foreach(range('A','Z') as $i) {
+        $word .= (array_key_exists ("$i", $alpha)) ? "<a href='courtbeginning?letter=$i&courtname=$courtname'".">".$i."</a>" : "$i";
+        $word .= ($i != 'Z') ? ' | ':'';
+        /*if(in_array($i,$alpha)){
+          $word .= "< a href='courtbeginning?letter='> $i </a>"; 
+        }*/
+      }
+
+      $query3 = "select distinct from_unixtime(field_jdate_value, '%Y') as year from content_type_caselaw where field_mnc_value like '%$mnc_code%' order by field_jdate_value";
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 
       $years_cont = '<p></p><p>Decisions for the years:</p>';
 
       sort($date_year);
       $years_range = '<p></p>';
       foreach($date_year as $year) {
+<<<<<<< HEAD
         //$years_range .= t('<a href="@url">'.$year.'</a>|', array('@url' => url('courtdecisions/'.$passedcourtname.'/'.$year)));
         $years_range .= t('<a href="@url">'.$year.'</a>|', array('@url' => url('courtnames/'.$passedcourtname.'/'. $year)));
+=======
+          $years_range .= "<a href='courtdecisions?courtname=$courtname&year=$year'>| $year </a> ";
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
       }
 
       $content['content'] = array(
@@ -152,6 +204,7 @@ function _page_courtnames($current_path) {
     );
   }
   
+<<<<<<< HEAD
   return $content;
 }
 
@@ -260,3 +313,11 @@ function courtbeginwith($current_path) {
 
 
 
+=======
+return $content;
+
+
+
+}
+
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3

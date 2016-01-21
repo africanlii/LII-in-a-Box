@@ -286,6 +286,7 @@
 		),
 	  );
 	  field_create_instance($instance);
+<<<<<<< HEAD
 
 	  $field = array(
 		   'field_name'=>'field_judg_rel_case',
@@ -335,6 +336,8 @@
 		);
 		field_create_instance($instance);
 
+=======
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 	 
 
 	  $cnt_code = strtolower(variable_get('site_default_country'));
@@ -367,6 +370,7 @@
 		  ),
 		
 	  );
+<<<<<<< HEAD
 	  field_create_instance($instance);	
 
 
@@ -463,6 +467,9 @@
 
 
 
+=======
+	  field_create_instance($instance);		
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 	}
 
 		

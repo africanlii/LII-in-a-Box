@@ -24,7 +24,11 @@ dependencies[] = syslog
 dependencies[] = search
 dependencies[] = shortcut
 dependencies[] = toolbar
+<<<<<<< HEAD
 ;dependencies[] = overlay
+=======
+dependencies[] = overlay
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 dependencies[] = field
 dependencies[] = field_ui
 dependencies[] = file
@@ -80,10 +84,18 @@ dependencies[] = variable
 dependencies[] = libraries
 dependencies[] = xmlsitemap
 dependencies[] = multiupload_filefield_widget
+<<<<<<< HEAD
 dependencies[] = node_reference
 
 ;Custom
 dependencies[] = courtnamesadd
+=======
+
+;Custom
+dependencies[] = courtnamesadd
+dependencies[] = courtbeginning
+dependencies[] = courtdecisions
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 dependencies[] = courtnames
 ;dependencies[] = judgment
 ;dependencies[] = legislation_promulgated
@@ -95,11 +107,23 @@ dependencies[] = listlegislation
 dependencies[] = uploadfiles
 dependencies[] = bulkuploadfiles
 dependencies[] = consol_leglist
+<<<<<<< HEAD
 ;dependencies[] = journal
 dependencies[] = listjournals
 dependencies[] = journaltitle
 dependencies[] = journalarticle
 dependencies[] = courtsmenu
+=======
+dependencies[] = consol_legbegin
+dependencies[] = consol_leglistyear
+;dependencies[] = journal
+dependencies[] = listjournals
+dependencies[] = journaltitle
+dependencies[] = journalarticlealphalisting
+dependencies[] = journalarticlebeginwith
+dependencies[] = journalarticleyearlisting
+;dependencies[] = itemhide
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 
 
 libraries[ckeditor][download][type] = get

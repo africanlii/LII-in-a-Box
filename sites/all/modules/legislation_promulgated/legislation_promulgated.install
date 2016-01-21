@@ -37,7 +37,11 @@
 
 
 		$country_code = strtolower(variable_get('site_default_country'));		
+<<<<<<< HEAD
 		variable_set('pathauto_node_legislation_promulgated_pattern', $country_code.'/legislation/act/[node:field_yearact]/[node:field_numact]');
+=======
+		variable_set('pathauto_node_legislation_promulgated_pattern', $country_code.'/legislation_promulgated/[node:field_numact]');
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 		
 
 		//variable_set('auto_nodetitle_node_judgment_pattern','[node:field_casename]'.'('.'[node:field_casenumber]'.')');
@@ -258,6 +262,7 @@
 		field_create_instance($instance);
 
 
+<<<<<<< HEAD
 		// Create a default vocabulary named "Tags", enabled for the 'article' content type.
 		$description = st('Related Sis.');
 		$vocabulary = (object) array(
@@ -304,11 +309,31 @@
 		        'weight' => 10,
 		    ),
 		  ),
+=======
+		$field = array(
+		  'field_name' => 'field_relatedsis',
+		  'label' => $t('Link to Related Sis'),
+		  'cardinality' => 1,
+		  'type' => 'text',      
+		);
+		field_create_field($field);
+
+		$instance = array(
+			'field_name'  => 'field_relatedsis',
+			'entity_type' => 'node',             
+			'bundle'      => 'legislation_promulgated', 
+			'label'       => $t('Link to Related Sis'),
+			'required'    => false,                    
+			'widget'      => array(
+			  'type'     => 'text',              
+			),
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 		);
 		field_create_instance($instance);
 
 
 		$field = array(
+<<<<<<< HEAD
 		   'field_name'=>'field_legprom_rel_case',
 		   'label'=>'Link to related Cases',		 
 		   'type'=>'node_reference',
@@ -329,10 +354,29 @@
 		    'widget'=>array(
 		      'type'=>'taxonomy_autocomplete'
 		    ),
+=======
+		  'field_name' => 'field_relatedcases',
+		  'label' => $t('Link to Related Cases'),
+		  'cardinality' => 1,
+		  'type' => 'text',      
+		);
+		field_create_field($field);
+
+		$instance = array(
+			'field_name'  => 'field_relatedcases',
+			'entity_type' => 'node',             
+			'bundle'      => 'legislation_promulgated', 
+			'label'       => $t('Link to Related Cases'),
+			'required'    => false,                    
+			'widget'      => array(
+			  'type'     => 'text',              
+			),
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 		);
 		field_create_instance($instance);
 
 		$field = array(
+<<<<<<< HEAD
 		   'field_name'=>'field_legprom_rel_leg',
 		   'label'=>'Link to related Legislation',		 
 		   'type'=>'node_reference',
@@ -355,6 +399,27 @@
 		    ),
 		);
 		field_create_instance($instance);
+=======
+		  'field_name' => 'field_relatedleg',
+		  'label' => $t('Link to Related Legislation'),
+		  'cardinality' => 1,
+		  'type' => 'text',      
+		);
+		field_create_field($field);
+
+		$instance = array(
+			'field_name'  => 'field_relatedleg',
+			'entity_type' => 'node',             
+			'bundle'      => 'legislation_promulgated', 
+			'label'       => $t('Link to Related Legislation'),
+			'required'    => false,                    
+			'widget'      => array(
+			  'type'     => 'text',              
+			),
+		);
+		field_create_instance($instance);
+		
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 
 	    $field = array(
 		  'field_name' => 'field_legtaxonomy',
@@ -366,7 +431,11 @@
 
 		$instance = array(
 			'field_name'  => 'field_legtaxonomy',
+<<<<<<< HEAD
 			'entity_type' => 'node',         
+=======
+			'entity_type' => 'node',             
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 			'bundle'      => 'legislation_promulgated', 
 			'label'       => $t('Taxonomy'),
 			'required'    => false,                    
@@ -376,6 +445,7 @@
 		);
 		field_create_instance($instance);
 
+<<<<<<< HEAD
 		
 	  	// Create a default vocabulary named "Tags", enabled for the 'article' content type.
 		$description = st('Use tags to group articles on similar topics into categories.');
@@ -387,6 +457,44 @@
 		taxonomy_vocabulary_save($vocabulary);
 
 		$field = array(
+=======
+		$field = array(
+		  'field_name' => 'field_legdownload',
+		  'label' => $t('Download'),
+		  'cardinality' => -1,
+		  'type' => 'file',      
+	  	);
+	  	field_create_field($field);
+
+	  	$cnt_code = strtolower(variable_get('site_default_country'));
+	  	$directory = $cnt_code."/legislation";
+	  	$instance = array(
+			'field_name'  => 'field_legdownload',
+			'entity_type' => 'node',             
+			'bundle'      => 'legislation_promulgated', 
+			'label'       => $t('Download of Original File'),
+			'required'    => false,
+			'cardinality' => -1,
+			'type' => 'file',                       
+			'settings' => array(      
+			  'file_directory' => $directory,
+			  'file_extensions' => 'txt doc xls pdf ppt pps odt ods odp rtf',       
+			  'max_filesize' => '10MB',           
+		  	),
+		);
+	  	field_create_instance($instance);
+
+	  	// Create a default vocabulary named "Tags", enabled for the 'article' content type.
+		  $description = st('Use tags to group articles on similar topics into categories.');
+		  $vocabulary = (object) array(
+		    'name' => st('Tags'),
+		    'description' => $description,
+		    'machine_name' => 'type',
+		  );
+		  taxonomy_vocabulary_save($vocabulary);
+
+		  $field = array(
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 		    'field_name' => 'field_' . $vocabulary->machine_name,
 		    'type' => 'taxonomy_term_reference',
 		    // Set cardinality to unlimited for tagging.
@@ -399,16 +507,27 @@
 		        ),
 		      ),
 		    ),
+<<<<<<< HEAD
 		);
 		field_create_field($field);
 
 		$help = st('Enter a comma-separated list of words to describe your content.');
 		$instance = array(
+=======
+		  );
+		  field_create_field($field);
+
+		  $help = st('Enter a comma-separated list of words to describe your content.');
+		  $instance = array(
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 		    'field_name' => 'field_' . $vocabulary->machine_name,
 		    'entity_type' => 'node',
 		    'label' => 'Type',
 		    'bundle' => 'legislation_promulgated',
+<<<<<<< HEAD
 		    'entity_type' => 'node',
+=======
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 		    'description' => $help,
 		    'widget' => array(
 		      'type' => 'taxonomy_autocomplete',
@@ -425,6 +544,7 @@
 		      ),
 		    ),
 		  );
+<<<<<<< HEAD
 		field_create_instance($instance);
 
 		$field = array(
@@ -494,6 +614,9 @@
 		field_create_instance($instance); 
 
 
+=======
+		  field_create_instance($instance);
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 
 
 	}

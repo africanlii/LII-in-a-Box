@@ -77,7 +77,11 @@ function liiinabox_install() {
   
   /*$default_theme = variable_get('theme_default', 'marinelli');
   $admin_theme = 'seven';
+<<<<<<< HEAD
   variable_set("theme_default", "marinelli"); */ 
+=======
+  variable_set("theme_default", "marinelli"); */
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
 
   /*$enable = array(
     'theme_default' => 'bartlik',
@@ -243,6 +247,7 @@ function liiinabox_install() {
     'pages' => '',
     'cache' => -1,
     ), 
+<<<<<<< HEAD
      array(
     'module' => 'system',
     'delta' => 'main-menu',
@@ -253,6 +258,8 @@ function liiinabox_install() {
     'pages' => '',
     'cache' => -1,
     ),  
+=======
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
   );
   $query = db_insert('block')->fields(array('module', 'delta', 'theme', 'status', 'weight', 'region', 'pages', 'cache'));
   foreach ($blocks as $block) {
@@ -451,11 +458,16 @@ function liiinabox_install() {
     ->execute();
 
   // Create a Home link in the main menu.
+<<<<<<< HEAD
   /*$item = array(
+=======
+  $item = array(
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
     'link_title' => st('Home'),
     'link_path' => '<front>',
     'menu_name' => 'main-menu',
   );
+<<<<<<< HEAD
   menu_link_save($item); */
 
   $path = 'http://'.$_SERVER['HTTP_HOST'].'/courtsmenu';
@@ -466,6 +478,10 @@ function liiinabox_install() {
     );
 
   menu_link_save($item);
+=======
+  menu_link_save($item);
+
+>>>>>>> dc0acc079329d1688fc63536d42cf8f0b2a82da3
   // Update the menu router information.
   menu_rebuild();
 
