@@ -1,0 +1,53 @@
+<?php
+/**
+* @file
+* Implements various blocks to improve pending content workflow.
+*/
+/**
+* Implements hook_block_info().
+*/
+function listjournals_block_info() {
+  $blocks['journal'] = array(
+    'info' => t('Journals'),
+  );
+  //$blocks['legislation'] = array(
+   // 'info' => t('Legislation'),
+  //);
+
+  return $blocks;
+}
+
+
+/**
+ * Implements hook_block_view().
+ */
+function listjournals_block_view($delta = '') {
+
+      $journaltitle  = '';
+      $type = 'journaltitle';
+
+
+      $result = db_query("SELECT title FROM {node} WHERE type = :type",array(':type' => $type,));
+
+      foreach ($result as $row) {
+        
+        $name = $row->title; 
+       
+        $journaltitle .= "<a href='/journalarticlealphalisting&journalname=$name'>".$name."</a><br/>";
+
+      }
+
+      switch ($delta) {
+        case 'journal':
+          $block['content'] = '<p><h2><strong>Journals</strong></h2><br />'.$journaltitle  .'</p>';
+          break;
+
+        //case 'legislation':
+         // $block['content'] = '<p><h2><strong>Legislation</strong></h2></p>';
+          //break;
+      }
+      if($result->rowCount() > 0){
+        return $block;
+      }
+      
+}

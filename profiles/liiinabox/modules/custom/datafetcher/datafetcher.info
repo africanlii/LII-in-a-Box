@@ -1,0 +1,5 @@
+name = Fetch Data
+description = A container that contains code to fetch data
+package = datafetcher
+core = 7.x
+files[] = datafetcher.module

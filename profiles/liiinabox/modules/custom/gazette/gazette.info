@@ -1,0 +1,8 @@
+name = Gazatte Content Type
+description = A module to install gazette content type
+package = gazette
+core = 7.x
+files[] = gazette.install
+files[] = gazette.module
+
+

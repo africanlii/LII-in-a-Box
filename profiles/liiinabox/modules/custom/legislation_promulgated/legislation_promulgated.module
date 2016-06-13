@@ -1,0 +1,26 @@
+<?php
+
+	//require_once('legislation_promulgated_functions.inc');
+
+	function legislation_promulgated_node_info() {
+
+		$items = array();
+		$items['legislation_promulgated'] = array(
+			'name' => t('Legislation as promulgated'),    // name of your content type
+			'type' => 'legislation_promulgated',
+			'base' => 'node_content',
+			'description' => t('A content type to handle legislation as promulgated.'),
+			'has_title' => 1,
+			'title_label' => t('Title'),
+			'body_label' => t('Legislation Description'),
+			//'help' => t('Please fill in all fields.'),
+			'custom' => TRUE,
+		);
+		return $items;
+	}
+
+	function legislation_promulgated_form($node, $form_state) {
+	
+		return node_content_form($node, $form_state);
+	}
+?>

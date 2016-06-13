@@ -1,0 +1,56 @@
+<?php
+/**
+* @file
+* Implements various blocks to improve pending content workflow.
+*/
+/**
+* Implements hook_block_info().
+*/
+function listcourts_block_info() {
+  $blocks['judgments'] = array(
+    'info' => t('Judgments'),
+  );
+  //$blocks['legislation'] = array(
+   // 'info' => t('Legislation'),
+  //);
+  
+  return $blocks;
+} 
+
+
+/**
+ * Implements hook_block_view().
+ */
+function listcourts_block_view($delta = '') {
+
+  $t = get_t();
+  $courtname = '';
+  $type = 'courtnamesadd';
+
+
+  $result = db_query("SELECT title FROM {node} WHERE type = :type",array(':type' => $type,));
+
+  foreach ($result as $row) {
+    
+    $name = $row->title; 
+   
+    //$courtname .= "<a href='/courtnames&courtname=$name'>".$name."</a><br/>";
+
+    $trimmednm = str_replace(' ','-',$name);
+    $newname = trim(strtolower($trimmednm));
+    $courtname .= $t('<a href="@url">'.$name.'</a>', array('@url' => url('courtnames/'.$newname))) . "<br/>" ;
+
+  }
+
+  switch ($delta) {
+    case 'judgments':
+      $block['content'] = '<p><h2><strong>Judgments</strong></h2><br />'.$courtname .'</p>';
+      break;
+
+    //case 'legislation':
+     // $block['content'] = '<p><h2><strong>Legislation</strong></h2></p>';
+      //break;
+  }
+
+  return $block;
+}

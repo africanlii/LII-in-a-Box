@@ -1,0 +1,36 @@
+<?php
+
+
+
+    require_once('journal_functions.inc');
+    /**
+     * Implements hook_menu()
+     * @return array
+     */
+    function journal_node_info() {
+
+        $items = array();
+        $items['journal'] = array(
+          'name' => t('Journal Article Content Type'),    // name of your content type
+          'type' => 'journal',
+          'base' => 'node_content',
+          'description' => t('A content type to handle journals.'),
+          'has_title' => 1,
+          'title_label' => t('Title of Article'),
+          'body_label' => t('Journal Description'),
+          //'help' => t('Please fill in all fields.'),
+          'custom' => TRUE,
+        );
+        return $items;
+      }
+     
+    /**
+     * Page callback mapped to the url /hello_world
+     *
+     * @return array
+     */
+    function journal_form($node, $form_state) {
+        
+        return node_content_form($node, $form_state);
+    }
+

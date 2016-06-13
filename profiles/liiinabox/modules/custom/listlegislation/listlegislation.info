@@ -1,0 +1,6 @@
+name = List legislation
+description = Blocks for listing the Legislation Types/Titles.
+package = Pro Drupal Development
+core = 7.x
+version = VERSION
+files[] = listlegislation.module

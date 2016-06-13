@@ -1,0 +1,361 @@
+<?php
+
+/**
+ * @file
+ */
+
+/**
+ * Implementation of hook_menu().
+ */
+function sync_content_menu() {
+	$items['sync_content'] = array(
+		'type' => MENU_CALLBACK,
+		'page callback' => '_get_new_content',
+		'access arguments' => array('access content'),
+	);
+
+	$items['admin/config/services/sync_content'] = array(
+	    'title' => 'Sync content settings',
+	    'description' => 'Settings for the Sync content module',
+	    'page callback' => 'drupal_get_form',
+	    'page arguments' => array('sync_content_admin'),
+	    'access arguments' => array('administer content'),
+	    'type' => MENU_NORMAL_ITEM,
+    );
+
+	return $items;
+}
+
+function sync_content_admin() {
+  $form = array();
+
+  $form['sync_content_service_url'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Sync content remote service URL'),
+    '#default_value' => variable_get('sync_content_service_url', 'http://pocketlaw.africanlii.org'),
+    '#description' => t("The URL used to sync content with this site."),
+    '#required' => TRUE,
+  );
+
+  $form['sync_content_service_file_dir'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Remote files directory'),
+    '#default_value' => variable_get('sync_content_service_file_dir', 'files'),
+    '#description' => t("The remote files directory where files will be fetched from."),
+    '#required' => TRUE,
+  );
+
+  return system_settings_form($form);
+}
+
+function _get_new_content() {
+	$latest_node = node_get_recent(1);
+
+	//print_r($latest_node);
+
+	$baseurl = variable_get('sync_content_service_url', 'http://pocketlaw.africanlii.org') .'/getcontent';
+
+	// Get from the API.
+	$nodes_index = _curl_content($baseurl .'/node.json');
+
+	$new_nodes = array();
+	foreach ($nodes_index as $node) {
+		$new_nodes[] = _curl_content($baseurl .'/node/'. $node['nid'] .'.json');
+	}
+
+	return _create_new_content($new_nodes);
+}
+
+function _create_new_content($nodes = array()) {
+	//print_r($nodes);
+
+	foreach ($nodes as $node) {
+		if (!in_array($node['type'], array('article', 'page', 'blog'))) {
+			//drupal_set_message(t('Update complete'));
+			//drupal_goto('<front>');
+		}
+
+		$query = new EntityFieldQuery();
+		$entities = $query->entityCondition('entity_type', 'node')
+		->propertyCondition('type', $node['type'])
+		->propertyCondition('title', $node['title'])
+		->range(0,1)
+		->execute();
+
+		if (!empty($entities['node'])) {
+			continue;
+		}
+
+		// entity_create replaces the procedural steps in the first example of
+		// creating a new object $node and setting its 'type' and uid property
+		$values = array(
+		  'type' => $node['type'],
+		  'uid' => 1,
+		  'status' => $node['status'],
+		  'comment' => $node['comment'],
+		  'promote' => $node['promote'],
+		);
+		$entity = entity_create('node', $values);
+
+		// The entity is now created, but we have not yet simplified use of it.
+		// Now create an entity_metadata_wrapper around the new node entity
+		// to make getting and setting values easier
+		$ewrapper = entity_metadata_wrapper('node', $entity);
+
+		// Using the wrapper, we do not have to worry about telling Drupal
+		// what language we are using. The Entity API handles that for us.
+		$ewrapper->title->set($node['title']);
+
+		// Setting the body is a bit different from other properties or fields
+		// because the body can have both its complete value and its
+		// summary
+		if (isset($node['body']['und'])) {
+			$ewrapper->body->set(array('value' => $node['body']['und'][0]['value'], 'format' => $node['body']['und'][0]['format']));
+			$ewrapper->body->summary->set($node['body']['und'][0]['summary']);
+		}
+
+		// Check for a whole lot of fields.
+		if (isset($node['field_journalmnc']['und'])) {
+			$ewrapper->field_journalmnc->set($node['field_journalmnc']['und'][0]['value']);
+		}
+
+		if (isset($node['field_jauthor']['und'])) {
+			$jauthors = array();
+			foreach ($node['field_jauthor']['und'] as $jauthor) {
+				$jauthors[] = $jauthor['value'];
+			}
+
+			$ewrapper->field_jauthor->set($jauthors);
+		}
+
+		if (isset($node['field_courtmnc']['und'])) {
+			$ewrapper->field_courtmnc->set($node['field_courtmnc']['und'][0]['value']);
+		}
+
+		if (isset($node['field_title_of_act']['und'])) {
+			$ewrapper->field_title_of_act->set($node['field_title_of_act']['und'][0]['value']);
+		}
+
+		if (isset($node['field_consol_leg_country_code']['und'])) {
+			$ewrapper->field_consol_leg_country_code->set($node['field_consol_leg_country_code']['und'][0]['value']);
+		}
+
+		if (isset($node['field_issuingcourt_select']['und'])) {
+			$ewrapper->field_issuingcourt_select->set($node['field_issuingcourt_select']['und'][0]['value']);
+		}
+
+		if (isset($node['field_chapterno']['und'])) {
+			$ewrapper->field_chapterno->set($node['field_chapterno']['und'][0]['value']);
+		}
+
+		if (isset($node['field_inforce']['und'])) {
+			$ewrapper->field_inforce->set($node['field_inforce']['und'][0]['value']);
+		}
+
+		if (isset($node['field_journaltitle_select']['und'])) {
+			$ewrapper->field_journaltitle_select->set($node['field_journaltitle_select']['und'][0]['value']);
+		}
+
+		if (isset($node['field_jcitation']['und'])) {
+			$ewrapper->field_jcitation->set($node['field_jcitation']['und'][0]['value']);
+		}
+
+		if (isset($node['field_jmnc']['und'])) {
+			$ewrapper->field_jmnc->set($node['field_jmnc']['und'][0]['value']);
+		}
+
+		if (isset($node['field_consoldate']['und'])) {
+			$entity->field_consoldate[LANGUAGE_NONE][0] = __save_date_to_site($node['field_consoldate']);
+		}
+
+		if (isset($node['field_jnpubdate']['und'])) {
+			$entity->field_jnpubdate[LANGUAGE_NONE][0] = __save_date_to_site($node['field_jnpubdate']);
+		}
+
+		if (isset($node['field_crelatedsis']['und'])) {
+			$ewrapper->field_crelatedsis->set($node['field_crelatedsis']['und'][0]['value']);
+		}
+
+		if (isset($node['field_crelatedcases']['und'])) {
+			$ewrapper->field_crelatedcases->set($node['field_crelatedcases']['und'][0]['value']);
+		}
+
+		if (isset($node['field_crelatedleg']['und'])) {
+			$ewrapper->field_crelatedleg->set($node['field_crelatedleg']['und'][0]['value']);
+		}
+
+		if (isset($node['field_clegdownload']['und'])) {
+			$ewrapper->field_clegdownload->set(__save_file_to_site($node['field_clegdownload']));
+		}
+
+		if (isset($node['field_zimbabwe_legislation_categ']['und'])) {
+			// Term reference
+			//$ewrapper->field_zimbabwe_legislation_categ->set($node['field_zimbabwe_legislation_categ']['und'][0]['value']);
+		}
+
+		if (isset($node['field_malawi_legislation_categor']['und'])) {
+			// Term reference
+			//$ewrapper->field_malawi_legislation_categor->set($node['field_malawi_legislation_categor']['und'][0]['value']);
+		}
+
+		if (isset($node['field_casename']['und'])) {
+			$ewrapper->field_casename->set($node['field_casename']['und'][0]['value']);
+		}
+
+		if (isset($node['field_casenumber']['und'])) {
+			$ewrapper->field_casenumber->set($node['field_casenumber']['und'][0]['value']);
+		}
+
+		if (isset($node['field_jno']['und'])) {
+			$ewrapper->field_jno->set($node['field_jno']['und'][0]['value']);
+		}
+
+		if (isset($node['field_issuingcourse_select']['und'])) {
+			$ewrapper->field_issuingcourse_select->set($node['field_issuingcourse_select']['und'][0]['value']);
+		}
+
+		if (isset($node['field_mnc']['und'])) {
+			$ewrapper->field_mnc->set($node['field_mnc']['und'][0]['value']);
+		}
+
+		if (isset($node['field_judge']['und'])) {
+			$ewrapper->field_judge->set($node['field_judge']['und'][0]['value']);
+		}
+
+		if (isset($node['field_download']['und'])) {
+			$ewrapper->field_download->set(__save_file_to_site($node['field_download']));
+		}
+
+		if (isset($node['field_country_code']['und'])) {
+			$ewrapper->field_country_code->set($node['field_country_code']['und'][0]['value']);
+		}
+
+		if (isset($node['field_jdate']['und'])) {
+			$entity->field_jdate[LANGUAGE_NONE][0] = __save_date_to_site($node['field_jdate']);
+		}
+
+		if (isset($node['field_shorttitle']['und'])) {
+			$ewrapper->field_shorttitle->set($node['field_shorttitle']['und'][0]['value']);
+		}
+
+		if (isset($node['field_longtitle']['und'])) {
+			$ewrapper->field_longtitle->set($node['field_longtitle']['und'][0]['value']);
+		}
+
+		if (isset($node['field_yearact']['und'])) {
+			$ewrapper->field_yearact->set($node['field_yearact']['und'][0]['value']);
+		}
+
+		if (isset($node['field_numact']['und'])) {
+			$ewrapper->field_numact->set($node['field_numact']['und'][0]['value']);
+		}
+
+		if (isset($node['field_dateassent']['und'])) {
+			$entity->field_dateassent[LANGUAGE_NONE][0] = __save_date_to_site($node['field_dateassent']);
+		}
+
+		if (isset($node['field_dpromulgation']['und'])) {
+			$entity->field_dpromulgation[LANGUAGE_NONE][0] = __save_date_to_site($node['field_dpromulgation']);
+		}
+
+		if (isset($node['field_promulgation']['und'])) {
+			$entity->field_promulgation[LANGUAGE_NONE][0] = __save_date_to_site($node['field_promulgation']);
+		}
+
+		if (isset($node['field_commencementdate']['und'])) {
+			$entity->field_commencementdate[LANGUAGE_NONE][0] = __save_date_to_site($node['field_commencementdate']);
+		}
+
+		if (isset($node['field_linforce']['und'])) {
+			$ewrapper->field_linforce->set($node['field_linforce']['und'][0]['value']);
+		}
+
+		if (isset($node['field_country_codea']['und'])) {
+			$ewrapper->field_country_codea->set($node['field_country_codea']['und'][0]['value']);
+		}
+
+		if (isset($node['field_relatedleg']['und'])) {
+			$ewrapper->field_relatedleg->set($node['field_relatedleg']['und'][0]['value']);
+		}
+
+		if (isset($node['field_legtaxonomy']['und'])) {
+			// Term reference.
+			//$ewrapper->field_legtaxonomy->set($node['field_legtaxonomy']['und'][0]['value']);
+		}
+
+		if (isset($node['field_legdownload']['und'])) {
+			$ewrapper->field_legdownload->set(__save_file_to_site($node['field_legdownload']));
+		}
+
+		if (isset($node['field_journaldownload']['und'])) {
+			$ewrapper->field_journaldownload->set(__save_file_to_site($node['field_journaldownload']));
+		}
+
+		// Now just save the wrapper and the entity
+		// There is some suggestion that the 'true' argument is necessary to
+		// the entity save method to circumvent a bug in Entity API. If there is
+		// such a bug, it almost certainly will get fixed, so make sure to check.
+		$ewrapper->save();
+
+		// Update the created and changed date on the new node to 
+		// what they should be.
+		db_update('node')
+			->fields(array(
+				'created' => $node['created'],
+				'changed' => $node['changed'],
+			))
+			->condition('nid', $ewrapper->getIdentifier(), '=')
+  			->execute();
+	}
+
+	drupal_set_message(t('Update complete'));
+	drupal_goto('<front>');
+}
+
+function _curl_content($service_url) {
+	$curl = curl_init($service_url);
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+
+	// Execute the session
+	$curl_response = curl_exec($curl);
+
+	// Finish off the session
+	curl_close($curl);
+	return json_decode($curl_response, true);
+}
+
+function __save_file_to_site($field) {
+	$files = array();
+
+	foreach ($field['und'] as $d) {
+		// File field
+
+		$download_base = variable_get('sync_content_service_url', 'http://pocketlaw.africanlii.org') .'/'. variable_get('sync_content_service_file_dir', 'files');
+		$download_file_path = $download_base .'/'. str_replace(array('public://', 'private://', 'temporary://'), '', $d['uri']);
+
+		// Retrieve file from web service (this works, I can see and open the retrieved file)
+		$download_file = system_retrieve_file($download_file_path, 'public://'. $d['filename'], TRUE, FILE_EXISTS_REPLACE);
+		file_save($download_file);
+
+		$download_file->display = 1;
+
+		$files[] = (array) $download_file;
+	}
+
+	$files = (array) $files;
+	return $files;
+}
+
+// MAke sure to not add the [und] part to the $field.
+function __save_date_to_site($field) {
+	// DATE FIELD... RUN AWAY!!
+
+	return array(
+	   'value' => $field['und'][0]['value'],
+	   'timezone' => $field['und'][0]['timezone'],
+	   'timezone_db' => $field['und'][0]['timezone_db'],
+	   'date_type' => $field['und'][0]['date_type'],
+	 );
+}

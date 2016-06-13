@@ -1,0 +1,8 @@
+name = Other Content Type
+description = A module to install other content type
+package = other
+core = 7.x
+files[] = other.install
+files[] = other.module
+
+

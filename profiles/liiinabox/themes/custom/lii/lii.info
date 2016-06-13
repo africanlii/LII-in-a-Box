@@ -1,0 +1,26 @@
+name = Lii
+description = Base theme for all Lii-in-a-Box sites.
+
+core = 7.x
+
+stylesheets[all][] = css/bootstrap.min.css
+stylesheets[all][] = css/font-awesome.min.css
+stylesheets[all][] = css/prettyPhoto.css
+stylesheets[all][] = css/animate.css
+stylesheets[all][] = css/main.css
+stylesheets[all][] = css/custom.css
+
+scripts[] = js/jquery.js
+scripts[] = js/bootstrap.min.js
+scripts[] = js/jquery.prettyPhoto.js
+scripts[] = js/main.js
+
+regions[content] = Content
+regions[help] = Help
+regions[page_top] = Page top
+regions[page_bottom] = Page bottom
+
+regions[footer_blocks] = Footer blocks
+regions[sidebar_left] = Sidebar Left
+regions[sidebar_right] = Sidebar Right
+regions[search_section] = Search Section

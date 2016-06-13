@@ -1,0 +1,47 @@
+<?php
+/**
+ * Implements hook_menu()
+ * @return array
+ */
+function judgmentsmenu_menu() {
+ 
+  /*$path = 'http://'.$_SERVER['HTTP_HOST'].'/courtsmenu';
+  $item = array(
+  'link_title' => st('Judgments2'),
+    'link_path' => $path,
+    'menu_name' => 'main-menu',
+    );
+
+  menu_link_save($item);
+  // Update the menu router information.
+  menu_rebuild();*/
+
+  $items['simple_link'] = array(
+    'title'            => t('Supreme Court'),
+    'page callback'    => '_show_judgments',
+    'access arguments' => array('access content'),
+    'menu_name' => 'main-menu',
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['simple_link/my_sublink_1'] = array(
+    'title'            => t('High Court'),
+    'page callback'    => '_show_judgments',
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['simple_link/my_sublink_2'] = array(
+    'title'            => t('Labour Court'),
+    'page callback'    => '_show_judgments',
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  return $items;
+    
+}
+
+function _show_judgments() {
+  return array(
+    '#markup' => '<p>Hello world</p>'
+  );
+} 
+

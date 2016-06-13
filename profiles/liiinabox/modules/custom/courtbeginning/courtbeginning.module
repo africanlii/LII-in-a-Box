@@ -1,0 +1,67 @@
+<?php
+/**
+ * Implements hook_menu()
+ * @return array
+ */
+function courtbeginning_menu() {
+ 
+  $aItems = array(
+      'courtbeginning' => array(
+        'title' => 'Court beginning',
+        'page callback' => '_page_courtbeginning',
+        //'access callback' => TRUE,
+        'access arguments' => array('access courtbeginning'),
+        'type' => MENU_NORMAL_ITEM,
+      ),
+    );
+  return $aItems;
+}
+ 
+/**
+ * Page callback mapped to the url /hello_world
+ *
+ * @return array
+ */
+function _page_courtbeginning() {
+  /*return array(
+    '#markup' => '<p>Hello world</p>'
+  );*/
+  $letter = '';
+  $courtname = '';
+  if(isset($_GET['letter']) && isset($_GET['courtname'])){
+    $letter = $_GET['letter'];
+     $courtname = $_GET['courtname'];
+  }
+  
+  drupal_set_title($courtname.':Decisions beginning with'.' '.$letter);
+
+  $queryres=db_query("SELECT nd.title, ualias.alias, issuingcourt.field_issuingcourt_select_value 
+  FROM {node} nd INNER JOIN {field_data_field_issuingcourt_select} issuingcourt ON 
+  nd.nid = issuingcourt.entity_id
+  INNER JOIN {url_alias} ualias ON
+  ualias.source = CONCAT('node/',nd.nid) 
+  AND nd.title LIKE '$letter%'
+  AND issuingcourt.field_issuingcourt_select_value LIKE '%$courtname%'
+  AND nd.type = 'judgment' ");
+
+
+  $data = '<p><strong>type:</strong> judgment';
+  $data .= '<p><strong>database:</strong> '.$courtname;
+  $data .= '<p><strong>alpha:</strong> '.$letter;
+  $data .= "<p><ul>";
+  foreach($queryres as $result){
+    $content_title = $result->title;
+    $content_src = $result->alias;
+    $data .="<li><a href='$content_src'>$content_title</a></li>"; 
+  }
+  $data .= "</ul></p>";
+
+  $content['content'] = array(
+    '#type' => 'fieldset',
+    '#description'=>t($data),
+  );
+  return $content;
+
+}
+
+

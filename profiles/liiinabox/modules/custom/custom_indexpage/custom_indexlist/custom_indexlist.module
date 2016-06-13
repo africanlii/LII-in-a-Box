@@ -1,0 +1,105 @@
+<?php
+/**
+ * Implements hook_menu()
+ * @return array
+ */
+function custom_indexlist_menu() {
+ 
+  $aItems = array(
+      'custom_indexlist' => array(
+        'title' => 'Custom Alphabetical listing',
+        'page callback' => 'custom_indexlist',
+        'access callback' => TRUE,
+        'access arguments' => array('access custom_indexlist'),
+        'type' => MENU_NORMAL_ITEM,
+      ),
+    );
+  return $aItems;
+}
+ 
+/**
+ * Page callback mapped to the url /hello_world
+ *
+ * @return array
+ */
+function custom_indexlist() {
+
+ 
+  //Code added for fixing the url-path
+
+  $path_ar = explode('/',current_path());
+  $linktype = $path_ar[1];
+  $letter = strtoupper($path_ar[2]);
+
+  $title = $linktype;
+
+  if(strlen($letter) == 1)
+  {
+       if($linktype == 'cmac_award'){
+        $title = "Conciliation Mediation and Arbitration Commission";
+      }
+      drupal_set_title($title .' beginning with '.$letter);
+
+      $queryres=db_query("SELECT nd.title, ualias.alias
+      FROM {node} nd INNER JOIN {url_alias} ualias ON
+      ualias.source = CONCAT('node/',nd.nid) 
+      AND nd.title LIKE '$letter%'
+      AND nd.type = '$linktype' ");
+
+
+      $data = '<p>';
+      $data .= '<p><strong>database:</strong> '.$linktype;
+      $data .= '<p><strong>alpha:</strong> '.$letter;
+      $data .= "<p><ul>";
+      foreach($queryres as $result){
+        $content_title = $result->title;
+        $content_src = $result->alias;
+        $data .= t('<li><a href="@url">'.$content_title.'</a></li>', array('@url' => url($content_src)));
+      }
+      $data .= "</ul></p>";
+
+      $content['content'] = array(
+        '#type' => 'fieldset',
+        '#description'=>t($data),
+      ); 
+      
+  }
+  else{
+      $year = $letter;
+      $data = '<p>';
+      $data .= '<p><strong>database:</strong> '.$linktype;
+      $data .= '<p><strong>year:</strong> '.$letter;
+      $data .= "<p><ul>";
+      $result = db_query("SELECT n.title,DATE_FORMAT(adate.field_awarddate_value,'%Y'),ualias.alias FROM {node} n     
+        INNER JOIN {field_data_field_awarddate} adate
+        ON n.nid = adate.entity_id
+        AND DATE_FORMAT(adate.field_awarddate_value,'%Y') = '$year'
+        INNER JOIN {url_alias} ualias
+        ON CONCAT('node/',n.nid) = ualias.source
+        ORDER BY n.title ");
+
+      $date_month = array();
+      
+
+      $date_ar = array();  
+      $titles = '<p><ul>';  
+      $prev_month = "";
+     
+      foreach($result as $res){        
+        $alias = $res->alias;
+        //$titles .= '<li>'."<a href='$alias'>".$res->title.'</a></li>'; 
+        $titles .= t('<li><a href="@url">'.$res->title.'</a></li>', array('@url' => url($alias)));       
+      }// End of for loop
+      
+      $titles .= '</ul></p>';
+      
+      $content['content'] = array(
+        '#type' => 'fieldset',
+        '#description'=>t($data.$titles),
+      );
+  }
+  return $content;
+  
+  
+}
+

@@ -1,0 +1,301 @@
+<?php
+
+/**
+	 * @file
+	 * Install file for the Judgment Content Type module
+	 */
+	
+	
+	
+	function bills_install() {
+		node_types_rebuild();
+		$types = node_type_get_types();	
+		
+		add_bills_fields();
+		
+		// add the body field to the node type
+		node_add_body_field($types['bills']);
+		// load the instance definition for our content type's body
+		$body_instance = field_info_instance('node', 'body', 'bills');
+		// configure the body field
+		$body_instance['type'] = 'text_summary_or_trimmed';
+		$body_instance['label'] = 'Legislation Description';
+		$body_instance['display'] = array(
+			'default' => array(
+				'label' => 'above', 
+				'type' => 'text_default',
+				'weight' => 0,
+			),
+			'teaser' => array(
+				'label' => 'hidden', 
+				'type' => 'text_summary_or_trimmed',
+				'weight' => 0,
+		),
+		);
+		$body_instance['widget']['weight'] = 0;
+		  
+
+
+		$country_code = strtolower(variable_get('site_default_country'));		
+		variable_set('pathauto_node_bills_pattern', $country_code.'/legislation/bill/[node:field_numact]');
+		
+
+		//variable_set('auto_nodetitle_node_judgment_pattern','[node:field_casename]'.'('.'[node:field_casenumber]'.')');
+		
+		  // Don't display date and author information for "Judgments" nodes by default.
+		variable_set('node_submitted_bills', FALSE);
+		variable_set('node_options_bills', array('status'));
+		variable_set('comment_bills', 'COMMENT_NODE_HIDDEN'); 
+		
+	}// End function install function
+
+
+	//function will read the array from and create the fields and instances
+	function add_bills_fields() {
+		$t = get_t();
+		$field = array(
+			'field_name' => 'field_billshorttitle',
+			'label' => $t('Short title'),
+			'cardinality' => 1,
+			'type' => 'text',
+			'settings' => array(
+				'max_length' => 1000,
+			),
+		);
+		field_create_field($field);
+		
+		$instance = array(
+			'field_name'  => 'field_billshorttitle',
+			'entity_type' => 'node',             
+			'bundle'      => 'bills', 
+			'label'       => $t('Short title'),
+			'required'    => false,                       
+			'display'     => array(
+				'default' => array(
+					'type' => 'text',                       
+				),
+			),
+			'widget'      => array(
+				'type'     => 'text',              
+				'settings' => array(
+					'display_label' => 1,                     
+				),
+			),
+		);
+		field_create_instance($instance);
+
+		$field = array(
+		  'field_name' => 'field_billlongtitle',
+		  'label' => $t('Long title'),
+		  'cardinality' => 1,
+		  'type' => 'text_long',      
+		);
+		field_create_field($field);
+
+		$instance = array(
+			'field_name'  => 'field_billlongtitle',
+			'entity_type' => 'node',             
+			'bundle'      => 'bills', 
+			'label'       => $t('Long title'),
+			'required'    => false,                    
+			'widget'      => array(
+			  'type'     => 'text_long',              
+			),
+		);
+		field_create_instance($instance);
+
+		
+		$field = array(
+		  'field_name' => 'field_billyear',
+		  'label' => $t('Year of Bill'),
+		  'cardinality' => 1,
+		  'type' => 'number_integer',      
+		);
+		field_create_field($field);
+
+		$instance = array(
+			'field_name'  => 'field_billyear',
+			'entity_type' => 'node',             
+			'bundle'      => 'bills', 
+			'label'       => $t('Year of Bill'),
+			'required'    => TRUE,                    
+			'widget'      => array(
+			  'type'     => 'text',              
+			),
+		);
+		field_create_instance($instance);
+
+
+		$field = array(
+		  'field_name' => 'field_billnumber',
+		  'label' => $t('Number of Bill'),
+		  'cardinality' => 1,
+		  'type' => 'number_integer',      
+		);
+		field_create_field($field);
+
+		$instance = array(
+			'field_name'  => 'field_billnumber',
+			'entity_type' => 'node',             
+			'bundle'      => 'bills', 
+			'label'       => $t('Number of Bill'),
+			'required'    => TRUE,                    
+			'widget'      => array(
+			  'type'     => 'text',              
+			),
+		);
+		field_create_instance($instance);
+
+		//Create Legislation date of assent field
+		$field = array(
+		  'field_name' => 'field_billdateintro',
+		  'label' => $t('Date introduced'),
+		  'cardinality' => 1,
+		  'type' => 'date',
+		);
+		field_create_field($field);
+
+		$instance = array(
+			'field_name'  => 'field_billdateintro',
+			'entity_type' => 'node',             
+			'bundle'      => 'bills', 
+			'label'       => $t('Date introduced'),
+			'required'    => TRUE, 
+			'widget'      => array(
+			  'type' => 'date_popup',                     
+			  'settings' => array(
+				'display_label' => 1,             
+				'input_format' => 'j F Y',
+				'date_format' => 'd m Y',
+				'increment' => 1,
+				'year_range' => '-150:+0',                   
+			  ),
+			),
+			
+		);
+		field_create_instance($instance);
+
+
+		//Create Legislation date of promulgation field
+		$field = array(
+		  'field_name' => 'field_billsponsor',
+		  'label' => $t('Sponsor of Bill'),
+		  'cardinality' => 1,
+		  'type' => 'text',
+		);
+		field_create_field($field);
+
+		$instance = array(
+			'field_name'  => 'field_billsponsor',
+			'entity_type' => 'node',             
+			'bundle'      => 'bills', 
+			'label'       => $t('Sponsor of Bill'),
+			'required'    => FALSE,                    
+			'widget'      => array(
+			  'type'     => 'text',
+			),
+			
+		);
+		field_create_instance($instance);
+
+
+
+		//Create Legislation date of assent field
+		$field = array(
+		  'field_name' => 'field_billinktoreleg',
+		  'label' => $t('Link to related Legislation'),
+		  'cardinality' => 1,
+		  'type' => 'node_reference',    
+		  'settings'=>array(
+		     'referenceable_types'=>array(
+		       'related_leg'=>'related_leg'
+		      ),  
+		    ),    
+		);
+		field_create_field($field);
+
+		$instance = array(
+			'field_name'  => 'field_billinktoreleg',
+			'entity_type' => 'node',             
+			'bundle'      => 'bills', 
+			'label'       => $t('Link to related Legislation'),
+			'required'    => FALSE,                    
+			'widget'=>array(
+		      'type'=>'taxonomy_autocomplete'
+		    ),
+		);
+		field_create_instance($instance);
+
+
+
+		$field = array(
+		  'field_name' => 'field_billdownload',
+		  'label' => $t('Download'),
+		  'cardinality' => -1,
+		  'type' => 'file',      
+	  	);
+	  	field_create_field($field);
+
+	  	$cnt_code = strtolower(variable_get('site_default_country'));
+	  	$directory = "/legislation/bill";
+	  	$instance = array(
+			'field_name'  => 'field_billdownload',
+			'entity_type' => 'node',             
+			'bundle'      => 'bills', 
+			'label'       => $t('Download Original File'),
+			'required'    => false,
+			'cardinality' => -1,
+			'type' => 'file',                       
+			'settings' => array(      
+			  'file_directory' => $directory,
+			  'file_extensions' => 'txt doc docx xls pdf ppt pps odt ods odp rtf',       
+			  'max_filesize' => '10MB',           
+		  	),
+		);
+	  	field_create_instance($instance);
+
+	  	$field = array(
+		  'field_name' => 'field_billmetadata',
+		  'label' => $t('Lifecycle metadata'),
+		  'cardinality' => 1,
+		  'type' => 'text',
+		);
+		field_create_field($field);
+
+		$instance = array(
+			'field_name'  => 'field_billmetadata',
+			'entity_type' => 'node',             
+			'bundle'      => 'bills', 
+			'label'       => $t('Lifecycle metadata'),
+			'required'    => FALSE,                    
+			'widget'      => array(
+			  'type'     => 'text',
+			),			
+		);
+		field_create_instance($instance);
+
+		$field = array(
+		  'field_name' => 'field_billauthmetadata',
+		  'label' => $t('Authoring metadata'),
+		  'cardinality' => 1,
+		  'type' => 'text',
+		);
+		field_create_field($field);
+
+		$instance = array(
+			'field_name'  => 'field_billauthmetadata',
+			'entity_type' => 'node',             
+			'bundle'      => 'bills', 
+			'label'       => $t('Authoring metadata'),
+			'required'    => FALSE,                    
+			'widget'      => array(
+			  'type'     => 'text',
+			),			
+		);
+		field_create_instance($instance);
+
+
+	}
+
+?>
+

@@ -1,0 +1,6 @@
+name = Sync Content
+description = Sync content from a main server using Services.
+core = 7.x
+
+dependencies[] = services
+dependencies[] = rest_server
