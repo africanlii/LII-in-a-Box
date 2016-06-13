@@ -1,0 +1,85 @@
+<?php
+/**
+ * Implements hook_menu()
+ * @return array
+ */
+function courtdecisions_menu() {
+ 
+  $aItems = array(
+    'courtdecisions' => array(
+      'title' => 'Court decisions',
+      'page callback' => '_page_courtdecisions',
+      //'access callback' => TRUE,
+      'access arguments' => array('access courtdecisions'),
+      'type' => MENU_NORMAL_ITEM,
+    ),
+  );
+  return $aItems;
+}
+ 
+/**
+ * Page callback mapped to the url /hello_world
+ *
+ * @return array
+ */
+function _page_courtdecisions() {
+  $content = array();
+  $courtname = '';
+  $year = '';
+  if(isset($_GET['courtname']) && isset($_GET['year'])){
+    $courtname = $_GET['courtname'];
+    $year = $_GET['year'];
+  }
+  //echo $courtname;exit;
+  drupal_set_title($courtname.':Decisions in'.' '.$year);
+ 
+  $metadata = '<p><strong>type:</strong>judgment';
+  $metadata .= '<p><strong>database:</strong>'.$courtname;
+  $metadata .= '<p><strong>year:</strong>'.$year;
+
+  $result = db_query("SELECT jdate.field_jdate_value,n.title,ualias.alias FROM {field_revision_field_issuingcourt_select} issuingcourt     
+    INNER JOIN {field_data_field_jdate} jdate
+    ON issuingcourt.entity_id = jdate.entity_id 
+    INNER JOIN {node} n 
+    ON n.nid = jdate.entity_id
+    AND n.type = 'judgment'
+    INNER JOIN {url_alias} ualias
+    ON CONCAT('node/',n.nid) = ualias.source
+    WHERE issuingcourt.field_issuingcourt_select_value LIKE '%$courtname%' ORDER BY jdate.field_jdate_value, n.title ");
+
+  $date_month = array();
+  
+
+  $date_ar = array();  
+  $months = '<p></p>';
+  $titles = '<p><ul>';  
+  $prev_month = "";
+ 
+  foreach($result as $res){
+    $yearjudg = date('Y',strtotime($res->field_jdate_value));    
+    $content_month = date('F Y',strtotime($res->field_jdate_value));
+    $monthjudg = date('F',strtotime($res->field_jdate_value));  
+    $alias = $res->alias;
+
+    if($yearjudg == $year){     
+      if($prev_month != $content_month){
+        $titles .= '<strong>'.$content_month.'</strong>'.'<br/>';
+      }      
+      $titles .= '<li>'."<a href='$alias'>".$res->title.'</a></li>';
+      $prev_month = $content_month;
+    }            
+  }// End of for loop
+  
+  $titles .= '</ul></p>';
+  
+  $content['content'] = array(
+    '#type' => 'fieldset',
+    '#description'=>t($metadata.$months.$titles),
+  );
+  return $content;
+
+}//End of _page_courtdecisions function
+
+
+
+

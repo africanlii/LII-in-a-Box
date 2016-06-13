@@ -1,0 +1,5 @@
+name = Add Court names
+description = A container that adds court names and MNC
+core = 7.x
+files[] = legislation.install
+files[] = courtnamesadd.module

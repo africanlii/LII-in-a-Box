@@ -1,0 +1,26 @@
+<?php
+
+	require_once('subordinate_legislation_functions.inc');
+
+	function subordinate_legislation_node_info() {
+
+		$items = array();
+		$items['subordinate_legislation'] = array(
+			'name' => t('Subordinate Legislation'),    // name of your content type
+			'type' => 'subordinate_legislation',
+			'base' => 'node_content',
+			'description' => t('A content type to handle subordinate legislation.'),
+			'has_title' => 1,
+			'title_label' => t('Title'),
+			'body_label' => t('Subordinate Legislation Description'),
+			//'help' => t('Please fill in all fields.'),
+			'custom' => TRUE,
+		);
+		return $items;
+	}
+
+	function subordinate_legislation_form($node, $form_state) {
+	
+		return node_content_form($node, $form_state);
+	}
+?>

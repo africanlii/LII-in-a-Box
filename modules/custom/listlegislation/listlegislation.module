@@ -1,0 +1,57 @@
+<?php
+/**
+* @file
+* Implements various blocks to improve pending content workflow.
+*/
+/**
+* Implements hook_block_info().
+*/
+function listlegislation_block_info() {
+  //$blocks['judgments'] = array(
+    //'info' => t('Judgments'),
+  //);
+  $blocks['legislation'] = array(
+    'info' => t('Legislation'),
+  );
+
+  return $blocks;
+}
+
+
+/**
+ * Implements hook_block_view().
+ */
+function listlegislation_block_view($delta = '') {
+
+  $t = get_t();
+  $legname = '';
+  $type = 'legislationtype';
+
+
+  $result = db_query("SELECT name,type FROM {node_type} WHERE type LIKE '%legislation%' ");
+
+  foreach ($result as $row) {
+    
+    $name = $row->name; 
+    $legtype = $row->type;
+   
+    //$legname .= "<a href='/consol_leglist&legname=$name'>".$name."</a><br/>";
+
+    $trimmednm = str_replace(' ','-',$name);
+    $newname = trim(strtolower($trimmednm));
+    $legname .= t('<a href="@url">'.$name.'</a>', array('@url' => url('consol_leglist/'.$legtype.'/'.$newname))) . "<br/>" ;
+
+
+  }
+
+  switch ($delta) {
+   
+    case 'legislation':
+      $block['content'] = '<p><h2><strong>Legislation</strong></h2><br />'.$legname .'</p>';
+    break;
+  }
+  if($result->rowCount() > 0){
+    return $block;
+  }
+  
+}

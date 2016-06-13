@@ -1,0 +1,4 @@
+name = Court decisions
+description = A container that lists court decisions
+core = 7.x
+files[] = courtdecisions.module

@@ -1,0 +1,5 @@
+name = Alphabetical Index page
+description = Alphabetical Index listing
+package = custom_indexlist
+core = 7.x
+files[] = custom_indexlist.module

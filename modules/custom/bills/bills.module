@@ -1,0 +1,26 @@
+<?php
+
+	require_once('bill_functions.inc');
+
+	function bills_node_info() {
+
+		$items = array();
+		$items['bills'] = array(
+			'name' => t('Bills Content Type'),    // name of your content type
+			'type' => 'bills',
+			'base' => 'node_content',
+			'description' => t('A content type to handle bills.'),
+			'has_title' => 1,
+			'title_label' => t('Short title'),
+			'body_label' => t('Bills Description'),
+			//'help' => t('Please fill in all fields.'),
+			'custom' => TRUE,
+		);
+		return $items;
+	}
+
+	function bills_form($node, $form_state) {
+	
+		return node_content_form($node, $form_state);
+	}
+?>

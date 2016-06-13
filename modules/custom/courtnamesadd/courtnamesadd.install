@@ -1,0 +1,92 @@
+<?php
+		
+	/**
+	 * @file
+	 * Install file for the Judgment Content Type module
+	 */
+	
+	function courtnamesadd_install() {
+		node_types_rebuild();
+		$types = node_type_get_types();	
+		
+		add_custom_fields_courtnames();
+	
+		$country_code = strtolower(variable_get('site_default_country'));	
+		
+		variable_set('pathauto_node_courtnamesadd_pattern', 'addcourtname');
+
+		  // Don't display date and author information for "Judgments" nodes by default.
+		variable_set('node_submitted_courtnamesadd', FALSE);
+		variable_set('node_options_courtnamesadd', array('status'));
+		variable_set('comment_courtnames', 'COMMENT_NODE_HIDDEN'); 
+		
+	}// End function install function
+
+	
+	//function will read the array from and create the fields and instances
+	function add_custom_fields_courtnames() {
+	
+		$t = get_t();
+		
+
+		$field = array(
+	      'field_name' => 'field_courtmnc',
+	      'label' => $t('Enter Media Neutral Citation'),
+	      'cardinality' => 1,
+	      'type' => 'text',      
+	  	);
+	  	field_create_field($field);
+
+	  	$instance = array(
+		    'field_name'  => 'field_courtmnc',
+		    'entity_type' => 'node',             
+		    'bundle'      => 'courtnamesadd', 
+		    'label'       => $t('Media Neutral Citation'),
+		    'required'    => false,                    
+		    'widget'      => array(
+		      'type'     => 'hidden',
+		      'settings' => array(
+		        'display_label' => 1, 
+		        'max_length' => '',                    
+		      ),               
+		    ),
+		);
+	  	field_create_instance($instance); 
+
+
+	  	variable_set('pathauto_node_courtnames_pattern', '[node:field_courtnameadd]');
+
+	  	variable_set('node_submitted_courtnamesadd', FALSE);
+	  	variable_set('node_options_courtnamesadd', array('status'));
+	  	variable_set('comment_courtnamesadd', 'COMMENT_NODE_HIDDEN');	
+	
+	}
+
+		
+	function courtnamesadd_uninstall() {
+		// gather all the content while the module was enabled
+		$sql = 'SELECT nid FROM {node} n WHERE n.type = :type';
+		$result = db_query($sql, array(':type' => 'courtnamesadd'));
+		$nids = array();
+		foreach ($result as $row) {
+			$nids[] = $row->nid;
+		}
+		  
+		// delete all the nodes at once
+		node_delete_multiple($nids);
+		  
+		// delete any remaining field instances attached to this content type
+		$instances = field_info_instances('node', 'courtnamesadd');
+		foreach ($instances as $instance_name => $instance) {
+			field_delete_instance($instance);
+		}
+		  
+		// delete our content type
+		node_type_delete('courtnamesadd');
+		  
+		// purge all field information
+		field_purge_batch(1000);
+	}
+?>
+
+

@@ -1,0 +1,29 @@
+<?php
+/**
+ * @file
+ * This module provides a node type called 'Simple Content Type'
+ */
+// make sure you have this or the options function won't fire
+require_once('simple_content_type_functions.inc');
+/**
+ * Implements hook_node_info().
+ */
+function simple_content_type_node_info() {
+  
+  $items['simple_content_type'] = array(
+    'name' => t('Simple Content Type'),
+    'type' => 'simple_content_type',
+    'base' => 'node_content',
+    'description' => t('A simple demonstration content type demonstarting the Form API select widget.'),
+    'title_label' => t('Simple Title'),
+    'help' => t('Please fill in all fields.'),
+  );
+  
+  return $items;
+}
+/**
+ * Implement hook_form() with the standard default form.
+ */
+function simple_content_type_form($node, $form_state) {
+  return node_content_form($node, $form_state);
+}

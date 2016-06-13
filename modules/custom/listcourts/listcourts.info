@@ -1,0 +1,6 @@
+name = List courts
+description = Blocks for listing the Content Types.
+package = Pro Drupal Development
+core = 7.x
+version = VERSION
+files[] = listcourts.module

@@ -1,0 +1,5 @@
+name = Add Legislation type
+description = A container that adds type of legislation
+core = 7.x
+files[] = legislationtype.install
+files[] = legislationtype.module
