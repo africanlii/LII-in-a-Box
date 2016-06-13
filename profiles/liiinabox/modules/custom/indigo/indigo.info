@@ -1,8 +1,0 @@
-name = Indigo Integration
-description = Integrate Indigo API with Drupal in order to get content
-
-core = 7.x
-
-version = 0.1
-
-package = AfricanLii

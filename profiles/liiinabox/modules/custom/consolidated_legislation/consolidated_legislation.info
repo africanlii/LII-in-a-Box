@@ -1,6 +1,0 @@
-name = Consolidated Legislation Content Type
-description = A module to install legislation as promulgated content type
-core = 7.x
-files[] = consolidated_legislation.install
-files[] = consolidated_legislation.module
-

@@ -1,8 +1,0 @@
-name = Bills Content Type
-description = A module to install legislation as bills content type
-core = 7.x
-
-files[] = bills.install
-files[] = bills.module
-files[] = bill_functions.inc
-

@@ -1,5 +1,0 @@
-name = Judgments menu
-description = A module to display judgments in a menu
-package = judgmentsmenu
-core = 7.x
-files[] = judgmentsmenu.module

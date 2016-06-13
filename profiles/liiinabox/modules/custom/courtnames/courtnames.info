@@ -1,5 +1,0 @@
-name = Court names
-description = A container that lists court names
-core = 7.x
-files[] = courtnames.module
-

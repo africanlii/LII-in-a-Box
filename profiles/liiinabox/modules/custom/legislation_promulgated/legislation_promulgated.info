@@ -1,6 +1,0 @@
-name = Legislation Content Type
-description = A module to install legislation as promulgated content type
-core = 7.x
-files[] = legislation_promulgated.install
-files[] = legislation_promulgated.module
-

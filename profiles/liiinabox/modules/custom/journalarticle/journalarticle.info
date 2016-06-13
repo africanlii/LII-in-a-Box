@@ -1,5 +1,0 @@
-name = Journal Artiles
-description = A container that lists Journal Articles
-package = journalarticle
-core = 7.x
-files[] = journalarticle

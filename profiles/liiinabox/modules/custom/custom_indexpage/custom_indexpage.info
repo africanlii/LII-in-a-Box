@@ -1,5 +1,0 @@
-name = Customized indexpage
-description = A container that lists content
-package = custom_indexpage
-core = 7.x
-files[] = custom_indexpage.module

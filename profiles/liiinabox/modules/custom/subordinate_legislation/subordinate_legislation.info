@@ -1,6 +1,0 @@
-name = Subordinate Legislation Content Type
-description = A module to install legislation as promulgated content type
-core = 7.x
-files[] = subordinate_legislation.install
-files[] = subordinate_legislation.module
-

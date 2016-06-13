@@ -1,5 +1,0 @@
-name = Journal
-description = A container that contains Journal Content Type
-package = journal
-core = 7.x
-files[] = journal.module

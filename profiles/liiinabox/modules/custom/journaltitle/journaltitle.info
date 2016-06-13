@@ -1,5 +1,0 @@
-name = Journal Titles
-description = A container that adds Journal Titles and MNC
-core = 7.x
-files[] = journaltitle.install
-files[] = journaltitle.module

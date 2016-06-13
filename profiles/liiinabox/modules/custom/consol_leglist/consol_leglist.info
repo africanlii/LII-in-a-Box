@@ -1,5 +1,0 @@
-name = Alphabetical listing of Consolidated Legislation
-description = A container that lists Consolidated Legislation alphabetically
-package = consol_leglist
-core = 7.x
-files[] = consol_leglist.module

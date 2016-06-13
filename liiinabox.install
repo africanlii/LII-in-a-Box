@@ -65,10 +65,15 @@ function liiinabox_install() {
   filter_format_save($full_html_format);
 
   // Enable some standard blocks.
-  $default_theme = variable_get('theme_default', 'bartlik');
+  //$default_theme = variable_get('theme_default', 'bartlik');
   $admin_theme = 'seven';
   theme_enable(array("creative")); 
   //variable_set("theme_default", "creative");
+  
+  $default_theme = variable_get('theme_default', 'gratis');
+  $admin_theme = 'seven';
+  variable_set("theme_default", "gratis");  
+
   
   /*$default_theme = variable_get('theme_default', 'marinelli');
   $admin_theme = 'seven';
@@ -441,23 +446,27 @@ function liiinabox_install() {
     ->execute();
 
   // Create a Home link in the main menu.
-  /*$item = array(
+  $item = array(
     'link_title' => st('Home'),
     'link_path' => '<front>',
     'menu_name' => 'main-menu',
   );
-  menu_link_save($item); */
+  menu_link_save($item); 
 
-  $path = 'http://'.$_SERVER['HTTP_HOST'].'/courtsmenu';
+  //Install the custom modules
+  install_custom_modules();
+
+  /*$path = 'http://'.$_SERVER['HTTP_HOST'].'/courtsmenu';
   $item = array(
   'link_title' => st('Judgments'),
     'link_path' => $path,
     'menu_name' => 'main-menu',
-    );
+    );*/
 
   menu_link_save($item);
   // Update the menu router information.
   menu_rebuild();
+
 
   // Enable the admin theme.
   db_update('system')
@@ -468,4 +477,14 @@ function liiinabox_install() {
   variable_set('admin_theme', 'seven');
   variable_set('node_admin_theme', '1');
   //variable_set('clean_url', '1');
+}
+
+
+function install_custom_modules(){
+
+  if(!module_exists('judgment')){   
+      $modules = array('judgment','consolidated_legislation','subordinate_legislation','legislation_promulgated','journal','bills','gazette','other'); // Array of module names
+      $enable_dependencies = TRUE;
+      module_enable($modules, $enable_dependencies);
+  }
 }
