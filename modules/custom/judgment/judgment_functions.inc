@@ -9,16 +9,27 @@
 
 		$bundle = 'courtnamesadd';
   		$mnc_code = 'scza';
-  		/*$result = db_query("SELECT entity_id,revision_id,field_courtname_value FROM {field_revision_field_courtname} WHERE bundle = :bundle",array(':bundle' => $bundle,)); 
-  		foreach($result as $option){
-			$options[$option->field_courtname_value] = $option->field_courtname_value;
-		}*/
-		
+  
 		$result = db_query("SELECT title FROM {node} WHERE type = :bundle",array(':bundle' => $bundle,));
 		$options = array();
 
 		foreach($result as $option){
 			$options[$option->title] = $option->title;
+		}
+			
+		return $options;
+	}
+
+	function _importance_options_list(){
+
+		$bundle = 'importance_taxonomy';
+  		$mnc_code = 'scza';
+  
+		$result = db_query("SELECT description FROM {taxonomy_vocabulary} WHERE machine_name = :bundle",array(':bundle' => $bundle,));
+		$options = array();
+
+		foreach($result as $option){
+			$options[$option->description] = $option->description;
 		}
 			
 		return $options;
@@ -43,22 +54,22 @@
 	 
 		//if you want any of the current users info in the title routine...
 		$current_user = user_load($form_state['values']['uid']);
-		//$title = $current_user->name;
-
-		//$jdate = date('j F Y', $form_state['input']['field_jdate']['und'][0]['value']);
-		//$jdate = date('j F Y',strtotime($form_state['input']['field_jdate']['und'][0]['value']));
-		$jdate = $form_state['input']['field_jdate']['und'][0]['value']['date'];
-
-		$query = db_query("SELECT MAX(field_jno_value) as max_jno FROM field_revision_field_jno")->fetchCol();
 		
+		$jdate = $form_state['input']['field_jdate']['und'][0]['value']['date'];
+		$courtname = $jdate = $form_state['input']['field_issuingcourt_select']['und'];
+		//$query = db_query("SELECT MAX(field_jno_value) as max_jno FROM field_revision_field_jno")->fetchCol();
+		$query = db_query("SELECT MAX(field_jno_value) as max_jno FROM field_data_field_jno
+                        INNER JOIN {field_revision_field_issuingcourt_select} issuingcourt
+                        ON issuingcourt.field_issuingcourt_select_value = '$courtname'
+                        AND issuingcourt.entity_id = field_data_field_jno.entity_id ")->fetchCol();
+
 		//echo $query[0];exit;
 		$max_jno = $query[0];
 
 
-
 		if($form_state['input']['field_jno']['und'][0]['value'] == ''){
-		
-			$form_state['values']['field_jno']['und'][0]['value'] = $max_jno+1;
+			$max_jno = $max_jno + 1;
+			$form_state['values']['field_jno']['und'][0]['value'] = $max_jno;
 			//echo $form_state['input']['field_jno']['und'][0]['value'] = $max_jno+1;exit;
 		}
 
@@ -66,17 +77,9 @@
 		//echo strtoupper($country_code);exit;
 
 		//Automating MNC code
-		/*$court_name_ar = explode(' ',$form_state['input']['field_issuingcourt_select']['und']);
-		$alpha1 = $court_name_ar[0][0];
-		$alpha2 = $court_name_ar[1][0];*/
 		$mnc_year = date('Y',strtotime($form_state['input']['field_jdate']['und'][0]['value']['date']));
 		$mnc_jno = $form_state['values']['field_jno']['und'][0]['value'];
 
-		
-		//$mncval = "[".$mnc_year."] ".$country_code.strtoupper($alpha1.$alpha2)." ".$mnc_jno;
-
-		echo '<pre>';
-		//print_r($form_state['input']);exit;
 
 		$court_name = $form_state['input']['field_issuingcourt_select']['und'];
 		$bundle = 'courtnamesadd';
@@ -94,24 +97,7 @@
 			$form_state['values']['field_mnc']['und'][0]['value'] = $mncval;
 		}
 
-
-		//echo '<pre>';
-		//print_r($form_state['values']);exit;
-		
-
-		//print($form_state['input']['field_issuingcourt_select']['und']);exit;
-		//$court = $form_state['input']['field_issuingcourt_select']['und'];
-		//echo '<pre>';
-		//print_r($form_state['field']['field_download']['und']['instance']['settings']['file_directory']);exit;
-		//$form_state['field']['field_download']['und']['instance']['settings']['file_directory'] = $form_state['field']['field_download']['und']['instance']['settings']['file_directory'].'/'.$court;
-
-
-		//echo $jdate;exit;
-		//$title = $form_state['input']['field_casename']['und'][0]['value'] .' ('.$form_state['input']['field_casenumber']['und'][0]['value'].')' .$form_state['input']['field_mnc']['und'][0]['value'] .' ('.$jdate.')';
-
-		$title = $form_state['input']['field_casename']['und'][0]['value'] .' ('.$form_state['input']['field_casenumber']['und'][0]['value'].')' .$form_state['values']['field_mnc']['und'][0]['value'] .' ('.$jdate.')';
-
-		
+		$title = $form_state['input']['field_casename']['und'][0]['value'] .' ('.$form_state['input']['field_casenumber']['und'][0]['value'].')' .$form_state['values']['field_mnc']['und'][0]['value'] .' ('.$jdate.')';		
 		 
 		//add the new title back to the form_state
 		$form_state['values']['title'] = $title;

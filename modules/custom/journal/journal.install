@@ -84,9 +84,32 @@
 		);
 		field_create_instance($instance);
 
+
+		$field = array(
+		  'field_name' => 'field_issueno',
+		  'label' => $t('Issue Number'),
+		  'cardinality' => 1,
+		  'type' => 'number_integer',      
+		);
+		field_create_field($field);
+
+		$instance = array(
+			'field_name'  => 'field_issueno',
+			'entity_type' => 'node',             
+			'bundle'      => 'journal', 
+			'label'       => $t('Issue Number'),
+			'required'    => FALSE,                    
+			'widget'      => array(
+			  'type'     => 'text',              
+			),
+		);
+		field_create_instance($instance);
+
+
+
 		$field = array(
 			'field_name' => 'field_journaltitle_select',
-			'label' => t('Select Journal title from the list'),
+			'label' => t('Journal title'),
 			'type' => 'list_text',
 			'cardinality' => '1', // change this to -1 to enable ctrl+select
 			'foreign keys' => array(),

@@ -68,7 +68,7 @@
 		  'field_name' => 'field_chapterno',
 		  'label' => $t('Chapter number'),
 		  'cardinality' => 1,
-		  'type' => 'text',      
+		  'type' => 'number_integer',      
 		);
 		field_create_field($field);
 
@@ -77,7 +77,7 @@
 			'entity_type' => 'node',             
 			'bundle'      => 'consolidated_legislation', 
 			'label'       => $t('Chapter number'),
-			'required'    => TRUE,                    
+			'required'    => FALSE,                    
 			'widget'      => array(
 			  'type'     => 'text',              
 			),
@@ -272,7 +272,7 @@
 	  	field_create_field($field);
 
 	  	$cnt_code = strtolower(variable_get('site_default_country'));
-	  	$directory = $cnt_code."/leg-consol";
+	  	$directory = $cnt_code."/legislation/consolidated-act";
 	  	$instance = array(
 			'field_name'  => 'field_clegdownload',
 			'entity_type' => 'node',             
@@ -283,7 +283,7 @@
 			'type' => 'file',                       
 			'settings' => array(      
 			  'file_directory' => $directory,
-			  'file_extensions' => 'txt doc xls pdf ppt pps odt ods odp rtf',       
+			  'file_extensions' => 'txt doc docx xls pdf ppt pps odt ods odp rtf',       
 			  'max_filesize' => '10MB',           
 		  	),
 		);

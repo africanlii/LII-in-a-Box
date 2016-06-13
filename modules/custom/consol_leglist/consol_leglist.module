@@ -22,18 +22,14 @@ function consol_leglist_menu() {
 function legislation_output() {
 
     $content = array();
-    $path = current_path();
-    $path_ar = explode('/',$path);
-    $letter = $path_ar[2];
-    $letter_size = strlen($letter);
-//print_r($path_ar);
-    //echo count($path_ar);
-    if(count($path_ar) == 3 && ($letter_size !=1 && $letter_size !=4)){
+    $path_ar = explode('/',current_path());
+    
+    if(count($path_ar) == 2){
 
-      return _page_consol_leglist($path);
+      return _page_consol_leglist(current_path());
     }
     else{
-      return legislation_beginwith($path);
+      return legislation_beginwith(current_path());
     }
     
 }
@@ -51,12 +47,9 @@ function _page_consol_leglist($current_path) {
   
   //$path_ar = explode('/',current_path());
   $path_ar = explode('/',$current_path);
-  //print_r($path_ar);
   $legtype = $path_ar[1];
-  $legname = $path_ar[2];
-
-  //if($legname == "Consolidated Legislation"){
-  if($legtype == "consolidated_legislation"){
+  
+  if($legtype == "consolidated-legislation"){
     $legname = str_replace('-',' ',$legname);
     $legname = ucwords($legname);
  
@@ -148,26 +141,28 @@ function _page_consol_leglist($current_path) {
     }
     
   }
-  //Checking Legislation promulgated
-  else if($legtype == "legislation_promulgated"){
-    $legname = str_replace('-',' ',$legname);
-    $legname = str_replace('_',' ',$legname);
-    $legname = ucwords($legname);
+  //Checking Legislation promulgated also called Numbered Acts
+  //else if($legtype == "legislation-promulgated"){
+  else if($legtype == "numbered-acts"){
+    $legtype_machine = "legislation_promulgated";
+    $legname = str_replace('-',' ',$legtype);
+    //$legname = str_replace('_',' ',$legname);
+    //$legname = ucwords($legname);
     
-    drupal_set_title($legname);
+    drupal_set_title(ucwords($legname));
     
-    $result = db_query("SELECT * FROM {node} WHERE type = '$legtype' ");
+    $result = db_query("SELECT * FROM {node} WHERE type = '$legtype_machine' ");
 
-    $result2 = db_query("SELECT p.field_commencedate_value FROM {field_data_field_commencedate} p 
-     WHERE p.bundle ='$legtype' ");  
+    $result2 = db_query("SELECT p.field_dateassent_value FROM {field_data_field_dateassent} p 
+     WHERE p.bundle ='$legtype_machine' ");  
 
 
     $date_ar = array();
     $date_year = array();
     foreach($result2 as $dt){
 
-      $date_ar[] = date('j F Y',strtotime($dt->field_commencedate_value)).'<br/>';
-      $yearval = date('Y',strtotime($dt->field_commencedate_value));
+      $date_ar[] = date('j F Y',strtotime($dt->field_dateassent_value)).'<br/>';
+      $yearval = date('Y',strtotime($dt->field_dateassent_value));
       
       if(!in_array($yearval,$date_year))
         $date_year[] = $yearval;
@@ -179,11 +174,11 @@ function _page_consol_leglist($current_path) {
     //echo $num;exit;
     //query to extract the first letter of the judgment
     if($promdate_count > 0){
-       $sqlresult = db_query("SELECT SUBSTRING(nd.title,1,1) AS letter,nd.title, cdate.field_commencedate_value FROM {node} nd INNER JOIN {field_data_field_commencedate} cdate ON 
-    nd.nid = cdate.entity_id WHERE cdate.bundle = '$legtype' ORDER BY nd.title ");
+       $sqlresult = db_query("SELECT SUBSTRING(nd.title,1,1) AS letter,nd.title, cdate.field_dateassent_value FROM {node} nd INNER JOIN {field_data_field_dateassent} cdate ON 
+    nd.nid = cdate.entity_id WHERE cdate.bundle = '$legtype_machine' ORDER BY nd.title ");
     }
     else{
-      $sqlresult = db_query("SELECT SUBSTRING(nd.title,1,1) AS letter,nd.title FROM {node} nd  WHERE nd.type = '$legtype' ORDER BY nd.title ");
+      $sqlresult = db_query("SELECT SUBSTRING(nd.title,1,1) AS letter,nd.title FROM {node} nd  WHERE nd.type = '$legtype_machine' ORDER BY nd.title ");
     }
    
     //print_r($sqlresult);
@@ -240,11 +235,11 @@ function _page_consol_leglist($current_path) {
    
   }
   //Checking Legislation promulgated
-  else if($legtype == "subordinate_legislation"){
-    $legname = str_replace('-',' ',$legname);
-    $legname = ucwords($legname);
+  else if($legtype == "subordinate-legislation"){
+    $legtype = str_replace('-','_',$legtype);
+    $legtype = ucwords($legtype);
     
-    drupal_set_title($legname);
+    drupal_set_title($legtype);
     
     $result = db_query("SELECT * FROM {node} WHERE type = '$legtype' ");
 
@@ -319,15 +314,15 @@ function _page_consol_leglist($current_path) {
     }
   }
   //Checking Legislation promulgated
-  else if($legtype == "gazette_legislation"){
-    $legname = str_replace('-',' ',$legname);
+  else if($legtype == "gazette"){
+    $legname = str_replace('-',' ',$legtype);
     $legname = ucwords($legname);
-    
+
     drupal_set_title($legname);
     
     $result = db_query("SELECT * FROM {node} WHERE type = '$legtype' ");
 
-    $result2 = db_query("SELECT pdate.field_gaz_publication_date_value FROM {field_data_field_gaz_publication_date} pdate
+    $result2 = db_query("SELECT pdate.field_gazette_pub_date_value FROM {field_data_field_gazette_pub_date} pdate
     WHERE pdate.bundle ='$legtype' ");  
 
 
@@ -335,8 +330,8 @@ function _page_consol_leglist($current_path) {
     $date_year = array();
     foreach($result2 as $dt){
 
-      $date_ar[] = date('j F Y',strtotime($dt->field_gaz_publication_date_value)).'<br/>';
-      $yearval = date('Y',strtotime($dt->field_gaz_publication_date_value));
+      $date_ar[] = date('j F Y',strtotime($dt->field_gazette_pub_date_value)).'<br/>';
+      $yearval = date('Y',strtotime($dt->field_gazette_pub_date_value));
       if(!in_array($yearval,$date_year))
         $date_year[] = $yearval;
     }
@@ -345,7 +340,7 @@ function _page_consol_leglist($current_path) {
     //print_r($date_year);
     //echo $num;exit;
     //query to extract the first letter of the judgment
-    $sqlresult = db_query("SELECT SUBSTRING(nd.title,1,1) AS letter,nd.title, pdate.field_gaz_publication_date_value FROM {node} nd INNER JOIN {field_data_field_gaz_publication_date} pdate ON 
+    $sqlresult = db_query("SELECT SUBSTRING(nd.title,1,1) AS letter,nd.title, pdate.field_gazette_pub_date_value FROM {node} nd INNER JOIN {field_data_field_gazette_pub_date} pdate ON 
     nd.nid = pdate.entity_id WHERE pdate.bundle = '$legtype' ORDER BY nd.title ");
     
     $alpha = array();
@@ -490,20 +485,21 @@ function legislation_beginwith($current_path){
 
     if(strlen($letter) == 1){
 
-        $legisname = db_query("SELECT name FROM {node_type} WHERE type = '$legtype' ")->fetchField();
-        //$courtname = str_replace('-',' ',$passedcourtname);
-        //$courtname = ucwords($courtname);
-        drupal_set_title($legisname .' beginning with '.$letter);
+        if ($legtype == "numbered-acts"){
+            $legtype_machine = "legislation_promulgated";
+        }
+        
+        $legtype = str_replace('-',' ',$legtype);
+        drupal_set_title(ucwords($legtype) .' beginning with '.$letter);
 
         $queryres=db_query("SELECT nd.title, ualias.alias
         FROM {node} nd INNER JOIN {url_alias} ualias ON
         ualias.source = CONCAT('node/',nd.nid) 
         AND nd.title LIKE '$letter%'
-        AND nd.type = '$legtype' ");
+        AND nd.type = '$legtype_machine' ");
 
 
-        $data = '<p><strong>type:</strong> judgment';
-        $data .= '<p><strong>database:</strong> '.$legisname;
+        $data = '<p><strong>database:</strong> '.$legtype;
         $data .= '<p><strong>alpha:</strong> '.$letter;
         $data .= "<p><ul>";
         foreach($queryres as $result){
@@ -526,22 +522,21 @@ function legislation_beginwith($current_path){
         $legtype = $path_ar[1];
         $year = $path_ar[2];
         
-        
-        //$metadata = '<p><strong>type:</strong>Legislation';
         $metadata = '';
-        //$metadata .= '<p><strong>database:</strong>'.$legtype;
-        //$metadata .= '<p><strong>year:</strong>'.$year;
-
+        
         $legname = db_query("SELECT name FROM {node_type} WHERE type = '$legtype' ")->fetchField();
-        drupal_set_title($legname.' commenced year '.$year);
+       
 
-        if($legtype == "legislation_promulgated"){      
+        if($legtype == "numbered-acts"){      
 
-          
-          $result = db_query("SELECT n.title,DATE_FORMAT(pdate.field_commencedate_value,'%Y'),ualias.alias FROM {node} n     
-            INNER JOIN {field_data_field_commencedate} pdate
+          $legtype_machine = "legislation_promulgated";
+          $legtype = str_replace('-',' ',$legtype);
+          drupal_set_title(ucwords($legtype).' for year '.$year);
+
+          $result = db_query("SELECT n.title,DATE_FORMAT(pdate.field_dateassent_value,'%Y'),ualias.alias FROM {node} n     
+            INNER JOIN {field_data_field_dateassent} pdate
             ON n.nid = pdate.entity_id
-            AND DATE_FORMAT(pdate.field_commencedate_value,'%Y') = '$year'
+            AND DATE_FORMAT(pdate.field_dateassent_value,'%Y') = '$year'
             INNER JOIN {url_alias} ualias
             ON CONCAT('node/',n.nid) = ualias.source
             ORDER BY n.title ");
@@ -657,6 +652,34 @@ function legislation_beginwith($current_path){
             INNER JOIN {field_data_field_date_introduced} subyear
             ON subyear.entity_id = n.nid 
             AND DATE_FORMAT(subyear.field_date_introduced_value,'%Y') = '$year'
+            INNER JOIN {url_alias} ualias
+            ON CONCAT('node/',n.nid) = ualias.source
+            ORDER BY n.title ");
+
+          $date_month = array();
+          
+
+          $date_ar = array();  
+          $months = '<p></p>';
+          $titles = '<p><ul>';  
+          $prev_month = "";
+         
+          foreach($result as $res){        
+            $alias = $res->alias;
+              $titles .= '<li>'."<a href='/$alias'>".$res->title.'</a></li>';        
+          }// End of for loop
+          
+          $titles .= '</ul></p>';
+          
+          $content['content'] = array(
+            '#markup'=>t($metadata.$months.$titles),
+          );
+        }
+        else if( $legtype == "gazette"){        
+          $result = db_query("SELECT n.title,DATE_FORMAT(subyear.field_gazette_pub_date_value,'%Y'),ualias.alias FROM {node} n     
+            INNER JOIN {field_data_field_gazette_pub_date} subyear
+            ON subyear.entity_id = n.nid 
+            AND DATE_FORMAT(subyear.field_gazette_pub_date_value,'%Y') = '$year'
             INNER JOIN {url_alias} ualias
             ON CONCAT('node/',n.nid) = ualias.source
             ORDER BY n.title ");

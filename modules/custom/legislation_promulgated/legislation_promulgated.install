@@ -2,9 +2,10 @@
 
 /**
 	 * @file
-	 * Install file for the Judgment Content Type module
+	 * Install file for the Legislation Promulgated Content Type module
 	 */
 	
+	//Also known as Numbered Acts
 	
 	
 	function legislation_promulgated_install() {
@@ -59,7 +60,7 @@
 			'cardinality' => 1,
 			'type' => 'text',
 			'settings' => array(
-				'max_length' => 1000,
+				'max_length' => 255,
 			),
 		);
 		field_create_field($field);
@@ -88,7 +89,7 @@
 		  'field_name' => 'field_longtitle',
 		  'label' => $t('Long title'),
 		  'cardinality' => 1,
-		  'type' => 'text',      
+		  'type' => 'text_long',      
 		);
 		field_create_field($field);
 
@@ -99,7 +100,7 @@
 			'label'       => $t('Long title'),
 			'required'    => false,                    
 			'widget'      => array(
-			  'type'     => 'text',              
+			  'type'     => 'text_long',              
 			),
 		);
 		field_create_instance($instance);
@@ -109,7 +110,7 @@
 		  'field_name' => 'field_yearact',
 		  'label' => $t('Year of Act'),
 		  'cardinality' => 1,
-		  'type' => 'text',      
+		  'type' => 'number_integer',      
 		);
 		field_create_field($field);
 
@@ -118,9 +119,9 @@
 			'entity_type' => 'node',             
 			'bundle'      => 'legislation_promulgated', 
 			'label'       => $t('Year of Act'),
-			'required'    => TRUE,                    
+			'required'    => FALSE,                    
 			'widget'      => array(
-			  'type'     => 'text',              
+			  'type'     => 'number_integer',              
 			),
 		);
 		field_create_instance($instance);
@@ -130,7 +131,7 @@
 		  'field_name' => 'field_numact',
 		  'label' => $t('Number of Act'),
 		  'cardinality' => 1,
-		  'type' => 'text',      
+		  'type' => 'number_integer',      
 		);
 		field_create_field($field);
 
@@ -139,9 +140,9 @@
 			'entity_type' => 'node',             
 			'bundle'      => 'legislation_promulgated', 
 			'label'       => $t('Number of Act'),
-			'required'    => TRUE,                    
+			'required'    => FALSE,                    
 			'widget'      => array(
-			  'type'     => 'text',              
+			  'type'     => 'number_integer',              
 			),
 		);
 		field_create_instance($instance);
@@ -160,7 +161,7 @@
 			'entity_type' => 'node',             
 			'bundle'      => 'legislation_promulgated', 
 			'label'       => $t('Date of assent'),
-			'required'    => true, 
+			'required'    => FALSE, 
 			'widget'      => array(
 			  'type' => 'date_popup',                     
 			  'settings' => array(
@@ -190,7 +191,7 @@
 			'entity_type' => 'node',             
 			'bundle'      => 'legislation_promulgated', 
 			'label'       => $t('Date of promulgation'),
-			'required'    => true, 
+			'required'    => FALSE, 
 			'widget'      => array(
 			  'type' => 'date_popup',                     
 			  'settings' => array(
@@ -221,7 +222,7 @@
 			'entity_type' => 'node',             
 			'bundle'      => 'legislation_promulgated', 
 			'label'       => $t('Date of commencement'),
-			'required'    => true, 
+			'required'    => FALSE, 
 			'widget'      => array(
 			  'type' => 'date_popup',                     
 			  'settings' => array(
@@ -312,6 +313,7 @@
 		   'field_name'=>'field_legprom_rel_case',
 		   'label'=>'Link to related Cases',		 
 		   'type'=>'node_reference',
+		   'cardinality' => FIELD_CARDINALITY_UNLIMITED,
 		   'settings'=>array(
 		     'referenceable_types'=>array(
 		       'related_cases'=>'related_cases'
@@ -336,6 +338,7 @@
 		   'field_name'=>'field_legprom_rel_leg',
 		   'label'=>'Link to related Legislation',		 
 		   'type'=>'node_reference',
+		   'cardinality' => FIELD_CARDINALITY_UNLIMITED,
 		   'settings'=>array(
 		     'referenceable_types'=>array(
 		       'related_leg'=>'related_leg'
@@ -376,57 +379,6 @@
 		);
 		field_create_instance($instance);
 
-		
-	  	// Create a default vocabulary named "Tags", enabled for the 'article' content type.
-		$description = st('Use tags to group articles on similar topics into categories.');
-		$vocabulary = (object) array(
-		    'name' => st('Tags'),
-		    'description' => $description,
-		    'machine_name' => 'legprom_taxonomy',
-		);
-		taxonomy_vocabulary_save($vocabulary);
-
-		$field = array(
-		    'field_name' => 'field_' . $vocabulary->machine_name,
-		    'type' => 'taxonomy_term_reference',
-		    // Set cardinality to unlimited for tagging.
-		    'cardinality' => FIELD_CARDINALITY_UNLIMITED,
-		    'settings' => array(
-		      'allowed_values' => array(
-		        array(
-		          'vocabulary' => $vocabulary->machine_name,
-		          'parent' => 0,
-		        ),
-		      ),
-		    ),
-		);
-		field_create_field($field);
-
-		$help = st('Enter a comma-separated list of words to describe your content.');
-		$instance = array(
-		    'field_name' => 'field_' . $vocabulary->machine_name,
-		    'entity_type' => 'node',
-		    'label' => 'Type',
-		    'bundle' => 'legislation_promulgated',
-		    'entity_type' => 'node',
-		    'description' => $help,
-		    'widget' => array(
-		      'type' => 'taxonomy_autocomplete',
-		      //'weight' => -4,
-		    ),
-		    'display' => array(
-		      'default' => array(
-		        'type' => 'taxonomy_term_reference_link',
-		        //'weight' => 10,
-		      ),
-		      'teaser' => array(
-		        'type' => 'taxonomy_term_reference_link',
-		        //'weight' => 10,
-		      ),
-		    ),
-		  );
-		field_create_instance($instance);
-
 		$field = array(
 		  'field_name' => 'field_legdownload',
 		  'label' => $t('Download'),
@@ -436,7 +388,7 @@
 	  	field_create_field($field);
 
 	  	$cnt_code = strtolower(variable_get('site_default_country'));
-	  	$directory = $cnt_code."/legislation";
+	  	$directory = $cnt_code."/legislation/num-act";
 	  	$instance = array(
 			'field_name'  => 'field_legdownload',
 			'entity_type' => 'node',             

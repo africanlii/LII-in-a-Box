@@ -37,13 +37,9 @@
 
 
 		$country_code = strtolower(variable_get('site_default_country'));	
-		  //Setting URI structure for judgment content type
-		  //variable_set('pathauto_node_judgment_pattern', 'judgment/[node:title]');
-		  //variable_set('pathauto_node_judgment_pattern', '[node:field_countrycode]/judgment/[node:field_issuingcourt]/[node:field-jdate:custom:Y]/[node:field_jno]');
-		variable_set('pathauto_node_judgment_pattern', $country_code.'/judgment/[node:field_issuingcourt_select]/[node:field-jdate:custom:Y]/[node:field_jno]'.'.html');
-
-		//variable_set('auto_nodetitle_node_judgment_pattern','[node:field_casename]'.'('.'[node:field_casenumber]'.')');
 		
+		variable_set('pathauto_node_judgment_pattern', $country_code.'/judgment/[node:field_issuingcourt_select]/[node:field-jdate:custom:Y]/[node:field_jno]');
+
 		  // Don't display date and author information for "Judgments" nodes by default.
 		variable_set('node_submitted_judgment', FALSE);
 		variable_set('node_options_judgment', array('status'));
@@ -61,7 +57,7 @@
 			'cardinality' => 1,
 			'type' => 'text',
 			'settings' => array(
-				'max_length' => 1000,
+				'max_length' => 500,
 			),
 		);
 		field_create_field($field);
@@ -90,10 +86,10 @@
 	  $field = array(
 		  'field_name' => 'field_casenumber',
 		  'label' => $t('Case number'),
-		  'cardinality' => 1,
+		  'cardinality' => -1,
 		  'type' => 'text',
 		  'settings' => array(
-			'max_length' => 1000,
+			'max_length' => 50,
 		  ),
 	  );
 	  field_create_field($field);
@@ -124,7 +120,7 @@
 		  'field_name' => 'field_jno',
 		  'label' => $t('Judgment Number'),
 		  'cardinality' => 1,
-		  'type' => 'text',     
+		  'type' => 'number_integer', 		     
 	  );
 	  field_create_field($field);
 
@@ -134,9 +130,9 @@
 	  'bundle'      => 'judgment', 
 	  'label'       => $t('Judgment Number'),
 	  //'required'    => true,                       
-	  'type' => 'number_decimal',                   
+	  'type' => 'number_integer',                   
 	  'widget'      => array(
-		'type'     => 'number_decimal',              
+		'type'     => 'number_integer',              
 		'settings' => array(
 		  'scale' => 0,                     
 		),
@@ -199,14 +195,38 @@
 	);
 	field_create_instance($instance); 
 	 
-			//Create Media Neutral Citation field
+	//Vendor Citation Field 
+	$field = array(
+	  'field_name' => 'field_vendor_citation',
+	  'label' => $t('Vendor Citation'),
+	  'cardinality' => -1,
+	  'type' => 'text',
+	  'settings' => array(
+			'max_length' => 50,
+		),   
+	);
+	field_create_field($field);
+
+	$instance = array(
+		'field_name'  => 'field_vendor_citation',
+		'entity_type' => 'node',             
+		'bundle'      => 'judgment', 
+		'label'       => $t('Vendor Citation'),
+		'required'    => FALSE,                    
+		'widget'      => array(
+		  'type'     => 'text',
+		),			
+	);
+	field_create_instance($instance);
+
+	//Create Media Neutral Citation field
 	$field = array(
 		'field_name' => 'field_mnc',
 		'label' => $t('Media Neutral Citation'),
 		'cardinality' => 1,
 		'type' => 'text',
 		'settings' => array(
-		'max_length' => 1000,
+		'max_length' => 50,
 		),
 	);
 	field_create_field($field);
@@ -263,7 +283,7 @@
 	  
 
 	//Create Presiding judge field
-	$field = array(
+	/*$field = array(
 	  'field_name' => 'field_judge',
 	  'label' => $t('Judge'),
 	  'cardinality' => -1,
@@ -285,7 +305,8 @@
 		  ),               
 		),
 	  );
-	  field_create_instance($instance);
+	  field_create_instance($instance); */
+	  //End of Presiding Judge field
 
 	  $field = array(
 		   'field_name'=>'field_judg_rel_case',
@@ -343,11 +364,7 @@
 		  'field_name' => 'field_download',
 		  'label' => $t('Download'),
 		  'cardinality' => -1,
-		  'type' => 'file', 
-		  /*'settings' => array(
-        		'display_default' => 0,
-        		'uri_scheme' => $uri,
-      		),*/     
+		  'type' => 'file', 		    
 	  );
 	  field_create_field($field);
 
@@ -362,7 +379,7 @@
 		'type' => 'file',                       
 		'settings' => array(      
 		  'file_directory' => $directory,
-		  'file_extensions' => 'txt doc xls pdf ppt pps odt ods odp rtf',       
+		  'file_extensions' => 'txt doc docx xls pdf ppt pps odt ods odp rtf',       
 		  'max_filesize' => '10MB',           
 		  ),
 		
@@ -404,7 +421,122 @@
 		   'description' => $help,
 		   'widget' => array(
 		     'type' => 'taxonomy_autocomplete',
-		     'weight' => -4,
+		     
+		    ),
+		    'display' => array(
+		      'default' => array(
+		        'type' => 'taxonomy_term_reference_link',
+		       
+		      ),
+		      'teaser' => array(
+		        'type' => 'taxonomy_term_reference_link',
+		        
+		    ),
+		  ),
+		);
+		field_create_instance($instance);
+		//End of Taxonomy field creation
+
+		// Create a default Importance vocabulary field, enabled for the 'judgment' content type.
+		$description = st('Reportable');
+		$vocabulary = (object) array(
+		    'name' => st('Importance'),
+		    'description' => $description,
+		    'machine_name' => 'importance_taxonomy',
+		);
+		taxonomy_vocabulary_save($vocabulary); 
+
+		$field = array(
+		   'field_name' => 'field_importance', //. $vocabulary->machine_name,
+		   'label' => t('Select an option from the list'),
+		   'type' => 'list_text',
+		    // Set cardinality to unlimited for tagging.
+		   'cardinality' => '1',
+		   'foreign keys' => array(),
+		   'indexes' => array(
+		   'value' => array(
+				0 => 'value',
+			  ),
+			),
+		   'module' => 'list',
+		   'settings' => array(
+		   		'allowed_values_function' => '_importance_options_list',
+			),
+		);
+		field_create_field($field);
+
+		//$help = st('Enter a comma-separated list of words to describe your content.');
+		$instance = array(
+		   'field_name' => 'field_importance',
+		   'entity_type' => 'node',
+		   'label' => t('Importance'),
+		   'bundle' => 'judgment',
+		   'default_value' => NULL,
+		   'description' => t('Importance.'),
+		   'display' => array(
+		   	'default' => array(
+				'label' => 'above',
+				'module' => 'list',
+				'settings' => array(),
+				'type' => 'list_default',
+		  		),
+		  		'teaser' => array(
+					'label' => 'above',
+					'settings' => array(),
+					'type' => 'hidden',
+					'weight' => 3,
+		  		),
+			),
+			'required' => 1,
+			'settings' => array(
+		  		'user_register_form' => FALSE,
+			),
+			'widget' => array(
+		  		'active' => 1,
+		  		'module' => 'options',
+		  		'settings' => array(),
+		  		'type' => 'options_select',
+		  	),
+		);
+		field_create_instance($instance);
+		//End of Importance Taxonomy field
+
+
+		// Create a default Presding Judge vocabulary , enabled for the 'judgment' content type.
+		$description = st('Presiding Judge');
+		$vocabulary = (object) array(
+		    'name' => st('Presiding Judge'),
+		    'description' => $description,
+		    'machine_name' => 'judge_taxonomy',
+		);
+		taxonomy_vocabulary_save($vocabulary);
+
+		$field = array(
+		   'field_name' => 'field_' . $vocabulary->machine_name,
+		   'type' => 'taxonomy_term_reference',
+		    // Set cardinality to unlimited for tagging.
+		   'cardinality' => FIELD_CARDINALITY_UNLIMITED,
+		   'settings' => array(
+		     'allowed_values' => array(
+		       array(
+		        'vocabulary' => $vocabulary->machine_name,
+		        'parent' => 0,
+		       ),
+		     ),
+		   ),
+		);
+		field_create_field($field);
+
+		$help = st('Enter a comma-separated list of words to describe your content.');
+		$instance = array(
+		   'field_name' => 'field_' . $vocabulary->machine_name,
+		   'entity_type' => 'node',
+		   'label' => 'Presiding Judge',
+		   'bundle' => 'judgment',
+		   'description' => $help,
+		   'widget' => array(
+		     'type' => 'taxonomy_autocomplete',
+		    
 		    ),
 		    'display' => array(
 		      'default' => array(
@@ -413,11 +545,14 @@
 		      ),
 		      'teaser' => array(
 		        'type' => 'taxonomy_term_reference_link',
-		        'weight' => 10,
+		      
 		    ),
 		  ),
 		);
 		field_create_instance($instance);
+		//End of Presiding Judge Taxonomy
+
+
 
 
 		$field = array(

@@ -1,0 +1,7 @@
+; $Id:
+name = Views Legislation
+description = Provides supplementary resources such as programmatic views
+package = D7 Views Recipes
+version = "7.x-1.0"
+core = "7.x"
+php = 5.3

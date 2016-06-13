@@ -1,0 +1,174 @@
+<?php
+/**
+ * Implements hook_views_api().
+ */
+function views_legislation_views_api() {
+  return array(
+    'api' => 2,
+    'path' => drupal_get_path('module', 'views_legislation'),
+  );
+}
+/**
+ * Implements hook_views_default_views().
+ */
+function views_legislation_views_default_views() {
+  return views_legislation_list_all_nodes();
+}
+/**
+ * Begin view
+ */
+function views_legislation_list_all_nodes() {
+  /*
+   * View 'list_all_nodes'
+   */
+  $view = new view();
+  $view->name = 'legislation_as_enacted';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'node';
+  $view->human_name = 'Legislation as Enacted';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'Legislation as Enacted of Zambia';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '50';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['quantity'] = '9';
+  $handler->display->display_options['style_plugin'] = 'list';
+  $handler->display->display_options['row_plugin'] = 'fields';
+  /* Field: Content: Date of assent */
+  $handler->display->display_options['fields']['field_dateassent']['id'] = 'field_dateassent';
+  $handler->display->display_options['fields']['field_dateassent']['table'] = 'field_data_field_dateassent';
+  $handler->display->display_options['fields']['field_dateassent']['field'] = 'field_dateassent';
+  $handler->display->display_options['fields']['field_dateassent']['settings'] = array(
+    'format_type' => 'long',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
+  /* Sort criterion: Content: Date of assent (field_dateassent) */
+  $handler->display->display_options['sorts']['field_dateassent_value']['id'] = 'field_dateassent_value';
+  $handler->display->display_options['sorts']['field_dateassent_value']['table'] = 'field_data_field_dateassent';
+  $handler->display->display_options['sorts']['field_dateassent_value']['field'] = 'field_dateassent_value';
+  /* Contextual filter: Content: Date of assent (field_dateassent) */
+  $handler->display->display_options['arguments']['field_dateassent_value']['id'] = 'field_dateassent_value';
+  $handler->display->display_options['arguments']['field_dateassent_value']['table'] = 'field_data_field_dateassent';
+  $handler->display->display_options['arguments']['field_dateassent_value']['field'] = 'field_dateassent_value';
+  $handler->display->display_options['arguments']['field_dateassent_value']['default_action'] = 'summary';
+  $handler->display->display_options['arguments']['field_dateassent_value']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_dateassent_value']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_dateassent_value']['summary']['format'] = 'unformatted_summary';
+  $handler->display->display_options['arguments']['field_dateassent_value']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_dateassent_value']['summary_options']['inline'] = TRUE;
+  $handler->display->display_options['arguments']['field_dateassent_value']['summary_options']['separator'] = ' | ';
+  $handler->display->display_options['arguments']['field_dateassent_value']['glossary'] = TRUE;
+  $handler->display->display_options['arguments']['field_dateassent_value']['limit'] = '4';
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'legislation_promulgated' => 'legislation_promulgated',
+  );
+
+  /* Display: Page */
+  $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['defaults']['header'] = FALSE;
+  /* Header: Global: Unfiltered text */
+  $handler->display->display_options['header']['area_text_custom']['id'] = 'area_text_custom';
+  $handler->display->display_options['header']['area_text_custom']['table'] = 'views';
+  $handler->display->display_options['header']['area_text_custom']['field'] = 'area_text_custom';
+  $handler->display->display_options['header']['area_text_custom']['content'] = 'Chronological index:';
+  $handler->display->display_options['path'] = 'zm/legislation/act';
+
+  /* Display: Attachment */
+  $handler = $view->new_display('attachment', 'Attachment', 'attachment_1');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Alphabetical List of Legislation as Enacted in Zambia';
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['defaults']['header'] = FALSE;
+  /* Header: Global: Unfiltered text */
+  $handler->display->display_options['header']['area_text_custom']['id'] = 'area_text_custom';
+  $handler->display->display_options['header']['area_text_custom']['table'] = 'views';
+  $handler->display->display_options['header']['area_text_custom']['field'] = 'area_text_custom';
+  $handler->display->display_options['header']['area_text_custom']['content'] = 'Alphabetical index';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Content: Title */
+  $handler->display->display_options['arguments']['title']['id'] = 'title';
+  $handler->display->display_options['arguments']['title']['table'] = 'node';
+  $handler->display->display_options['arguments']['title']['field'] = 'title';
+  $handler->display->display_options['arguments']['title']['default_action'] = 'summary';
+  $handler->display->display_options['arguments']['title']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['title']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['title']['summary']['format'] = 'unformatted_summary';
+  $handler->display->display_options['arguments']['title']['summary_options']['count'] = FALSE;
+  $handler->display->display_options['arguments']['title']['summary_options']['override'] = TRUE;
+  $handler->display->display_options['arguments']['title']['summary_options']['items_per_page'] = '37';
+  $handler->display->display_options['arguments']['title']['summary_options']['inline'] = TRUE;
+  $handler->display->display_options['arguments']['title']['summary_options']['separator'] = '|';
+  $handler->display->display_options['arguments']['title']['glossary'] = TRUE;
+  $handler->display->display_options['arguments']['title']['limit'] = '1';
+  $handler->display->display_options['displays'] = array(
+    'page' => 'page',
+    'default' => 0,
+  );
+  $handler->display->display_options['attachment_position'] = 'after';
+  $translatables['legislation_as_enacted'] = array(
+    t('Master'),
+    t('Legislation as Enacted of Zambia'),
+    t('more'),
+    t('Apply'),
+    t('Reset'),
+    t('Sort by'),
+    t('Asc'),
+    t('Desc'),
+    t('Items per page'),
+    t('- All -'),
+    t('Offset'),
+    t('« first'),
+    t('‹ previous'),
+    t('next ›'),
+    t('last »'),
+    t('Date of assent'),
+    t('All'),
+    t('Page'),
+    t('Chronological index:'),
+    t('Attachment'),
+    t('Alphabetical List of Legislation as Enacted in Zambia'),
+    t('Alphabetical index'),
+  );
+
+/* Display: Page */
+  $handler = $view->new_display('page', 'Page', 'page_1');
+  //$handler->display->display_options['path'] = 'list-all-nodes';
+  $views[$view->name] = $view;
+  return $views;
+}
+
+
+
+?>
