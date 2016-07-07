@@ -52,12 +52,42 @@
 	//function will read the array from and create the fields and instances
 	function add_subleg_fields() {
 		$t = get_t();
+		/*$field = array(
+			'field_name' => 'field_sublegtitle',
+			'label' => $t('Title'),
+			'cardinality' => 1,
+			'type' => 'text',
+			'settings' => array(
+				'max_length' => 1000,
+			),
+		);
+		field_create_field($field);
+		
+		$instance = array(
+			'field_name'  => 'field_sublegtitle',
+			'entity_type' => 'node',             
+			'bundle'      => 'subordinate_legislation', 
+			'label'       => $t('Title'),
+			'required'    => false,                       
+			'display'     => array(
+				'default' => array(
+					'type' => 'text',                       
+				),
+			),
+			'widget'      => array(
+				'type'     => 'text',              
+				'settings' => array(
+					'display_label' => 1,                     
+				),
+			),
+		);
+		field_create_instance($instance); */
 
 		$field = array(
 		  'field_name' => 'field_sublegyear',
 		  'label' => $t('Year of Subordinate Legislation'),
 		  'cardinality' => 1,
-		  'type' => 'number_integer',      
+		  'type' => 'text',      
 		);
 		field_create_field($field);
 
@@ -66,7 +96,7 @@
 			'entity_type' => 'node',             
 			'bundle'      => 'subordinate_legislation', 
 			'label'       => $t('Year'),
-			'required'    => FALSE,                    
+			'required'    => TRUE,                    
 			'widget'      => array(
 			  'type'     => 'text',              
 			),
@@ -76,9 +106,9 @@
 		
 		$field = array(
 		  'field_name' => 'field_sublegno',
-		  'label' => $t('Number of Act'),
+		  'label' => $t('Number of SL'),
 		  'cardinality' => 1,
-		  'type' => 'number_integer',      
+		  'type' => 'text',      
 		);
 		field_create_field($field);
 
@@ -87,34 +117,12 @@
 			'entity_type' => 'node',             
 			'bundle'      => 'subordinate_legislation', 
 			'label'       => $t('Number of SL'),
-			'required'    => FALSE,                    
+			'required'    => TRUE,                    
 			'widget'      => array(
 			  'type'     => 'text',              
 			),
 		);
 		field_create_instance($instance);
-
-		//Create Issuing Authority field
-		$field = array(
-		  'field_name' => 'field_issuingauth',
-		  'label' => $t('Issuing Authority'),
-		  'cardinality' => 1,
-		  'type' => 'text',      
-		);
-		field_create_field($field);
-
-		$instance = array(
-			'field_name'  => 'field_issuingauth',
-			'entity_type' => 'node',             
-			'bundle'      => 'subordinate_legislation', 
-			'label'       => $t('Issuing Authority'),
-			'required'    => FALSE,                    
-			'widget'      => array(
-			  'type'     => 'text',              
-			),
-		);
-		field_create_instance($instance);
-
 		
 
 		//Create Legislation date of assent field
@@ -131,7 +139,7 @@
 			'entity_type' => 'node',             
 			'bundle'      => 'subordinate_legislation', 
 			'label'       => $t('Date of assent'),
-			'required'    => FALSE, 
+			'required'    => true, 
 			'widget'      => array(
 			  'type' => 'date_popup',                     
 			  'settings' => array(
@@ -139,7 +147,7 @@
 				'input_format' => 'j F Y',
 				'date_format' => 'd m Y',
 				'increment' => 1,
-				'year_range' => '-150:+0',                   
+				'year_range' => '-100:+0',                   
 			  ),
 			),
 			
@@ -160,7 +168,7 @@
 			'entity_type' => 'node',             
 			'bundle'      => 'subordinate_legislation', 
 			'label'       => $t('Date of promulgation'),
-			'required'    => FALSE, 
+			'required'    => true, 
 			'widget'      => array(
 			  'type' => 'date_popup',                     
 			  'settings' => array(
@@ -168,7 +176,7 @@
 				'input_format' => 'j F Y',
 				'date_format' => 'd m Y',
 				'increment' => 1,
-				'year_range' => '-150:+0',                   
+				'year_range' => '-100:+0',                   
 			  ),
 			),
 			
@@ -190,7 +198,7 @@
 			'entity_type' => 'node',             
 			'bundle'      => 'subordinate_legislation', 
 			'label'       => $t('Date of commencement'),
-			'required'    => FALSE, 
+			'required'    => true, 
 			'widget'      => array(
 			  'type' => 'date_popup',                     
 			  'settings' => array(
@@ -198,7 +206,7 @@
 				'input_format' => 'j F Y',
 				'date_format' => 'd m Y',
 				'increment' => 1,
-				'year_range' => '-150:+0',                   
+				'year_range' => '-100:+0',                   
 			  ),
 			),
 			
@@ -225,7 +233,7 @@
 			'bundle'      => 'subordinate_legislation', 
 			'type' => 'node_reference',
 			'label'       => $t('Link to Related Sis'),
-			'required'    => FALSE,                    
+			'required'    => false,                    
 			'widget'=>array(
 		      'type'=>'taxonomy_autocomplete'
 		    ),
@@ -252,7 +260,7 @@
 			'bundle'      => 'subordinate_legislation', 
 			'type' => 'node_reference',
 			'label'       => $t('Link to Related Consol Act'),
-			'required'    => FALSE,                    
+			'required'    => false,                    
 			'widget'=>array(
 		      'type'=>'taxonomy_autocomplete'
 		    ),
@@ -278,7 +286,7 @@
 			'bundle'      => 'subordinate_legislation', 
 			'type' => 'node_reference',
 			'label'       => $t('Link to Related Legislation'),
-			'required'    => FALSE,                    
+			'required'    => false,                    
 			'widget'=>array(
 		      'type'=>'taxonomy_autocomplete'
 		    ),
@@ -345,13 +353,13 @@
 	  	field_create_field($field);
 
 	  	$cnt_code = strtolower(variable_get('site_default_country'));
-	  	$directory = $cnt_code."/legislation/subordinate-legislation";
+	  	$directory = $cnt_code."/subleg-consol";
 	  	$instance = array(
 			'field_name'  => 'field_sublegdownload',
 			'entity_type' => 'node',             
 			'bundle'      => 'subordinate_legislation', 
 			'label'       => $t('Download of Original File'),
-			'required'    => FALSE,
+			'required'    => false,
 			'cardinality' => -1,
 			'type' => 'file',                       
 			'settings' => array(      

@@ -22,6 +22,13 @@ function indigo_menu() {
 	    'type' => MENU_CALLBACK,
 	);
 
+	$items['admin/content/indigo-import'] = array(
+		'title' => t('Import Indigo Content'),
+	    'page callback' => '__test_indigo_fetch',
+	    'access arguments' => array('administer indigo settings'),
+	    'type' => MENU_NORMAL_ITEM,
+	);
+
 	return $items;
 }
 
@@ -48,31 +55,224 @@ function indigo_admin() {
 	return system_settings_form($form);
 }
 
+function indigo_block_info() {
+  $blocks['indigo_document_index'] = array(
+    'info' => t('Indigo Document Index'),
+    'cache' => DRUPAL_NO_CACHE
+  );
+
+  $blocks['indigo_document_downloads'] = array(
+    'info' => t('Indigo Document Downloads'),
+    'cache' => DRUPAL_NO_CACHE
+  );
+
+  return $blocks;
+}
+
+function indigo_block_view($delta = '') {
+  $block = array();
+
+  switch ($delta) {
+    case 'indigo_document_index':
+      $block['subject'] = t('Table of Contents');
+      $block['content'] = __build_indigo_html_list(__build_indigo_document_index());
+      break;
+
+    case 'indigo_document_downloads':
+      $block['subject'] = t('Downloads');
+      $block['content'] = __build_indigo_html_list(__build_indigo_document_downloads());
+      break;
+  }
+
+  return $block;
+}
+
+function indigo_theme($existing, $type, $theme, $path) {
+  return array(
+    'node__indigo_document' => array(
+      'render element' => 'content',
+      'base hook' => 'node',
+      'template' => 'node--indigo-document',
+      'path' => drupal_get_path('module', 'indigo') . '/templates',
+    ),
+    'node__indigo_section' => array(
+      'render element' => 'content',
+      'base hook' => 'node',
+      'template' => 'node--indigo-section',
+      'path' => drupal_get_path('module', 'indigo') . '/templates',
+    ),
+  );
+}
+
+function indigo_node_view($node, $view_mode, $langcod) {
+	$content_types = array('indigo_document', 'indigo_section', 'indigo_tag');
+
+	if(in_array($node->type, $content_types)) {
+		// Add in the fancy CSS.
+		drupal_add_css(drupal_get_path('module', 'indigo') .'/styles/akoma-ntoso.css');
+
+		// Add the Indigo content to the content variable.
+		$node->content['indigo'] = '<div id="indigo-content-wrapper" class="akoma-ntoso">'. __load_indigo_content($node->nid) .'</div>';
+
+		return $node;
+	}
+}
+
+function __load_indigo_content($nid) {
+	$this_node = node_load($nid);
+	$indigo_content = '';
+
+	switch ($this_node->type) {
+		case 'indigo_document':
+			$doc_node = $this_node->nid;
+
+			$result = db_select('field_data_field_section_parent', 'p')
+		    ->fields('p')
+		    ->condition('field_section_parent_target_id', $doc_node, '=')
+		    ->condition('entity_type', 'node', '=')
+		    ->execute()
+		    ->fetchAll();
+
+		    foreach ($result as $r) {
+			  	$_node = node_load($r->entity_id);
+			  	$indigo_content .= $_node->body[$_node->language][0]['value'];
+			  }
+			break;
+
+		case 'indigo_section':
+			$indigo_content .= $this_node->body[$this_node->language][0]['value'];
+
+			// Set the title to the parent document.
+			$parent = node_load($this_node->field_section_parent[$this_node->language][0]['target_id']);
+			drupal_set_title($parent->title);
+			break;
+	}
+
+  return $indigo_content;
+}
+
+function __build_indigo_document_index() {
+  // Get the ID of the parent document.
+  if (arg(0) == 'node' && is_numeric(arg(1))) {
+  	$this_node = node_load(arg(1));
+
+  	// Start building out the index.
+  	$this_index = array();
+
+  	if ($this_node) {
+  		switch ($this_node->type) {
+  			case 'indigo_document':
+  				$doc_node = $this_node->nid;
+
+  				$result = db_select('field_data_field_section_parent', 'p')
+				    ->fields('p')
+				    ->condition('field_section_parent_target_id', $doc_node, '=')
+				    ->condition('entity_type', 'node', '=')
+				    ->execute()
+				    ->fetchAll();
+  				break;
+
+  			case 'indigo_section':
+  				$doc_node = $this_node->field_section_parent[$this_node->language][0]['target_id'];
+
+  				$result = db_select('field_data_field_section_parent', 'p')
+				    ->fields('p')
+				    ->condition('field_section_parent_target_id', $doc_node, '=')
+				    ->condition('entity_type', 'node', '=')
+				    ->execute()
+				    ->fetchAll();
+  				break;
+  		}
+
+  		$this_index[] = array(
+  			'nid' => $doc_node,
+		  	'title' => t('View Entire Act'),
+		  	'href' => 'node/'. $doc_node,
+  		);
+
+  		foreach ($result as $r) {
+		  	$_node = node_load($r->entity_id);
+
+		  	$this_index[] = array(
+		  		'nid' => $_node->nid,
+		  		'title' => $_node->title,
+		  		'href' => 'node/'. $_node->nid,
+		  	);
+		  }
+  	}
+
+  	return $this_index;
+  }
+
+  return false;
+}
+
+function __build_indigo_document_downloads() {
+  // Get the ID of the parent document.
+  if (arg(0) == 'node' && is_numeric(arg(1))) {
+  	$this_node = node_load(arg(1));
+
+  	// Start building out the index.
+  	$this_index = array();
+
+  	if ($this_node) {
+  		switch ($this_node->type) {
+  			case 'indigo_document':
+  				$doc_node = $this_node;
+  				break;
+
+  			case 'indigo_section':
+  				$doc_node = node_load($this_node->field_section_parent[$this_node->language][0]['target_id']);
+  				break;
+  		}
+
+  		foreach ($doc_node->field_doc_alternate_links[$doc_node->language] as $dn) {
+  			$download = explode('......', $dn['value']);
+
+		  	$this_index[] = array(
+		  		'nid' => $doc_node->nid,
+		  		'title' => $download[0],
+		  		'href' => $download[1],
+		  	);
+		  }
+  	}
+
+  	return $this_index;
+  }
+
+  return false;
+}
+
+function __build_indigo_html_list($items) {
+	if (!$items) {
+		return false;
+	}
+
+	$list = '<ul class="indigo-list">';
+
+	foreach ($items as $item) {
+		$list .= '<li>'. l($item['title'], $item['href']) .'</li>';
+	}
+
+	$list .= '</ul>';
+
+	return $list;
+}
+
 function indigo_sync_content($data = array()) {
-	drupal_set_message('<pre>'. print_r($data, true) .'<pre>');
+	//drupal_set_message('<pre>'. print_r($data, true) .'<pre>');
 
 	foreach ($data as $d) {
-		$query = new EntityFieldQuery();
-		$entities = $query->entityCondition('entity_type', 'node')
-			->propertyCondition('type', variable_get('indigo_document_content_type', 'indigo_document'))
-			->propertyCondition('title', $d['title'])
-			->range(0,1)
-			->execute();
-
-		if (!empty($entities['node'])) {
+		if (_check_if_exists($d['title'], variable_get('indigo_document_content_type', 'indigo_document'))) {
 			continue;
 		}
-
+		
 		// entity_create replaces the procedural steps in the first example of
 		// creating a new object $node and setting its 'type' and uid property
-		$values = array(
-		  'type' => variable_get('indigo_document_content_type', 'indigo_document'),
-		  'uid' => 1,
-		  //'status' => true,
-		  //'comment' => false,
-		  //'promote' => false,
-		);
-		$entity = entity_create('node', $values);
+		$entity = entity_create('node', array(
+			'type' => variable_get('indigo_document_content_type', 'indigo_document'),
+		 	'uid' => 1,
+		));
 
 		// The entity is now created, but we have not yet simplified use of it.
 		// Now create an entity_metadata_wrapper around the new node entity
@@ -83,17 +283,64 @@ function indigo_sync_content($data = array()) {
 		// what language we are using. The Entity API handles that for us.
 		$ewrapper->title->set($d['title']);
 
+		// Multiple fields.
+		$multiple_fields = array(
+			'field_doc_tags',
+		);
+
 		foreach ($d['fields'] as $fk => $fv) {
-			$ewrapper->{$fk}->set($fv);
+			if (!in_array($fk, $multiple_fields)) {
+				$ewrapper->{$fk}->set($fv);
+			}
+			else {
+				if (!empty($fv)) {
+					if ($fk == 'field_doc_tags') {
+						$tag_data = array();
+
+						foreach ($fv as $tag_name) {
+							$tn = _check_if_exists($tag_name, 'indigo_tag');
+							if ($tn) {
+								$tag_data[$tn] = $tn;
+							}
+							else {
+								$tag_entity = entity_create('node', array(
+									'type' => 'indigo_tag',
+								 	'uid' => 1,
+								));
+
+								$tag_ewrapper = entity_metadata_wrapper('node', $tag_entity);
+								$tag_ewrapper->title->set($tag_name);
+								$tag_ewrapper->save();
+
+								$new_tn = _check_if_exists($tag_name, 'indigo_tag');
+								$tag_data[$new_tn] = $new_tn;
+							}
+						}
+
+						$ewrapper->{$fk}->set($tag_data);
+					}
+				}
+			}
 		}
 
-		// Setting the body is a bit different from other properties or fields
-		// because the body can have both its complete value and its
-		// summary
-		//if (isset($node['body']['und'])) {
-		//	$ewrapper->body->set(array('value' => $node['body']['und'][0]['value'], 'format' => $node['body']['und'][0]['format']));
-		//	$ewrapper->body->summary->set($node['body']['und'][0]['summary']);
-		//}
+		// Save the alternate links.
+		if (!empty($d['alternate_links'])) {
+			$alternate_links = array();
+
+			foreach ($d['alternate_links'] as $link) {
+				$allowed_mime_types = array(
+					'text/html',
+					'application/pdf',
+					'application/epub+zip',
+				);
+
+				if (in_array($link->mediaType, $allowed_mime_types)) {
+					$alternate_links[] = $link->title .'......'. $link->href;
+				}
+			}
+
+			$ewrapper->field_doc_alternate_links->set($alternate_links);
+		}
 
 		// Now just save the wrapper and the entity
 		// There is some suggestion that the 'true' argument is necessary to
@@ -101,35 +348,94 @@ function indigo_sync_content($data = array()) {
 		// such a bug, it almost certainly will get fixed, so make sure to check.
 		$ewrapper->save();
 
-		// Update the created and changed date on the new node to 
-		// what they should be.
-		/*
-		db_update('node')
-			->fields(array(
-				'created' => $node['created'],
-				'changed' => $node['changed'],
-			))
-			->condition('nid', $ewrapper->getIdentifier(), '=')
-  			->execute();
-  		*/
+		// Get the node id.
+		$tn = $ewrapper->getIdentifier();
+
+		// Now save the FRBR as the url_alias.
+		$path = array(
+			'source' => 'node/'. $tn,
+			'alias' => trim($d['url_alias'], '/'),
+		);
+		_set_url_alias($path);
+
+		if ($tn) {
+			foreach ($d['toc'] as $t) {
+				// Now we need to deal with the toc.
+				$section = entity_create('node', array(
+					'type' => variable_get('indigo_sections_content_type', 'indigo_section'),
+				 	'uid' => 1,
+				));
+
+				$section_ewrapper = entity_metadata_wrapper('node', $section);
+				$section_ewrapper->title->set($t->title);
+				$section_ewrapper->field_section_parent->set($tn);
+				$section_ewrapper->field_section_number->set($t->num);
+				$section_ewrapper->field_section_subcomponent->set($t->subcomponent);
+
+				// The HTML content.
+				$section_ewrapper->body->set(array('value' => $t->html, 'format' => 'full_html'));
+
+				$section_ewrapper->save();
+
+				$sn = $section_ewrapper->getIdentifier();
+				$section_path = array(
+					'source' => 'node/'. $sn,
+					'alias' => $path['alias'] .'/'. $t->subcomponent,
+				);
+				_set_url_alias($section_path);
+			}
+		}
 	}
+}
+
+function _set_url_alias($path) {
+	$delete_existing = array(
+		'source' => $path['source'],
+	);
+	path_delete($delete_existing);
+	path_save($path);
+}
+
+function _check_if_exists($title, $type) {
+	$query = new EntityFieldQuery();
+	$entities = $query->entityCondition('entity_type', 'node')
+		->propertyCondition('type', $type)
+		->propertyCondition('title', $title)
+		->range(0, 1)
+		->execute();
+
+	if (!empty($entities['node'])) {
+		$nid = 0;
+		foreach ($entities['node'] as $n) {
+			$nid = $n->nid;
+		}
+
+		return $nid;
+	}
+
+	return false;
 }
 
 function __test_indigo_fetch() {
 	$output = '';
 
-	drupal_set_message('API:<pre>'. print_r(variable_get('indigo_api_url', ''), true) .'</pre>');
-	drupal_set_message('Country Code:<pre>'. print_r(variable_get('indigo_site_country_code', '<all>'), true) .'</pre>');
+	drupal_set_message('Importing Indigo content for: '. __country_codes_lookup(variable_get('indigo_site_country_code', '<all>')), 'status');
 	
 	$indigo_data = __fetch_indigo_content('', array());
 
-	drupal_set_message('<pre>'. print_r($indigo_data->results, true) .'</pre>');
+	//drupal_set_message('<pre>'. print_r($indigo_data->results, true) .'</pre>');
 
 	$data = array();
+	$count = 0;
 	foreach ($indigo_data->results as $id) {
-		$output .= '<h3>'. $id->title .'</h3>';
-		$output .= '<p>'. $id->frbr_uri .'</p>';
-		$output .= '<p>&nbsp;</p>';
+		$count++;
+
+		$toc = __fetch_indigo_content($id->toc_url, array('secure' => true));
+		$toc_data = array();
+		foreach ($toc->toc as $tk => $td) {
+			$toc_data[$tk] = $td;
+			$toc_data[$tk]->html = __fetch_indigo_content($td->url, array('format' => 'html', 'secure' => true));
+		}
 
 		$data[] = array(
 			'title' => $id->title,
@@ -138,12 +444,30 @@ function __test_indigo_fetch() {
 				'field_doc_locality' => $id->locality,
 				'field_doc_language' => $id->language,
 				'field_doc_subtype' => $id->subtype,
+				'field_doc_year' => $id->year,
+				'field_doc_number' => $id->number,
 				'field_doc_frbr' => $id->frbr_uri,
+				'field_doc_tags' => $id->tags,
+				'field_doc_last_saved' => $id->created_at,
+				'field_doc_last_updated' => $id->updated_at,
+				'field_doc_publication_name' => $id->publication_name,
+				'field_doc_publication_date' => $id->publication_date,
+				'field_doc_publication_number' => $id->publication_number,
+				'field_doc_assent_date' => $id->assent_date,
+				'field_doc_expression_date' => $id->expression_date,
+				'field_doc_commencement_date' => $id->commencement_date,
 			),
+			'toc' => $toc_data,
+			'url_alias' => $id->frbr_uri,
+			'alternate_links' => $id->links,
 		);
 	}
+
 	indigo_sync_content($data);
 
+	drupal_set_message('Nodes imported: '. $count);
+
+	$output .= '<p>'. l(t('View Content'), 'admin/content') .'</p>';
 	return $output;
 }
 
@@ -156,15 +480,39 @@ function __fetch_indigo_content($endpoint = '', $payload = array()) {
 
 	$url = $api_url .'/'. $endpoint;
 
+	if (strstr($endpoint, 'http')) {
+		if (isset($payload['secure'])) {
+			if ($payload['secure']) {
+				$url = str_replace('http://', 'https://', $endpoint) .'.json';
+			}
+			else {
+				$url = $endpoint;
+			}
+		}
+	}
+
+	if (isset($payload['format'])) {
+		if ($payload['format'] == 'html') {
+			$url = str_replace('http://', 'https://', $endpoint) .'.html';
+		}
+	}
+
 	$ch = curl_init();
 
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_URL,$url);
 
-	$result = json_decode(curl_exec($ch));
+	if (isset($payload['format'])) {
+		if ($payload['format'] == 'html') {
+			$result = curl_exec($ch);
+		}
+	}
+	else {
+		$result = json_decode(curl_exec($ch));
+	}
+	
 	curl_close($ch);
-
 	return $result;
 }
 

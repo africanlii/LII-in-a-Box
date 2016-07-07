@@ -8,9 +8,10 @@
  * Implements hook_install()
  */
 function indigo_install() {
-	// Create both required content types:
+	// Create required content types:
   //   - Indigo Document indigo_document
   //   - Indigo Setion indigo_section
+  //   - Indigo Tag indigo_tag
   $content_types = array(
     array(
       'type' => 'indigo_document',
@@ -20,6 +21,7 @@ function indigo_install() {
       'custom' => 1,
       'modified' => 1,
       'locked' => 0,
+      'comment' => array('status' => 0),
     ),
     array(
       'type' => 'indigo_section',
@@ -29,21 +31,43 @@ function indigo_install() {
       'custom' => 1,
       'modified' => 1,
       'locked' => 0,
+      'comment' => array('status' => 0),
+    ),
+    array(
+      'type' => 'indigo_tag',
+      'name' => t('Indigo Tag'),
+      'base' => 'node_content',
+      'description' => t('Stores all tags for Indigo Document classification'),
+      'custom' => 1,
+      'modified' => 1,
+      'locked' => 0,
+      'comment' => array('status' => 0),
     ),
   );
 
   foreach ($content_types as $content_types) {
+    // Disable comments on all Indigo content types.
+    variable_set('comment_anonymous_'. $content_types['type'], 0);
+    variable_set('comment_default_mode_'. $content_types['type'], 0);
+    variable_set('comment_default_per_page_'. $content_types['type'], 50);
+    variable_set('comment_form_location_'. $content_types['type'], 1);
+    variable_set('comment_'. $content_types['type'], 0);
+    variable_set('comment_preview_'. $content_types['type'], 0);
+    variable_set('comment_subject_field_'. $content_types['type'], 0);
+
     $content_types = node_type_set_defaults($content_types);
     node_type_save($content_types);
     node_add_body_field($content_types);
   }
 
+  // Create all of the fields.
   $fields = array(
     'field_doc_country' => array(
       'type' => 'text',
       'label' => t('Country'),
       'description' => t('Country field'),
       'bundle' => 'indigo_document',
+      'cardinality' => 1,
       'widget' => array(
         'type' => 'text',
         'weight' => -1,
@@ -54,6 +78,7 @@ function indigo_install() {
       'label' => t('Locality'),
       'description' => t('Locality field'),
       'bundle' => 'indigo_document',
+      'cardinality' => 1,
       'widget' => array(
         'type' => 'text',
         'weight' => -1,
@@ -64,6 +89,7 @@ function indigo_install() {
       'label' => t('Language'),
       'description' => t('Language field'),
       'bundle' => 'indigo_document',
+      'cardinality' => 1,
       'widget' => array(
         'type' => 'text',
         'weight' => -1,
@@ -74,6 +100,7 @@ function indigo_install() {
       'label' => t('Document Subtype'),
       'description' => t('Document Subtype field'),
       'bundle' => 'indigo_document',
+      'cardinality' => 1,
       'widget' => array(
         'type' => 'text',
         'weight' => -1,
@@ -84,6 +111,7 @@ function indigo_install() {
       'label' => t('Year'),
       'description' => t('Year field'),
       'bundle' => 'indigo_document',
+      'cardinality' => 1,
       'widget' => array(
         'type' => 'text',
         'weight' => -1,
@@ -94,6 +122,7 @@ function indigo_install() {
       'label' => t('Number'),
       'description' => t('Number field'),
       'bundle' => 'indigo_document',
+      'cardinality' => 1,
       'widget' => array(
         'type' => 'text',
         'weight' => -1,
@@ -104,19 +133,25 @@ function indigo_install() {
       'label' => t('FRBR'),
       'description' => t('FRBR field'),
       'bundle' => 'indigo_document',
+      'cardinality' => 1,
       'widget' => array(
         'type' => 'text',
         'weight' => -1,
       ),
     ),
     'field_doc_tags' => array(
-      'type' => 'text',
+      'type' => 'entityreference',
       'label' => t('Tags'),
       'description' => t('Tags field'),
       'bundle' => 'indigo_document',
+      'cardinality' => -1,
       'widget' => array(
-        'type' => 'text',
+        'type' => 'entityreference',
         'weight' => -1,
+      ),
+      'settings' => array(
+        'target_type' => 'node',
+        'target_bundles' => array('indigo_tag'),
       ),
     ),
     'field_doc_last_saved' => array(
@@ -124,6 +159,7 @@ function indigo_install() {
       'label' => t('Last Saved'),
       'description' => t('Last Saved field'),
       'bundle' => 'indigo_document',
+      'cardinality' => 1,
       'widget' => array(
         'type' => 'text',
         'weight' => -1,
@@ -134,6 +170,7 @@ function indigo_install() {
       'label' => t('Last Updated'),
       'description' => t('Last Updated field'),
       'bundle' => 'indigo_document',
+      'cardinality' => 1,
       'widget' => array(
         'type' => 'text',
         'weight' => -1,
@@ -144,6 +181,7 @@ function indigo_install() {
       'label' => t('Publication Date'),
       'description' => t('Publication date field'),
       'bundle' => 'indigo_document',
+      'cardinality' => 1,
       'widget' => array(
         'type' => 'text',
         'weight' => -1,
@@ -154,6 +192,7 @@ function indigo_install() {
       'label' => t('Publication Name'),
       'description' => t('Publication name field'),
       'bundle' => 'indigo_document',
+      'cardinality' => 1,
       'widget' => array(
         'type' => 'text',
         'weight' => -1,
@@ -164,6 +203,7 @@ function indigo_install() {
       'label' => t('Publication Number'),
       'description' => t('Publication number field'),
       'bundle' => 'indigo_document',
+      'cardinality' => 1,
       'widget' => array(
         'type' => 'text',
         'weight' => -1,
@@ -174,6 +214,7 @@ function indigo_install() {
       'label' => t('Assent Date'),
       'description' => t('Assent date field'),
       'bundle' => 'indigo_document',
+      'cardinality' => 1,
       'widget' => array(
         'type' => 'text',
         'weight' => -1,
@@ -184,6 +225,7 @@ function indigo_install() {
       'label' => t('Commencement Date'),
       'description' => t('Commencement date field'),
       'bundle' => 'indigo_document',
+      'cardinality' => 1,
       'widget' => array(
         'type' => 'text',
         'weight' => -1,
@@ -194,9 +236,58 @@ function indigo_install() {
       'label' => t('Expression Date'),
       'description' => t('Expression date field'),
       'bundle' => 'indigo_document',
+      'cardinality' => 1,
       'widget' => array(
         'type' => 'text',
         'weight' => -1,
+      ),
+    ),
+    'field_doc_alternate_links' => array(
+      'type' => 'text',
+      'label' => t('Alternate Links'),
+      'description' => t('Alternate links field'),
+      'bundle' => 'indigo_document',
+      'cardinality' => -1,
+      'widget' => array(
+        'type' => 'text',
+        'weight' => -1,
+      ),
+    ),
+    'field_section_subcomponent' => array(
+      'type' => 'text',
+      'label' => t('Subcomponent'),
+      'description' => t('Subcomponent field'),
+      'bundle' => 'indigo_section',
+      'cardinality' => 1,
+      'widget' => array(
+        'type' => 'text',
+        'weight' => -1,
+      ),
+    ),
+    'field_section_number' => array(
+      'type' => 'text',
+      'label' => t('Number'),
+      'description' => t('Number field'),
+      'bundle' => 'indigo_section',
+      'cardinality' => 1,
+      'widget' => array(
+        'type' => 'text',
+        'weight' => -1,
+      ),
+    ),
+    'field_section_parent' => array(
+      'type' => 'entityreference',
+      'label' => t('Parent'),
+      'description' => t('Section parent field'),
+      'bundle' => 'indigo_section',
+      'cardinality' => 1,
+      'widget' => array(
+        'type' => 'entityreference',
+        'weight' => -1,
+      ),
+      'settings' => array(
+        'target_type' => 'node',
+        'target_bundles' => array('indigo_document'),
       ),
     ),
   );
@@ -209,6 +300,7 @@ function indigo_install() {
   variable_set('indigo_site_country_code', '<all>');
   variable_set('indigo_document_content_type', 'indigo_document');
   variable_set('indigo_sections_content_type', 'indigo_section');
+  variable_set('indigo_tag_content_type', 'indigo_tag');
 }
 
 function __install_fields($fields = array()) {
@@ -218,14 +310,13 @@ function __install_fields($fields = array()) {
     $the_field = array(
       'field_name' => $field_name,
       'type' => $field['type'],
-      'cardinality' => 1,
+      'cardinality' => $field['cardinality'],
       'locked' => false,
       'settings' => array(
         'target_type' => 'node',
         'handler_settings' => array('target_bundles' => array($field['bundle'])),
       ),
     );
-    field_create_field($the_field);
 
     // Create the instance.
     $the_instance = array(
@@ -241,6 +332,42 @@ function __install_fields($fields = array()) {
         'handler_settings' => array('target_bundles' => array($field['bundle'])),
       ),
     );
+
+    if ($field['type'] == 'entityreference') {
+      $the_field['settings']['handler_settings']['target_bundles'] = $field['settings']['target_bundles'];
+      $the_instance['settings']['handler_settings']['target_bundles'] = $field['settings']['target_bundles'];
+    }
+
+    field_create_field($the_field);
     field_create_instance($the_instance);
+  }
+}
+
+function indigo_uninstall() {
+  $content_types = array(
+    'indigo_document',
+    'indigo_section',
+    'indigo_tag',
+  );
+
+  foreach ($content_types as $type) {
+    // Gather all the example content that might have been created while this
+    // module was enabled.  Simple selects still use db_query().
+    // http://api.drupal.org/api/function/db_query/7
+    $sql = 'SELECT nid FROM {node} n WHERE n.type = :type';
+    $result = db_query($sql, array(':type' => $type));
+
+    $nids = array();
+    foreach ($result as $row) {
+      $nids[] = $row->nid;
+    }
+    
+    // Delete all the nodes at once
+    // http://api.drupal.org/api/function/node_delete_multiple/7
+    node_delete_multiple($nids);
+
+    // Delete our content type
+    // http://api.drupal.org/api/function/node_type_delete/7
+    node_type_delete($type);
   }
 }
