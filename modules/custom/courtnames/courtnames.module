@@ -182,7 +182,7 @@ function courtbeginwith($current_path) {
         AND issuingcourt.field_issuingcourt_select_value LIKE '%$courtname%'
         AND nd.type = 'judgment' ");
 
-        $data .= "<p>";
+        $data = "<p>";
         foreach($queryres as $result){
           $content_title = $result->title;
           $content_src = $result->alias;
