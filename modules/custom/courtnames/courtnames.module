@@ -189,7 +189,7 @@ function courtbeginwith($current_path) {
           //$data .="<li><a href='$content_src'>$content_title</a></li>"; 
           $data .= t('<ul><li><a href="@url">'.$content_title.'</a></li></ul>', array('@url' => url($content_src)));
         }
-        $data .= "</p>";
+        $data = "</p>";
 
         $content['content'] = array(
           '#type' => 'fieldset',
