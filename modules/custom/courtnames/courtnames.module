@@ -182,17 +182,14 @@ function courtbeginwith($current_path) {
         AND issuingcourt.field_issuingcourt_select_value LIKE '%$courtname%'
         AND nd.type = 'judgment' ");
 
-        $data = '<p><strong>type:</strong> judgment';
-        $data .= '<p><strong>database:</strong> '.$courtname;
-        $data .= '<p><strong>alpha:</strong> '.$letter;
-        $data .= "<p><ul>";
+        $data .= "<p>";
         foreach($queryres as $result){
           $content_title = $result->title;
           $content_src = $result->alias;
           //$data .="<li><a href='$content_src'>$content_title</a></li>"; 
-          $data .= t('<li><a href="@url">'.$content_title.'</a></li>', array('@url' => url($content_src)));
+          $data .= t('<ul><li><a href="@url">'.$content_title.'</a></li></ul>', array('@url' => url($content_src)));
         }
-        $data .= "</ul></p>";
+        $data .= "</p>";
 
         $content['content'] = array(
           '#type' => 'fieldset',
@@ -208,10 +205,7 @@ function courtbeginwith($current_path) {
       //print_r(current_path());exit;
       drupal_set_title($courtname.': Decisions in'.' '.$year);
  
-      $metadata = '<p><strong>type:</strong>judgment';
-      $metadata .= '<p><strong>database:</strong>'.$courtname;
-      $metadata .= '<p><strong>year:</strong>'.$year;
-
+      $metadata = "";
       $result = db_query("SELECT jdate.field_jdate_value,n.title,ualias.alias FROM {field_revision_field_issuingcourt_select} issuingcourt     
         INNER JOIN {field_data_field_jdate} jdate
         ON issuingcourt.entity_id = jdate.entity_id 
@@ -227,7 +221,7 @@ function courtbeginwith($current_path) {
 
       $date_ar = array();  
       $months = '<p></p>';
-      $titles = '<p><ul>';  
+      $titles = '<p>';  
       $prev_month = "";
      
       foreach($result as $res){
@@ -242,12 +236,12 @@ function courtbeginwith($current_path) {
             $titles .= '<strong>'.$content_month.'</strong>'.'<br/>';
           }      
           //$titles .= '<li>'."<a href='$alias'>".$res->title.'</a></li>';
-          $titles .= t('<li><a href="@url">'.$res->title.'</a></li>', array('@url' => url($alias)));
+          $titles .= t('<ul><li><a href="@url">'.$res->title.'</a></li></ul>', array('@url' => url($alias)));
           $prev_month = $content_month;
         }            
       }// End of for loop
       
-      $titles .= '</ul></p>';
+      $titles .= '</p>';
       
       $content['content'] = array(
         '#type' => 'fieldset',
