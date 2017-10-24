@@ -126,7 +126,7 @@ function __load_indigo_content($nid) {
 		case 'indigo_document':
 			$doc_node = $this_node->nid;
 
-			$result = db_select('field_data_field_section_parent', 'p')
+			/*$result = db_select('field_data_field_section_parent', 'p')
 		    ->fields('p')
 		    ->condition('field_section_parent_target_id', $doc_node, '=')
 		    ->condition('entity_type', 'node', '=')
@@ -136,7 +136,9 @@ function __load_indigo_content($nid) {
 		    foreach ($result as $r) {
 			  	$_node = node_load($r->entity_id);
 			  	$indigo_content .= $_node->body[$_node->language][0]['value'];
-			  }
+			}*/
+
+			$indigo_content = $this_node->body[$this_node->language][0]['value'];
 			break;
 
 		case 'indigo_section':
@@ -323,6 +325,8 @@ function indigo_sync_content($data = array()) {
 			}
 		}
 
+		$full_act_text = '';
+
 		// Save the alternate links.
 		if (!empty($d['alternate_links'])) {
 			$alternate_links = array();
@@ -337,9 +341,20 @@ function indigo_sync_content($data = array()) {
 				if (in_array($link->mediaType, $allowed_mime_types)) {
 					$alternate_links[] = $link->title .'......'. $link->href;
 				}
+
+				if ($link->mediaType == $allowed_mime_types[0]) {
+					if (!strstr($link->href, 'standalone')) {
+						$full_act_text = $link->href;
+					}
+				}
 			}
 
 			$ewrapper->field_doc_alternate_links->set($alternate_links);
+		}
+
+		// Set the body content to the entire act.
+		if ($full_act_text) {
+			$ewrapper->body->set(array('value' => __fetch_indigo_content($full_act_text), 'format' => 'full_html'));
 		}
 
 		// Now just save the wrapper and the entity
