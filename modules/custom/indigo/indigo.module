@@ -447,9 +447,23 @@ function __test_indigo_fetch() {
 
 		$toc = __fetch_indigo_content($id->toc_url, array('secure' => true));
 		$toc_data = array();
+
+		$i = 0;
 		foreach ($toc->toc as $tk => $td) {
-			$toc_data[$tk] = $td;
-			$toc_data[$tk]->html = __fetch_indigo_content($td->url, array('format' => 'html', 'secure' => true));
+			$toc_data[$i] = $td;
+			$toc_data[$i]->html = __fetch_indigo_content($td->url, array('format' => 'html', 'secure' => true));
+
+			$i++;
+
+			// Check for children sections.
+			if (isset($td->children)) {
+				foreach ($td->children as $tc) {
+					$toc_data[$i] = $tc;
+					$toc_data[$i]->html = __fetch_indigo_content($tc->url, array('format' => 'html', 'secure' => true));
+
+					$i++;
+				}
+			}
 		}
 
 		$data[] = array(
