@@ -449,7 +449,7 @@
 		field_create_field($field);
 
 		$instance = array(
-			'field_name'  => 'field_gaz_aut_metadata',
+			'field_name'  => 'field_judg_aut_metadata',
 			'entity_type' => 'node',             
 			'bundle'      => 'judgment', 
 			'label'       => $t('Authoring metadata'),

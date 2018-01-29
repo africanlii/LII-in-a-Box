@@ -482,7 +482,7 @@ function liiinabox_install() {
 
 function install_custom_modules(){
 
-  if(!module_exists('judgment')){   
+  if(!module_exists('other')){   
       $modules = array('judgment','consolidated_legislation','subordinate_legislation','legislation_promulgated','journal','bills','gazette','other'); // Array of module names
       $enable_dependencies = TRUE;
       module_enable($modules, $enable_dependencies);
