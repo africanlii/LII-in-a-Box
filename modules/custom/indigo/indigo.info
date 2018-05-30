@@ -8,3 +8,9 @@ version = 0.1
 package = AfricanLii
 
 dependencies[] = entityreference
+
+; Information added by drush on 2016-07-07
+version = "unknown"
+project = "liiinabox"
+datestamp = "1467878324"
+

@@ -38,7 +38,7 @@ function indigo_admin() {
 	$form['indigo_api_url'] = array(
 		'#type' => 'textfield',
 		'#title' => t('Indigo API URL'),
-		'#default_value' => variable_get('indigo_api_url', 'https://indigo.code4sa.org/api'),
+		'#default_value' => variable_get('indigo_api_url', 'https://indigo.africanlii.org/api'),
 		'#description' => t("The maximum number of links to display in the block."),
 		'#required' => TRUE,
 	);
@@ -126,7 +126,7 @@ function __load_indigo_content($nid) {
 		case 'indigo_document':
 			$doc_node = $this_node->nid;
 
-			/*$result = db_select('field_data_field_section_parent', 'p')
+			$result = db_select('field_data_field_section_parent', 'p')
 		    ->fields('p')
 		    ->condition('field_section_parent_target_id', $doc_node, '=')
 		    ->condition('entity_type', 'node', '=')
@@ -136,9 +136,7 @@ function __load_indigo_content($nid) {
 		    foreach ($result as $r) {
 			  	$_node = node_load($r->entity_id);
 			  	$indigo_content .= $_node->body[$_node->language][0]['value'];
-			}*/
-
-			$indigo_content = $this_node->body[$this_node->language][0]['value'];
+			  }
 			break;
 
 		case 'indigo_section':
@@ -325,8 +323,6 @@ function indigo_sync_content($data = array()) {
 			}
 		}
 
-		$full_act_text = '';
-
 		// Save the alternate links.
 		if (!empty($d['alternate_links'])) {
 			$alternate_links = array();
@@ -341,20 +337,9 @@ function indigo_sync_content($data = array()) {
 				if (in_array($link->mediaType, $allowed_mime_types)) {
 					$alternate_links[] = $link->title .'......'. $link->href;
 				}
-
-				if ($link->mediaType == $allowed_mime_types[0]) {
-					if (!strstr($link->href, 'standalone')) {
-						$full_act_text = $link->href;
-					}
-				}
 			}
 
 			$ewrapper->field_doc_alternate_links->set($alternate_links);
-		}
-
-		// Set the body content to the entire act.
-		if ($full_act_text) {
-			$ewrapper->body->set(array('value' => __fetch_indigo_content($full_act_text), 'format' => 'full_html'));
 		}
 
 		// Now just save the wrapper and the entity
@@ -439,31 +424,25 @@ function __test_indigo_fetch() {
 	$indigo_data = __fetch_indigo_content('', array());
 
 	//drupal_set_message('<pre>'. print_r($indigo_data->results, true) .'</pre>');
+//echo '<pre>';
+//print_r($indigo_data->results);exit;
 
 	$data = array();
 	$count = 0;
 	foreach ($indigo_data->results as $id) {
 		$count++;
 
+		
 		$toc = __fetch_indigo_content($id->toc_url, array('secure' => true));
+		
 		$toc_data = array();
+   
+		//echo '<pre>';
+		//print_r($toc);exit;
 
-		$i = 0;
 		foreach ($toc->toc as $tk => $td) {
-			$toc_data[$i] = $td;
-			$toc_data[$i]->html = __fetch_indigo_content($td->url, array('format' => 'html', 'secure' => true));
-
-			$i++;
-
-			// Check for children sections.
-			if (isset($td->children)) {
-				foreach ($td->children as $tc) {
-					$toc_data[$i] = $tc;
-					$toc_data[$i]->html = __fetch_indigo_content($tc->url, array('format' => 'html', 'secure' => true));
-
-					$i++;
-				}
-			}
+			$toc_data[$tk] = $td;
+			$toc_data[$tk]->html = __fetch_indigo_content($td->url, array('format' => 'html', 'secure' => true));
 		}
 
 		$data[] = array(
@@ -509,6 +488,7 @@ function __fetch_indigo_content($endpoint = '', $payload = array()) {
 
 	$url = $api_url .'/'. $endpoint;
 
+
 	if (strstr($endpoint, 'http')) {
 		if (isset($payload['secure'])) {
 			if ($payload['secure']) {
@@ -519,18 +499,26 @@ function __fetch_indigo_content($endpoint = '', $payload = array()) {
 			}
 		}
 	}
+    
 
 	if (isset($payload['format'])) {
 		if ($payload['format'] == 'html') {
 			$url = str_replace('http://', 'https://', $endpoint) .'.html';
 		}
-	}
+	} 
+
+	$token = 'to get-from-indigo';	
 
 	$ch = curl_init();
+
+	//Alfred added the header for authentication
+	$headers = array('Content-type: application/json', 'Authorization: Token ' .$token);
 
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_URL,$url);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+	
 
 	if (isset($payload['format'])) {
 		if ($payload['format'] == 'html') {
@@ -540,7 +528,8 @@ function __fetch_indigo_content($endpoint = '', $payload = array()) {
 	else {
 		$result = json_decode(curl_exec($ch));
 	}
-	
+	//echo '<pre>';
+	//print_r($result);exit;
 	curl_close($ch);
 	return $result;
 }
