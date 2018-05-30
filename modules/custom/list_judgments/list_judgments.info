@@ -1,0 +1,12 @@
+name = List Judgments
+description = A module that lists court judgments
+core = 7.x
+
+dependencies[] = views
+#dependencies[] = xautoload (>= 7.x-5.0)
+files[] = list_judgments.views.inc
+files[] = list_judgmentsHandler.inc
+files[] = list_judgments.module
+
+
+
