@@ -1,5 +1,0 @@
-name = Legislation Type name
-description = A container that lists names of Legislation Types
-core = 7.x
-files[] = legisnames.module
-
