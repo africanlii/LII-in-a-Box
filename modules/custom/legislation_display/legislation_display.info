@@ -1,5 +1,0 @@
-name = Display Legislation
-description = A container that contains code to display legislation
-package = legislation_display
-core = 7.x
-files[] = legislation_display.module

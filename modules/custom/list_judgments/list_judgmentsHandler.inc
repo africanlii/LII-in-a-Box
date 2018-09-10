@@ -1,6 +1,6 @@
 <?php
 
-	class CourtnamesHandler extends views_handler_area_text{
+	class list_judgmentsHandler extends views_handler_area_text{
 		
 		function render($empty = FALSE){
 					
@@ -16,10 +16,10 @@
             
             //echo count($path_ar);exit;
 		    if(count($path_ar) == 3){
-		        return $this->page_courtnames($path);
+		        return $this->page_list_judgments($path);
 		    }
 		    else{
-		        return $this->courtbeginwith($path);
+		        return $this->judgments_begin_with($path);
 		    }
 		}
 
@@ -28,7 +28,7 @@
 		*
 		* @return array
 		*/
-		function page_courtnames($current_path) {
+		function page_list_judgments($current_path) {
 		  $content = array();
 
 		  //Code added to fix url paths
@@ -37,6 +37,7 @@
 		  $path_ar = explode('/',$current_path);
 		  $passedcourtname = $path_ar[2];
 		  $courtname = str_replace('-',' ',$passedcourtname);
+          $courtname = ucwords($courtname);
 		  drupal_set_title(ucwords($courtname).' decisions');
 
 		  //print_r($path_ar);
@@ -49,7 +50,7 @@
 
 		  $result2 = db_query("SELECT jdate.field_jdate_value FROM {field_revision_field_issuingcourt_select} issuingcourt INNER JOIN {field_data_field_jdate} jdate
 		                         ON issuingcourt.entity_id = jdate.entity_id 
-		                         WHERE issuingcourt.field_issuingcourt_select_value LIKE '%$courtname%' ");  
+		                         WHERE issuingcourt.field_issuingcourt_select_value = '$courtname' ");  
 
 
 		  $date_ar = array();
@@ -119,9 +120,10 @@
 		      $content2 = t($lists.$word.$years_cont.$years_range);
 		  }
 		  else{
-		    $content['content'] = array(
-		    '#markup'=>t("<strong>There are currently no judgments loaded for this court</strong>"),
-		    );
+		    //$content['content'] = array(
+		    //'#markup'=>t("<strong>There are currently no judgments loaded for this court</strong>"),);
+		     $content2 = t("<strong>There are currently no judgments loaded for this court</strong>");
+                   
 		  }
 		  
 		  return $content2;
@@ -129,7 +131,7 @@
 	
 
 
-	function courtbeginwith($current_path) {
+	function judgments_begin_with($current_path) {
  
 
 	    //Code added for fixing the url-path

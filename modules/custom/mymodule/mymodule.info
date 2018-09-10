@@ -1,5 +1,0 @@
-name = Hello World
-description = A container that contains some lii-inabox code
-package = helloworld
-core = 7.x
-files[] = helloworld.module
