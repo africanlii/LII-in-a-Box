@@ -1,0 +1,12 @@
+name = Citator Judgments
+description = A module that list judgments citations
+core = 7.x
+
+dependencies[] = views
+#dependencies[] = xautoload (>= 7.x-5.0)
+files[] = citator.views.inc
+files[] = citatorHandler.inc
+files[] = citator.module
+
+
+

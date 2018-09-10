@@ -1,0 +1,19 @@
+<?php 
+/**
+ * Implements hook_view()
+ * @return array
+ */
+
+
+require_once('citator_functions.inc');
+
+function citator_views_api(){
+  return [
+    'api' => 3,
+    'path' => drupal_get_path('module', 'citator'),
+  ];
+}
+
+
+
+
