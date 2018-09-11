@@ -41,8 +41,8 @@
 		//$title = $current_user->name;
 
 		$jdate = $form_state['input']['field_jdate']['und'][0]['value']['date'];
-		//$year = $mnc_year = date('Y',strtotime($form_state['input']['field_jdate']['und'][0]['value']['date']));
-        $year = $mnc_year = date('Y',strtotime($form_state['input']['field_jdate']['und'][0]['value']['year']));
+		$year = $mnc_year = date('Y',strtotime($form_state['input']['field_jdate']['und'][0]['value']['date']));
+        //$year = $mnc_year = date('Y',strtotime($form_state['input']['field_jdate']['und'][0]['value']['year']));
         $courtname = $form_state['input']['field_issuingcourt_select']['und'];
 
 		$query = db_query("SELECT MAX(field_jno_value) as max_jno, field_issuingcourt_select_value, field_mnc_value
@@ -65,9 +65,9 @@
 		$country_code = strtoupper(variable_get('site_default_country'));
 
 		//Automating MNC code
-		//$mnc_year = date('Y',strtotime($form_state['input']['field_jdate']['und'][0]['value']['date']));
+		$mnc_year = date('Y',strtotime($form_state['input']['field_jdate']['und'][0]['value']['date']));
         //Changed the date format is separated into blocks: day-month-year
-        $mnc_year = date('Y',strtotime($form_state['input']['field_jdate']['und'][0]['value']['year']));
+        //$mnc_year = date('Y',strtotime($form_state['input']['field_jdate']['und'][0]['value']['year']));
 		$mnc_jno = $form_state['values']['field_jno']['und'][0]['value'];		
 		
 
