@@ -83,7 +83,7 @@
   			WHERE nd.nid = mnc.entity_id
   			AND nd.title = '$court_name' ");
 
-  		$result->fetchObject();
+  		$record = $result->fetchObject();
          
 		//var_dump($record->field_courtmnc_value);exit;
 
