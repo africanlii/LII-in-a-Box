@@ -31,7 +31,7 @@
 				if(arg(1) == $references->node){
 	                
 	            	foreach($references->citations as $citations){
-	                	$found_id = str_replace("Uganda","",$citations->processed_case);
+	                	$found_id = str_replace("Uganda","",$citations->link_url);
 	                    $cit_url = $this->get_url_alias($found_id);                  
 	                    $url_alias = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]/".$cit_url;    
 	                    $citation .= t('<li><a href="@url">'.$citations->text.'</a></li>',array('@url' => url($url_alias)));
