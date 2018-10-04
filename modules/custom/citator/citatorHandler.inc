@@ -20,25 +20,27 @@
 			curl_setopt($ch, CURLOPT_URL,$api_url);
 			//curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-			$references = json_decode(curl_exec($ch));						
+			$references = json_decode(curl_exec($ch));
+								
 			curl_close($ch); 
-
-			//echo '<pre>';
-			//print_r($references);exit;   
-            			
+				
             $citation = '<ul>';
             if(!is_null($references)){
-				if(arg(1) == $references->node){
-	                
-	            	foreach($references->citations as $citations){
-	                	$found_id = str_replace("Uganda","",$citations->link_url);
-	                    $cit_url = $this->get_url_alias($found_id);                  
-	                    $url_alias = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]/".$cit_url;    
-	                    $citation .= t('<li><a href="@url">'.$citations->text.'</a></li>',array('@url' => url($url_alias)));
-	                }
-	                $citation .= '</ul>';
-	               
-	            }
+            	if(isset($references->node)){
+					if(arg(1) == $references->node){
+		                
+		            	foreach($references->citations as $citations){
+		                	$found_id = str_replace("Uganda","",$citations->link_url);
+		                    $cit_url = $this->get_url_alias($found_id);                  
+		                    $url_alias = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]/".$cit_url;
+	                        if($cit_url != ''){
+		                    	$citation .= t('<li><a href="@url">'.$citations->text.'</a></li>',array('@url' => url($url_alias)));
+	                        }
+		                }
+		                $citation .= '</ul>';
+		               
+		            }
+	        	}
             }
 			return $citation;
 		}
@@ -46,10 +48,7 @@
 
 		function output_results(){
 			
-   				
-   			//$api_url = "http://www.africanliicitator.co.za/api/write_processed_case.json";
-            //$api_ur = "http://www.africanliicitator.co.za/api/read_processed_case.json";
-            //$api_url = "http://www.africanliicitator.co.za/api/read_processed_case/Uganda28712/by_node/";
+   			
             $api_url = "http://www.africanliicitator.co.za/api/read_processed_case/Uganda27951/by_node/";
 
 			$ch = curl_init($api_url);
