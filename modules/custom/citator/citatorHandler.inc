@@ -26,7 +26,8 @@
 								
 			curl_close($ch); 
 		
-            $citation = '<h2 class="block-title">CASES CONSIDERED</h2><ul>';
+            $citation_results = '<h2 class="block-title">CASES CONSIDERED</h2><ul>';
+            $citation_links = '';
             if(!is_null($references)){
             	if(isset($references->node)){            		
 					if(arg(1) == $references->node){
@@ -36,21 +37,23 @@
 		                    $cit_url = $this->get_url_alias($found_id);                  
 		                    $url_alias = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]/".$cit_url;
 	                        if($cit_url != ''){
-		                    	$citation .= t('<li><a href="@url">'.$citations->text.'</a></li>',array('@url' => url($url_alias)));
+		                    	$citation_links .= t('<li><a href="@url">'.$citations->text.'</a></li>',array('@url' => url($url_alias)));
 	                        }
 		                }
-		                $citation .= '</ul>';
-		               
+		                //$citation .= '</ul>';
+		               $citation_results .= $citation_links.'</ul>';
 		            }		            
 	        	}
             }
 
+            //echo $citation_links;exit;
+            //echo strlen($citation);exit;
             //Checking if the string with links is empty returns length 54, if empty hide block title           
-            if(strlen($citation) == 54){
-		       	$citation = '';
+            if($citation_links == ''){
+		       	$citation_results = '';
 		       	
 		    }
-			return $citation;
+			return $citation_results;
 		}
 	
         
