@@ -46,9 +46,8 @@
 	        	}
             }
 
-            //echo $citation_links;exit;
-            //echo strlen($citation);exit;
-            //Checking if the string with links is empty returns length 54, if empty hide block title           
+            
+            //Checking if the string with links is empty, if empty hide block title           
             if($citation_links == ''){
 		       	$citation_results = '';
 		       	
